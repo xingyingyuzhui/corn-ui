@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+{{> head}}
+<title>字体 · Corn UI</title>
+</head>
+<body class="corn-body" data-page="typography">
+{{> nav}}
+
+<main>
+  <header class="demo-page-head">
+    <div class="corn-shell">
+      <span class="corn-eyebrow">Foundations</span>
+      <h1 class="corn-h2">字体</h1>
+      <p class="corn-lead" style="font-size:15px;">
+        三种字体各司其职：serif 给标题重量，sans 给正文阅读，mono 给数据精度。
+      </p>
+    </div>
+  </header>
+
+  <section class="demo-section demo-section-flush">
+    <div class="corn-shell">
+      <p class="demo-label">Serif · 标题（宋体系）</p>
+      <div class="demo-grid" style="gap:28px;">
+        <div>
+          <p class="corn-mono" style="font-size:11px; color:var(--corn-muted-2); margin:0 0 6px;">corn-h1 · clamp(34–56px) · 600</p>
+          <p class="corn-h1" style="font-size:44px;">宋体标题，纸上的秩序</p>
+        </div>
+        <div>
+          <p class="corn-mono" style="font-size:11px; color:var(--corn-muted-2); margin:0 0 6px;">corn-h2 · clamp(26–38px) · 600</p>
+          <p class="corn-h2">二级标题的节制</p>
+        </div>
+        <div>
+          <p class="corn-mono" style="font-size:11px; color:var(--corn-muted-2); margin:0 0 6px;">corn-h3 · 22px · 600</p>
+          <p class="corn-h3">三级标题与卡片标题</p>
+        </div>
+      </div>
+
+      <p class="demo-label">Sans · 正文（黑体系）</p>
+      <div class="demo-grid" style="gap:20px; max-width:56ch;">
+        <p style="margin:0;">正文 16px，行高 1.7。行长控制在 52–60 字符：中文排版里行长比字号更影响阅读节奏，宁可短行，不要通栏长句。</p>
+        <p class="corn-lead" style="margin:0;">corn-lead：导语用 17px muted，跟在标题后面交代这一页是什么。</p>
+        <p class="corn-hint" style="margin:0; font-size:13px;">corn-hint：辅助说明 13px 上下， muted 色，不出现在主角位置。</p>
+      </div>
+
+      <p class="demo-label">Mono · 数据与标签</p>
+      <div class="demo-grid" style="gap:16px;">
+        <p class="corn-mono" style="font-size:14px; margin:0;">00:12:47.38 · v1.0.0-rc.46 · 1,280px · tabular-nums</p>
+        <div><span class="corn-eyebrow">Eyebrow · 签名细节</span></div>
+        <div><span class="corn-label">Field Label / 表单标签</span></div>
+        <div><span class="corn-tag">TAG · MONO 11PX</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="corn-shell">
+      <span class="corn-eyebrow">Rules</span>
+      <h2 class="corn-h3" style="margin-top:12px;">分工表</h2>
+      <table class="demo-spec" style="margin-top:20px;">
+        <tr><th>角色</th><th>字体</th><th>位置</th></tr>
+        <tr><td>serif</td><td>Songti SC / Noto Serif SC</td><td>h1–h3、空状态标题、引述</td></tr>
+        <tr><td>sans</td><td>PingFang SC / Noto Sans SC</td><td>正文、按钮、输入、导航</td></tr>
+        <tr><td>mono</td><td>SF Mono / JetBrains Mono</td><td>eyebrow、tag、数据、时间戳、路径、版本号</td></tr>
+      </table>
+      <ul class="demo-rules" style="margin-top:24px;">
+        <li>serif 只在标题级位置出现；正文段落不用 serif。</li>
+        <li>数字默认 tabular-nums（corn-mono 已带）。</li>
+        <li>eyebrow 是区块级标记，不拿来当段落强调。</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+{{> footer}}
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+{{> head}}
+<title>色板 · Corn UI</title>
+</head>
+<body class="corn-body" data-page="colors">
+{{> nav}}
+
+<main>
+  <header class="demo-page-head">
+    <div class="corn-shell">
+      <span class="corn-eyebrow">Foundations</span>
+      <h1 class="corn-h2">色板</h1>
+      <p class="corn-lead" style="font-size:15px;">
+        全部颜色出自 <code class="corn-mono">corn-tokens.css</code>，绕开 token 自造色值是不允许的。
+      </p>
+    </div>
+  </header>
+
+  <section class="demo-section demo-section-flush">
+    <div class="corn-shell">
+      <p class="demo-label">Surface · 纸面由浅入深</p>
+      <div class="demo-grid demo-grid-4">
+        <div class="swatch"><div class="chip" style="background:var(--corn-void)"></div><span class="name">void · 最底层</span><span class="hex">#f6f7ef</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-paper)"></div><span class="name">paper · 页面底</span><span class="hex">#f2f3e9</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-panel)"></div><span class="name">panel · 面板底</span><span class="hex">#e8eade</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-paper-3)"></div><span class="name">paper-3 · 深纸面</span><span class="hex">#dbdecb</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-raised)"></div><span class="name">raised · 浮起面</span><span class="hex">#fafbf5</span></div>
+      </div>
+
+      <p class="demo-label">Ink · 墨绿</p>
+      <div class="demo-grid demo-grid-4">
+        <div class="swatch"><div class="chip" style="background:var(--corn-ink)"></div><span class="name">ink · 主文字/深底</span><span class="hex">#1b1e1a</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-ink-2)"></div><span class="name">ink-2 · 深底次面</span><span class="hex">#252922</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-ink-3)"></div><span class="name">ink-3 · 深底 hover</span><span class="hex">#32372c</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-muted)"></div><span class="name">muted · 次要文字</span><span class="hex">#58635a</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-muted-2)"></div><span class="name">muted-2 · 更弱文字</span><span class="hex">#7a857c</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-ondark-muted)"></div><span class="name">ondark-muted</span><span class="hex">#aeb9ae</span></div>
+      </div>
+
+      <p class="demo-label">Brand · 玉米田</p>
+      <div class="demo-grid demo-grid-4">
+        <div class="swatch"><div class="chip" style="background:var(--corn-maize)"></div><span class="name">maize · 唯一强点缀</span><span class="hex">#f2c84b</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-maize-soft)"></div><span class="name">maize-soft</span><span class="hex">#f7de96</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-maize-deep)"></div><span class="name">maize-deep · 浅底accent字</span><span class="hex">#8a6110</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-husk)"></div><span class="name">husk · 品牌绿</span><span class="hex">#4d6847</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-husk-deep)"></div><span class="name">husk-deep</span><span class="hex">#34482f</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-sage)"></div><span class="name">sage · 灰绿</span><span class="hex">#7e9a72</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-celadon)"></div><span class="name">celadon · 青釉</span><span class="hex">#a9bc9c</span></div>
+      </div>
+
+      <p class="demo-label">Semantic · 语义</p>
+      <div class="demo-grid demo-grid-4">
+        <div class="swatch"><div class="chip" style="background:var(--corn-danger)"></div><span class="name">danger · 浅底错误</span><span class="hex">#ad342c</span></div>
+        <div class="swatch"><div class="chip" style="background:var(--corn-alert)"></div><span class="name">alert · 深底警示</span><span class="hex">#fa5c57</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <div class="corn-shell">
+      <span class="corn-eyebrow">Rules</span>
+      <h2 class="corn-h3" style="margin-top:12px;">用量规则</h2>
+      <ul class="demo-rules" style="margin-top:20px;">
+        <li><strong>纸面阶梯方向固定：</strong>背景 ≤ 面板 ≤ 更深区域，不能用反（深色卡片不能坐浅色背景上再挖洞）。</li>
+        <li><strong>maize 是"被记住"的那一笔：</strong>eyebrow 方块、selection、focus、至多一处主强调；铺大背景即失效。</li>
+        <li><strong>husk/sage/celadon 只做辅助：</strong>tag、状态点、弱强调，不抢 ink 的文字层级。</li>
+        <li><strong>深色区块用 ink 系</strong>，一页一到两处，不引入蓝黑纯黑等新深色。</li>
+        <li><strong>禁止：</strong>暖米/奶油/桃粉/橘棕底色；大面积纯黑 #000、纯白 #fff；彩色渐变底。</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+{{> footer}}
+</body>
+</html>

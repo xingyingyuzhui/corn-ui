@@ -1,0 +1,65 @@
+/* ==========================================================================
+   Corn UI — Design Tokens
+   玉米设计语言：纸田青釉底色 × 墨绿文字 × 玉米黄点缀
+   提炼自 CornStudio (Hull) 与玉米 AI 官网，双端统一
+   ========================================================================== */
+
+:root {
+  /* --- Surface：暖纸 × 青釉，由浅到深 --- */
+  --corn-void: #f6f7ef;      /* 最底层背景 */
+  --corn-paper: #f2f3e9;     /* 页面背景 */
+  --corn-panel: #e8eade;     /* 面板 / 卡片底 */
+  --corn-paper-3: #dbdecb;   /* 更深一档的纸面 */
+  --corn-raised: #fafbf5;    /* 浮起面（popover、hover 卡片） */
+
+  /* --- Ink：墨绿近黑 --- */
+  --corn-ink: #1b1e1a;       /* 主文字 / 深色区块底 */
+  --corn-ink-2: #252922;     /* 深底上的次级面 */
+  --corn-ink-3: #32372c;     /* 深底 hover */
+  --corn-muted: #58635a;     /* 次要文字 */
+  --corn-muted-2: #7a857c;   /* 更弱的次要文字 */
+  --corn-ondark-muted: #aeb9ae; /* 深底上的次要文字 */
+
+  /* --- Brand：玉米田三色 --- */
+  --corn-maize: #f2c84b;       /* 玉米黄：唯一高饱和点缀 */
+  --corn-maize-soft: #f7de96;  /* 浅玉米黄 */
+  --corn-maize-deep: #8a6110;  /* 深玉米黄（浅底上的 accent 文字） */
+  --corn-husk: #4d6847;        /* 苞叶绿：品牌绿 */
+  --corn-husk-deep: #34482f;
+  --corn-sage: #7e9a72;        /* 灰绿 */
+  --corn-celadon: #a9bc9c;     /* 青釉 */
+
+  /* --- Semantic --- */
+  --corn-danger: #ad342c;      /* 浅底错误 */
+  --corn-alert: #fa5c57;       /* 深底警示 / 状态灯 */
+  --corn-focus: var(--corn-maize-deep);
+
+  /* --- Lines --- */
+  --corn-line: rgba(27, 30, 26, 0.14);
+  --corn-line-strong: rgba(27, 30, 26, 0.3);
+  --corn-inkline: rgba(242, 243, 233, 0.16);
+  --corn-inkline-strong: rgba(242, 243, 233, 0.32);
+
+  /* --- Type：宋体标题 × 黑体正文 × 等宽数据 --- */
+  --corn-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC",
+    "STSong", "SimSun", serif;
+  --corn-sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC",
+    "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --corn-mono: "SF Mono", "JetBrains Mono", "IBM Plex Mono",
+    ui-monospace, Menlo, Consolas, monospace;
+
+  /* --- Shape：小圆角，克制 --- */
+  --corn-radius-xs: 2px;   /* tab、chip */
+  --corn-radius-sm: 3px;   /* 按钮、输入框 */
+  --corn-radius: 4px;      /* 默认 */
+  --corn-radius-lg: 9px;   /* 大卡片 */
+
+  /* --- Motion --- */
+  --corn-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --corn-dur: 0.2s;
+  --corn-dur-slow: 0.55s;
+
+  /* --- Layout --- */
+  --corn-shell: 1280px;
+  --corn-gutter: clamp(20px, 4.2vw, 56px);
+}

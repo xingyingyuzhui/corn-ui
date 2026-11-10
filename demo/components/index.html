@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+{{> head}}
+<title>组件 · Corn UI</title>
+</head>
+<body class="corn-body" data-page="components">
+{{> nav}}
+
+<main>
+  <header class="demo-page-head">
+    <div class="corn-shell">
+      <span class="corn-eyebrow">Components</span>
+      <h1 class="corn-h2">组件</h1>
+      <p class="corn-lead" style="font-size:15px;">
+        每个组件对应 <code class="corn-mono">packages/ui/components/*.html</code> 里可直接拷贝的片段，
+        页面下方附源码。
+      </p>
+    </div>
+  </header>
+
+  <section class="demo-section demo-section-flush">
+    <div class="corn-shell">
+      <div class="demo-grid demo-grid-3">
+        <a class="corn-card comp-card" href="{{ROOT}}components/button.html">
+          <span class="comp-path">components/button</span>
+          <span class="comp-name">按钮 Button</span>
+          <span class="comp-desc">五种变体 × 三档尺寸，icon 按钮与禁用态。</span>
+        </a>
+        <a class="corn-card comp-card" href="{{ROOT}}components/card.html">
+          <span class="comp-path">components/card</span>
+          <span class="comp-name">卡片 Card</span>
+          <span class="comp-desc">浮起卡片、面板与井三种容器层级。</span>
+        </a>
+        <a class="corn-card comp-card" href="{{ROOT}}components/form.html">
+          <span class="comp-path">components/form</span>
+          <span class="comp-name">表单 Form</span>
+          <span class="comp-desc">字段、输入框、下拉、多行与提示/错误文案。</span>
+        </a>
+        <a class="corn-card comp-card" href="{{ROOT}}components/tag-tabs.html">
+          <span class="comp-path">components/tag-tabs</span>
+          <span class="comp-name">标签与选项卡</span>
+          <span class="comp-desc">mono 小标签与 segmented 切换控件。</span>
+        </a>
+        <a class="corn-card comp-card" href="{{ROOT}}components/empty.html">
+          <span class="comp-path">components/empty</span>
+          <span class="comp-name">空状态 Empty</span>
+          <span class="comp-desc">虚线井 + serif 标题的空状态范式。</span>
+        </a>
+        <a class="corn-card comp-card" href="{{ROOT}}components/dark.html">
+          <span class="comp-path">components/dark</span>
+          <span class="comp-name">深色区块 Dark</span>
+          <span class="comp-desc">整块墨绿对比区，token 自动重映射。</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+{{> footer}}
+</body>
+</html>

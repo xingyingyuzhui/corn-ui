@@ -1,0 +1,383 @@
+/* ==========================================================================
+   Corn UI — 组件层
+   用法：先引入 corn-tokens.css，再引入本文件。
+   所有类以 .corn- 前缀，纯 CSS 无副作用，拷进任何项目即可用。
+   ========================================================================== */
+
+/* --- 基础 --- */
+.corn-root,
+.corn-body {
+  background: var(--corn-paper);
+  color: var(--corn-ink);
+  font-family: var(--corn-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.corn-root ::selection,
+.corn-body ::selection {
+  background: var(--corn-maize);
+  color: var(--corn-ink);
+}
+
+.corn-shell {
+  width: 100%;
+  max-width: var(--corn-shell);
+  margin-inline: auto;
+  padding-inline: var(--corn-gutter);
+}
+
+.corn-mono {
+  font-family: var(--corn-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- 标题：宋体 --- */
+.corn-h1, .corn-h2, .corn-h3 {
+  font-family: var(--corn-serif);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+}
+.corn-h1 { font-size: clamp(34px, 5vw, 56px); letter-spacing: 0.01em; }
+.corn-h2 { font-size: clamp(26px, 3.4vw, 38px); }
+.corn-h3 { font-size: 22px; }
+
+.corn-lead {
+  font-size: 17px;
+  color: var(--corn-muted);
+  max-width: 56ch;
+}
+
+/* --- Eyebrow：签名细节——mono 小字 + 玉米黄小方块 --- */
+.corn-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--corn-muted);
+}
+.corn-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--corn-maize);
+  flex: none;
+}
+
+/* ==========================================================================
+   按钮
+   ========================================================================== */
+.corn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--corn-radius-sm);
+  font-family: var(--corn-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--corn-dur) var(--corn-ease),
+    border-color var(--corn-dur) var(--corn-ease),
+    color var(--corn-dur) var(--corn-ease),
+    transform var(--corn-dur) var(--corn-ease);
+}
+.corn-btn:hover { transform: translateY(-1px); }
+.corn-btn:active { transform: translateY(0); }
+.corn-btn svg { flex: none; }
+
+.corn-btn-ink   { background: var(--corn-ink); color: var(--corn-paper); }
+.corn-btn-ink:hover { background: var(--corn-ink-3); }
+
+.corn-btn-ghost { border-color: var(--corn-line-strong); color: var(--corn-ink); background: transparent; }
+.corn-btn-ghost:hover { border-color: var(--corn-ink); }
+
+.corn-btn-light { background: var(--corn-paper); color: var(--corn-ink); }
+.corn-btn-light:hover { background: #ffffff; }
+
+.corn-btn-maize { background: var(--corn-maize); color: var(--corn-ink); }
+.corn-btn-maize:hover { background: #ecc153; }
+
+.corn-btn-husk { background: var(--corn-husk); color: var(--corn-paper); }
+.corn-btn-husk:hover { background: var(--corn-husk-deep); }
+
+.corn-btn-sm { height: 40px; padding: 0 16px; font-size: 13px; }
+.corn-btn-lg { height: 54px; padding: 0 28px; font-size: 15px; }
+
+.corn-btn:disabled,
+.corn-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.corn-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--corn-line-strong);
+  border-radius: var(--corn-radius-sm);
+  background: transparent;
+  color: var(--corn-ink);
+  cursor: pointer;
+  transition: border-color var(--corn-dur) var(--corn-ease),
+    background-color var(--corn-dur) var(--corn-ease);
+}
+.corn-btn-icon:hover { border-color: var(--corn-ink); }
+
+/* ==========================================================================
+   链接
+   ========================================================================== */
+.corn-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--corn-ink);
+  text-decoration: none;
+  transition: gap var(--corn-dur) var(--corn-ease);
+}
+.corn-arrow-link:hover { gap: 12px; }
+
+/* ==========================================================================
+   卡片 / 面板
+   ========================================================================== */
+.corn-card {
+  background: var(--corn-raised);
+  border: 1px solid var(--corn-line);
+  border-radius: var(--corn-radius-lg);
+  box-shadow: 0 0 0 1px rgba(27, 30, 26, 0.02),
+    0 6px 14px -10px rgba(27, 30, 26, 0.5);
+  transition: transform var(--corn-dur-slow) var(--corn-ease),
+    box-shadow var(--corn-dur-slow) var(--corn-ease);
+}
+.corn-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(242, 200, 75, 0.55),
+    0 10px 22px -12px rgba(27, 30, 26, 0.6);
+}
+.corn-card-pad { padding: 28px; }
+
+.corn-panel {
+  background: var(--corn-panel);
+  border-radius: var(--corn-radius);
+}
+
+.corn-well {
+  background: var(--corn-panel);
+  border: 1px dashed var(--corn-line-strong);
+  border-radius: var(--corn-radius-sm);
+}
+
+/* ==========================================================================
+   徽章 / 标签
+   ========================================================================== */
+.corn-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--corn-line-strong);
+  border-radius: var(--corn-radius-xs);
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--corn-muted);
+  white-space: nowrap;
+}
+.corn-tag-maize {
+  border-color: transparent;
+  background: var(--corn-maize-soft);
+  color: var(--corn-maize-deep);
+}
+.corn-tag-husk {
+  border-color: transparent;
+  background: rgba(77, 104, 71, 0.12);
+  color: var(--corn-husk);
+}
+.corn-tag-dot::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ==========================================================================
+   表单
+   ========================================================================== */
+.corn-field { display: grid; gap: 6px; }
+
+.corn-label {
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--corn-muted);
+}
+
+.corn-input,
+.corn-select,
+.corn-textarea {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  background: var(--corn-raised);
+  border: 1px solid var(--corn-line-strong);
+  border-radius: var(--corn-radius-sm);
+  font-family: var(--corn-sans);
+  font-size: 14px;
+  color: var(--corn-ink);
+  transition: border-color var(--corn-dur) var(--corn-ease),
+    box-shadow var(--corn-dur) var(--corn-ease);
+}
+.corn-textarea { height: auto; padding: 12px 14px; resize: vertical; }
+.corn-input::placeholder,
+.corn-textarea::placeholder { color: var(--corn-muted-2); }
+.corn-input:hover,
+.corn-select:hover,
+.corn-textarea:hover { border-color: var(--corn-ink); }
+.corn-input:focus,
+.corn-select:focus,
+.corn-textarea:focus {
+  outline: none;
+  border-color: var(--corn-maize-deep);
+  box-shadow: 0 0 0 3px rgba(242, 200, 75, 0.3);
+}
+
+.corn-hint { font-size: 12.5px; color: var(--corn-muted-2); }
+.corn-error-text { font-size: 12.5px; color: var(--corn-danger); }
+
+/* ==========================================================================
+   Tabs（model-tabs 模式：小方角 segmented）
+   ========================================================================== */
+.corn-tabs {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--corn-panel);
+  border-radius: var(--corn-radius-sm);
+}
+.corn-tabs button {
+  height: 34px;
+  padding: 0 14px;
+  border: none;
+  border-radius: var(--corn-radius-xs);
+  background: transparent;
+  font-family: var(--corn-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--corn-muted);
+  cursor: pointer;
+  transition: background-color var(--corn-dur) var(--corn-ease),
+    color var(--corn-dur) var(--corn-ease);
+}
+.corn-tabs button:hover { color: var(--corn-ink); }
+.corn-tabs button[aria-selected="true"] {
+  background: var(--corn-raised);
+  color: var(--corn-ink);
+  box-shadow: 0 1px 2px rgba(27, 30, 26, 0.1);
+}
+
+/* ==========================================================================
+   深色区块（玉米语言允许整块墨绿对比区）
+   ========================================================================== */
+.corn-dark {
+  background: var(--corn-ink);
+  color: var(--corn-paper);
+  --corn-line: var(--corn-inkline);
+  --corn-line-strong: var(--corn-inkline-strong);
+  --corn-muted: var(--corn-ondark-muted);
+  --corn-muted-2: var(--corn-ondark-muted);
+}
+.corn-dark ::selection { background: var(--corn-maize); color: var(--corn-ink); }
+.corn-dark .corn-card {
+  background: var(--corn-ink-2);
+  border-color: var(--corn-inkline);
+  box-shadow: none;
+}
+.corn-dark .corn-tabs { background: var(--corn-ink-2); }
+.corn-dark .corn-tabs button[aria-selected="true"] {
+  background: var(--corn-ink-3);
+  color: var(--corn-paper);
+}
+.corn-dark .corn-input,
+.corn-dark .corn-select,
+.corn-dark .corn-textarea {
+  background: var(--corn-ink-2);
+  border-color: var(--corn-inkline-strong);
+  color: var(--corn-paper);
+}
+
+/* ==========================================================================
+   代码块
+   ========================================================================== */
+.corn-code-card {
+  background: var(--corn-ink);
+  color: var(--corn-paper);
+  border-radius: var(--corn-radius);
+  overflow: hidden;
+}
+.corn-code-card pre {
+  margin: 0;
+  padding: 20px 22px;
+  font-family: var(--corn-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.corn-code-card .corn-mono { color: var(--corn-maize-soft); }
+
+/* ==========================================================================
+   空状态
+   ========================================================================== */
+.corn-empty {
+  padding: 56px 24px;
+  text-align: center;
+  border: 1px dashed var(--corn-line-strong);
+  border-radius: var(--corn-radius-sm);
+  background: var(--corn-panel);
+}
+.corn-empty-title {
+  font-family: var(--corn-serif);
+  font-size: 22px;
+  font-weight: 600;
+}
+.corn-empty-desc { margin-top: 6px; font-size: 13.5px; color: var(--corn-muted); }
+
+/* ==========================================================================
+   分隔线
+   ========================================================================== */
+.corn-divider {
+  border: none;
+  border-top: 1px solid var(--corn-line);
+}
+
+/* ==========================================================================
+   Focus：maize 系外描边
+   ========================================================================== */
+.corn-root :focus-visible,
+.corn-body :focus-visible {
+  outline: 2px solid var(--corn-maize-deep);
+  outline-offset: 3px;
+}
+.corn-dark :focus-visible { outline-color: var(--corn-maize); }

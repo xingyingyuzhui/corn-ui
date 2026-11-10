@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Corn UI demo 站点专属样式 — 不属于组件层，不进 corn.css
+   ========================================================================== */
+
+body { margin: 0; }
+
+/* --- 站点导航 --- */
+.demo-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(242, 243, 233, 0.86);
+  backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid var(--corn-line);
+}
+.demo-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.demo-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--corn-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--corn-ink);
+  text-decoration: none;
+}
+.demo-brand-dot {
+  width: 9px;
+  height: 9px;
+  background: var(--corn-maize);
+  border-radius: 1px;
+}
+.demo-nav-links { display: flex; gap: 4px; }
+.demo-nav-links a {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 13px;
+  border-radius: var(--corn-radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--corn-muted);
+  text-decoration: none;
+  transition: color var(--corn-dur) var(--corn-ease),
+    background-color var(--corn-dur) var(--corn-ease);
+}
+.demo-nav-links a:hover { color: var(--corn-ink); background: var(--corn-panel); }
+.demo-nav-links a[aria-current="page"] {
+  color: var(--corn-ink);
+  background: var(--corn-panel);
+  box-shadow: inset 0 -2px 0 var(--corn-maize);
+}
+
+/* --- 页头 --- */
+.demo-page-head { padding: 56px 0 40px; }
+.demo-page-head .corn-h1,
+.demo-page-head .corn-h2 { margin-top: 16px; }
+.demo-page-head .corn-lead { margin-top: 14px; }
+.demo-page-head .demo-actions { margin-top: 26px; }
+
+/* --- 布局工具 --- */
+.demo-section { padding: 56px 0; border-top: 1px solid var(--corn-line); }
+.demo-section-flush { border-top: none; }
+.demo-grid { display: grid; gap: 16px; }
+.demo-grid-3 { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.demo-grid-4 { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.demo-label {
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--corn-muted-2);
+  text-transform: uppercase;
+  margin: 40px 0 16px;
+}
+.demo-label:first-child { margin-top: 0; }
+
+/* --- 色板 swatch --- */
+.swatch { display: grid; gap: 8px; }
+.swatch .chip {
+  height: 72px;
+  border-radius: var(--corn-radius-sm);
+  border: 1px solid var(--corn-line);
+}
+.swatch .name {
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--corn-muted);
+}
+.swatch .hex { font-family: var(--corn-mono); font-size: 11px; color: var(--corn-ink); }
+
+/* --- 规则条文 --- */
+.demo-rules { display: grid; gap: 10px; max-width: 64ch; }
+.demo-rules li { line-height: 1.7; }
+.demo-rules li::marker { color: var(--corn-maize-deep); }
+
+/* --- 组件索引卡 --- */
+.comp-card {
+  display: grid;
+  gap: 6px;
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+}
+.comp-card .comp-name {
+  font-family: var(--corn-serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+.comp-card .comp-path {
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  color: var(--corn-muted-2);
+  letter-spacing: 0.04em;
+}
+.comp-card .comp-desc { font-size: 13.5px; color: var(--corn-muted); }
+
+/* --- 代码示例块 --- */
+.demo-snippet { margin-top: 20px; max-width: 720px; }
+
+/* --- 规格表 --- */
+.demo-spec { width: 100%; max-width: 640px; border-collapse: collapse; }
+.demo-spec th, .demo-spec td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--corn-line);
+  font-size: 13.5px;
+  text-align: left;
+  vertical-align: top;
+}
+.demo-spec th {
+  font-family: var(--corn-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--corn-muted);
+}
+.demo-spec td:first-child { font-family: var(--corn-mono); font-size: 12px; white-space: nowrap; }
+
+/* --- 页脚 --- */
+.demo-footer { padding: 36px 0; border-top: 1px solid var(--corn-line); }
+.demo-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
