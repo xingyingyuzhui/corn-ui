@@ -1,0 +1,93 @@
+<!-- {"title": "玉米设计语言", "nav": ""} -->
+<section class="hero">
+  <div class="corn-shell hero-grid">
+    <div class="hero-copy">
+      <span class="corn-eyebrow corn-enter" style="--i:0">Corn UI · v0.1.0</span>
+      <h1 class="corn-h1 corn-enter" style="--i:1">玉米设计语言</h1>
+      <p class="corn-lead corn-enter" style="--i:2">纸田青釉的底色、墨绿近黑的文字、一抹玉米黄。宋体负责标题，黑体负责正文，等宽体负责数据——克制、有秩序、认得出来。</p>
+      <div class="corn-cluster corn-enter" style="--i:3">
+        <a class="corn-btn corn-btn-ink" href="{{ROOT}}components/index.html">浏览 {{@stat components}} 个组件</a>
+        <a class="corn-btn corn-btn-ghost" href="{{ROOT}}patterns.html">看场景组合</a>
+      </div>
+      <dl class="hero-stats corn-enter" style="--i:4">
+        <div><dt>组件</dt><dd class="corn-mono">{{@stat components}}</dd></div>
+        <div><dt>可复制示例</dt><dd class="corn-mono">{{@stat examples}}</dd></div>
+        <div><dt>设计 token</dt><dd class="corn-mono">{{@stat tokens}}</dd></div>
+      </dl>
+    </div>
+    <div class="hero-stage corn-enter" style="--i:2" aria-label="组件组合预览">
+      <article class="corn-card corn-card-pad hero-card">
+        <div class="corn-card-head">
+          <span class="corn-eyebrow">Field · 07</span>
+          <span class="corn-tag corn-tag-brand corn-tag-dot corn-tag-live">灌溉中</span>
+        </div>
+        <h2 class="corn-h3">东坡 7 号地</h2>
+        <div class="hero-meter">
+          <span class="corn-label">土壤湿度</span>
+          <span class="corn-mono hero-meter-value">31%</span>
+          <progress class="corn-progress" max="100" value="31">31%</progress>
+        </div>
+        <div class="corn-card-foot">
+          <label class="corn-choice"><input type="checkbox" role="switch" class="corn-switch" checked> 霜冻预警</label>
+          <button type="button" class="corn-btn corn-btn-maize corn-btn-sm" data-corn-toast data-toast-title="已安排灌溉" data-toast-message="东坡 7 号地将在 05:30 开始，持续 30 分钟。" data-toast-tone="brand">安排灌溉</button>
+        </div>
+      </article>
+      <div class="corn-dark hero-dark">
+        <span class="corn-eyebrow">Dark surface</span>
+        <p>同一套组件放进 <code class="corn-mono">.corn-dark</code>，语义色自动换成深底版本。</p>
+        <div class="corn-cluster">
+          <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm">ghost</button>
+          <a class="corn-arrow-link" href="{{ROOT}}components/surface.html">深色区块 <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="site-section">
+  <div class="corn-shell">
+    <span class="corn-eyebrow" data-reveal>Principles</span>
+    <h2 class="corn-h2 section-title" data-reveal>三句话说清这套语言</h2>
+    <div class="principles">
+      <div class="corn-panel principle" data-reveal style="--i:0"><span class="corn-tag corn-tag-accent">01</span><h3 class="corn-h3">颜色从田里来</h3><p>纸、青釉、墨、玉米黄、苞叶绿。不引入第七种色相，maize 是唯一强点缀。</p></div>
+      <div class="corn-panel principle" data-reveal style="--i:1"><span class="corn-tag corn-tag-accent">02</span><h3 class="corn-h3">字体有分工</h3><p>serif 标题、sans 正文、mono 数据与标签。eyebrow 小方块是签名细节。</p></div>
+      <div class="corn-panel principle" data-reveal style="--i:2"><span class="corn-tag corn-tag-accent">03</span><h3 class="corn-h3">动效有目的</h3><p>浮起 1–2px、maize 描边光、短促的勾选与滑动；减少动效时全部收敛。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="site-section">
+  <div class="corn-shell quickstart">
+    <div data-reveal>
+      <span class="corn-eyebrow">Start</span>
+      <h2 class="corn-h2 section-title">两个文件起步，一个脚本可选</h2>
+      <p class="corn-lead">组件层是纯 CSS + HTML 片段，拷进项目即用；需要交互（标签页、菜单、弹窗、通知）再加 corn.js。</p>
+    </div>
+    <div class="corn-code-card quickstart-code" data-reveal>
+      <div class="corn-code-head"><span class="corn-mono">index.html</span>
+        <button type="button" class="code-trigger code-trigger-dark" aria-haspopup="dialog" aria-expanded="false" data-code-title="快速开始" data-code-html="qs-code"><span>代码</span></button></div>
+<pre><code>&lt;link rel="stylesheet" href="corn-tokens.css"&gt;
+&lt;link rel="stylesheet" href="corn.css"&gt;
+&lt;script src="corn.js" defer&gt;&lt;/script&gt;
+
+&lt;body class="corn-body"&gt;
+  &lt;button class="corn-btn corn-btn-maize"&gt;保存&lt;/button&gt;
+&lt;/body&gt;</code></pre>
+      <template id="qs-code" data-lang="html">&lt;link rel="stylesheet" href="corn-tokens.css"&gt;
+&lt;link rel="stylesheet" href="corn.css"&gt;
+&lt;script src="corn.js" defer&gt;&lt;/script&gt;
+
+&lt;body class="corn-body"&gt;
+  &lt;button class="corn-btn corn-btn-maize"&gt;保存&lt;/button&gt;
+&lt;/body&gt;</template>
+    </div>
+  </div>
+</section>
+
+<section class="site-section">
+  <div class="corn-shell">
+    <span class="corn-eyebrow" data-reveal>Components</span>
+    <h2 class="corn-h2 section-title" data-reveal>组件目录</h2>
+    {{@component-grid}}
+  </div>
+</section>

@@ -1,0 +1,12 @@
+{
+  "title": "对话框 Dialog",
+  "summary": "基于原生 dialog.showModal()：焦点自动困在框内、Esc 关闭、关闭后焦点回到打开它的按钮；背景渐暗、面板轻缩放进出。",
+  "group": "overlay",
+  "order": 3,
+  "rules": [
+    "只用于必须先回答才能继续的事：确认危险操作、填写短表单。",
+    "标题说清要做的事，主按钮写动词（“删除 3 个地块”而不是“确定”）。",
+    "点击遮罩关闭只适用于无副作用的对话框；有未保存输入时不要这样做。"
+  ],
+  "usage": "打开：按钮 data-corn-dialog-open=\"对话框 id\"；关闭：框内按钮 data-corn-dialog-close，或 <form method=\"dialog\">。data-backdrop-close 允许点遮罩关闭。关闭时触发 corn:close，detail.value 为 returnValue。"
+}

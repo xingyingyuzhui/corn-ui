@@ -1,12 +1,17 @@
 {
   "name": "corn-ui",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "Corn UI — 玉米设计语言体系：设计 Skill + token + 组件层",
   "type": "module",
   "scripts": {
-    "demo": "python3 -m http.server 4789",
-    "build:demo": "python3 scripts/build-demo.py"
+    "build": "python3 scripts/build.py",
+    "build:demo": "python3 scripts/build.py",
+    "preview": "python3 scripts/build.py && python3 -m http.server 4789 --bind 127.0.0.1 --directory dist",
+    "demo": "python3 scripts/build.py && python3 -m http.server 4789 --bind 127.0.0.1 --directory dist",
+    "check": "python3 scripts/check.py",
+    "test:e2e": "node tests/e2e/run.mjs",
+    "test": "python3 scripts/check.py && node tests/e2e/run.mjs"
   },
   "devDependencies": {},
   "packageManager": "pnpm@10.28.2"

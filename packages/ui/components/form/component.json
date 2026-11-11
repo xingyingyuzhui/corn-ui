@@ -1,0 +1,12 @@
+{
+  "title": "表单 Form",
+  "summary": "mono 大写 label + raised 底输入框；hover 加深边框，focus 出现 maize 光环，错误态由 aria-invalid 驱动并通过 aria-describedby 读出。",
+  "group": "input",
+  "order": 1,
+  "rules": [
+    "label 用 corn-label（mono 大写小字），不用 sans 粗体当标签。",
+    "错误态只写 aria-invalid=\"true\"，样式自动跟上；错误文案用 aria-describedby 关联。",
+    "输入框底用 surface-raised（比页面略亮），不用 panel 或纯白。",
+    "前后缀单位放进 corn-input-group，不要用 placeholder 当单位。"
+  ]
+}

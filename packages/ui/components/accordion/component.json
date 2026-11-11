@@ -1,0 +1,10 @@
+{
+  "title": "折叠面板 Accordion",
+  "summary": "基于原生 details / summary：无需脚本、键盘与读屏器开箱可用；支持的浏览器里高度平滑展开，箭头同步旋转。",
+  "group": "structure",
+  "order": 2,
+  "rules": [
+    "用于次要信息（FAQ、高级设置）；主流程内容不要藏起来。",
+    "需要一次只开一个时，给同组 details 设置相同的 name 属性（原生互斥）。"
+  ]
+}

@@ -1,0 +1,20 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Corn UI：纸田青釉 × 墨绿 × 玉米黄的设计语言、token 与零构建组件层。">
+<script>
+  /* theme + motion preference before first paint (no flash) */
+  (function (d) {
+    d.classList.add('js');
+    try {
+      var t = localStorage.getItem('corn-theme'), m = localStorage.getItem('corn-motion');
+      if (t) d.setAttribute('data-corn-theme', t);
+      if (m) d.setAttribute('data-corn-motion', m);
+    } catch (e) { /* storage blocked: defaults apply */ }
+  })(document.documentElement);
+</script>
+<link rel="stylesheet" href="{{ROOT}}assets/corn/corn-tokens.css">
+<link rel="stylesheet" href="{{ROOT}}assets/corn/corn.css">
+<link rel="stylesheet" href="{{ROOT}}assets/css/site.css">
+<link rel="stylesheet" href="{{ROOT}}assets/css/specimen.css">
+<link rel="stylesheet" href="{{ROOT}}assets/css/foundations.css">
+<link rel="stylesheet" href="{{ROOT}}assets/css/code-pop.css">

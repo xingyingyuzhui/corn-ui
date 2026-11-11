@@ -1,0 +1,135 @@
+/* Base: surfaces, type scale, links and focus.
+   Components only read semantic tokens (--corn-fg, --corn-surface…), so any
+   container with .corn-dark / .corn-light, or <html data-corn-theme>, re-themes
+   everything inside it. */
+
+.corn-root,
+.corn-body,
+.corn-dark,
+.corn-light {
+  background: var(--corn-bg);
+  color: var(--corn-fg);
+}
+
+.corn-root,
+.corn-body {
+  font-family: var(--corn-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Border-box only inside an opted-in root, so copying corn.css into an
+   existing project never changes its own layout. */
+:where(.corn-root, .corn-body),
+:where(.corn-root, .corn-body) *,
+:where(.corn-root, .corn-body) *::before,
+:where(.corn-root, .corn-body) *::after {
+  box-sizing: border-box;
+}
+
+:where(.corn-root, .corn-body, .corn-dark) ::selection {
+  background: var(--corn-selection);
+  color: var(--corn-ink);
+}
+
+.corn-shell {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: calc(var(--corn-shell) + 2 * var(--corn-gutter));
+  margin-inline: auto;
+  padding-inline: var(--corn-gutter);
+}
+
+.corn-mono {
+  font-family: var(--corn-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Headings: serif ---------------------------------------------------- */
+.corn-h1,
+.corn-h2,
+.corn-h3 {
+  margin: 0;
+  font-family: var(--corn-serif);
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.corn-h1 { font-size: clamp(2.125rem, 5vw, 3.5rem); letter-spacing: 0.01em; }
+.corn-h2 { font-size: clamp(1.625rem, 3.4vw, 2.375rem); }
+.corn-h3 { font-size: 1.375rem; }
+
+.corn-lead {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 1.0625rem;
+  color: var(--corn-fg-muted);
+}
+
+.corn-text-muted { color: var(--corn-fg-muted); }
+.corn-text-subtle { color: var(--corn-fg-subtle); }
+.corn-text-sm { font-size: 0.8125rem; }
+
+/* --- Eyebrow: mono caps + maize square (signature detail) --------------- */
+.corn-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--corn-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--corn-fg-muted);
+}
+.corn-eyebrow::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  background: var(--corn-accent);
+}
+
+/* --- Links ---------------------------------------------------------------- */
+.corn-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--corn-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--corn-dur) var(--corn-ease),
+    text-underline-offset var(--corn-dur) var(--corn-ease);
+}
+.corn-link:hover { text-decoration-color: currentColor; text-underline-offset: 6px; }
+
+.corn-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--corn-fg);
+  text-decoration: none;
+  transition: gap var(--corn-dur) var(--corn-ease-out), color var(--corn-dur) var(--corn-ease);
+}
+.corn-arrow-link:hover,
+.corn-arrow-link:focus-visible { gap: 12px; color: var(--corn-accent-text); }
+
+/* --- Lists & dividers ----------------------------------------------------- */
+.corn-list { display: grid; gap: 8px; margin: 0; padding-left: 1.2em; }
+.corn-list li::marker { color: var(--corn-accent-text); }
+
+.corn-divider {
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--corn-border);
+}
+
+/* --- Focus: maize ring (maize-deep on light, maize on dark) ------------- */
+:where(.corn-root, .corn-body, .corn-dark, .corn-light) :focus-visible {
+  outline: 2px solid var(--corn-focus);
+  outline-offset: 3px;
+}

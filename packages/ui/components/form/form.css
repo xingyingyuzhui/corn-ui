@@ -1,0 +1,97 @@
+/* Form fields: label, control, hint/error; states from native attributes. */
+.corn-field { display: grid; gap: 6px; }
+
+.corn-label {
+  font-family: var(--corn-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--corn-fg-muted);
+}
+.corn-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+
+.corn-input,
+.corn-select,
+.corn-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--corn-control-border);
+  border-radius: var(--corn-radius-sm);
+  background: var(--corn-surface-raised);
+  color: var(--corn-fg);
+  font-family: var(--corn-sans);
+  font-size: 0.875rem;
+  transition: border-color var(--corn-dur) var(--corn-ease),
+    box-shadow var(--corn-dur) var(--corn-ease),
+    background-color var(--corn-dur) var(--corn-ease);
+}
+.corn-textarea { height: auto; min-height: 96px; padding: 12px 14px; line-height: 1.6; resize: vertical; }
+.corn-input::placeholder,
+.corn-textarea::placeholder { color: var(--corn-fg-subtle); }
+
+.corn-select {
+  appearance: none;
+  padding-right: 38px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--corn-fg-muted) 50%),
+    linear-gradient(135deg, var(--corn-fg-muted) 50%, transparent 50%);
+  background-position: calc(100% - 19px) 52%, calc(100% - 14px) 52%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+:is(.corn-input, .corn-select, .corn-textarea):hover { border-color: var(--corn-fg); }
+:is(.corn-input, .corn-select, .corn-textarea):focus,
+:is(.corn-input, .corn-select, .corn-textarea):focus-visible {
+  outline: none;
+  border-color: var(--corn-focus);
+  box-shadow: 0 0 0 1px var(--corn-focus), 0 0 0 5px var(--corn-focus-glow);
+}
+:is(.corn-input, .corn-select, .corn-textarea)[aria-invalid="true"] {
+  border-color: var(--corn-danger-border);
+  background-color: var(--corn-danger-soft);
+}
+:is(.corn-input, .corn-select, .corn-textarea)[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 1px var(--corn-danger-border), 0 0 0 5px var(--corn-danger-soft);
+}
+:is(.corn-input, .corn-select, .corn-textarea):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+:is(.corn-input, .corn-textarea):read-only:not(:disabled) {
+  background: var(--corn-surface);
+  border-color: var(--corn-border-strong);
+}
+
+.corn-hint { margin: 0; font-size: 0.78125rem; color: var(--corn-fg-subtle); }
+.corn-error-text {
+  margin: 0;
+  font-size: 0.78125rem;
+  color: var(--corn-danger-text);
+  animation: corn-fade-up var(--corn-dur) var(--corn-ease-out);
+}
+
+/* Prefix / suffix addons share one border with the control. */
+.corn-input-group {
+  display: flex;
+  align-items: stretch;
+  border-radius: var(--corn-radius-sm);
+}
+.corn-input-group > .corn-input { flex: 1; min-width: 0; }
+.corn-input-group > .corn-input:not(:first-child) { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.corn-input-group > .corn-input:not(:last-child) { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.corn-addon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--corn-control-border);
+  background: var(--corn-surface);
+  color: var(--corn-fg-muted);
+  font-family: var(--corn-mono);
+  font-size: 0.75rem;
+}
+.corn-addon:first-child { border-right: 0; border-radius: var(--corn-radius-sm) 0 0 var(--corn-radius-sm); }
+.corn-addon:last-child { border-left: 0; border-radius: 0 var(--corn-radius-sm) var(--corn-radius-sm) 0; }

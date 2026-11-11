@@ -1,0 +1,13 @@
+<!-- @example {"title": "Spinner 与骨架屏", "note": "骨架屏的形状贴近将要出现的卡片；容器带 aria-busy。", "layout": "grid"} -->
+<div class="corn-cluster">
+  <span class="corn-spinner corn-spinner-sm" role="status" aria-label="加载中"></span>
+  <span class="corn-spinner" role="status" aria-label="加载中"></span>
+  <span class="corn-spinner corn-spinner-lg" role="status" aria-label="加载中"></span>
+  <span class="corn-text-sm corn-text-muted">正在读取传感器…</span>
+</div>
+<div class="corn-card corn-card-pad corn-stack corn-gap-sm" aria-busy="true" aria-label="卡片加载中">
+  <span class="corn-skeleton corn-skeleton-circle"></span>
+  <span class="corn-skeleton corn-skeleton-title"></span>
+  <span class="corn-skeleton"></span>
+  <span class="corn-skeleton corn-skeleton-short"></span>
+</div>

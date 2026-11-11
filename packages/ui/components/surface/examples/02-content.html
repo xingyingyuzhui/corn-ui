@@ -1,0 +1,24 @@
+<!-- @example {"title": "深色区块：容器、表单与反馈", "note": "panel / well / card / 输入框 / 选择控件 / 提示条在深底上的样子。", "stage": "plain", "layout": "wide"} -->
+<section class="corn-dark corn-block">
+  <div class="corn-grid">
+    <div class="corn-panel corn-card-pad"><span class="corn-tag">PANEL</span><p class="corn-card-desc">平面分区，ink-2 底。</p></div>
+    <div class="corn-well corn-card-pad"><span class="corn-tag">WELL</span><p class="corn-card-desc">拖入区，虚线描边。</p></div>
+    <a class="corn-card corn-card-pad" href="#dark-card"><span class="corn-eyebrow">Card</span><p class="corn-card-desc">可点卡片，hover 仍是 maize 描边光。</p></a>
+  </div>
+  <div class="corn-grid">
+    <div class="corn-field">
+      <label class="corn-label" for="dk-name">名称</label>
+      <input class="corn-input" id="dk-name" placeholder="深底输入框">
+      <p class="corn-hint">提示文字在深底上 ≥ 4.5:1。</p>
+    </div>
+    <div class="corn-stack corn-gap-sm">
+      <label class="corn-choice"><input type="checkbox" class="corn-checkbox" checked> 复选框</label>
+      <label class="corn-choice"><input type="checkbox" role="switch" class="corn-switch" checked> 开关</label>
+    </div>
+  </div>
+  <div class="corn-alert corn-alert-danger" role="alert">
+    <span class="corn-alert-icon" aria-hidden="true">×</span>
+    <p class="corn-alert-title">3 号泵站离线</p>
+    <p class="corn-alert-body">检查电源后重新连接。</p>
+  </div>
+</section>

@@ -1,0 +1,40 @@
+/* Dialog on native <dialog>; enter via [open] animation, exit via
+   [data-closing] (corn.js waits for animationend before close()). */
+.corn-dialog {
+  box-sizing: border-box;
+  width: min(480px, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  padding: 0;
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-lg);
+  background: var(--corn-surface-raised);
+  color: var(--corn-fg);
+  box-shadow: var(--corn-shadow-pop);
+}
+.corn-dialog[open] { animation: corn-dialog-in var(--corn-dur-slow) var(--corn-ease-out); }
+.corn-dialog[open]::backdrop {
+  background: var(--corn-overlay);
+  animation: corn-fade-in var(--corn-dur) var(--corn-ease);
+}
+.corn-dialog[data-closing] { animation: corn-dialog-out var(--corn-dur) var(--corn-ease-in) forwards; }
+.corn-dialog[data-closing]::backdrop { animation: corn-fade-out var(--corn-dur) var(--corn-ease-in) forwards; }
+
+.corn-dialog-body { padding: 26px 28px 8px; }
+.corn-dialog-body > * + * { margin-top: 10px; }
+.corn-dialog-body p { margin: 0; color: var(--corn-fg-muted); font-size: 0.875rem; }
+.corn-dialog-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 28px 24px;
+}
+
+@keyframes corn-dialog-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+}
+@keyframes corn-dialog-out {
+  to { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
+@keyframes corn-fade-out {
+  to { opacity: 0; }
+}

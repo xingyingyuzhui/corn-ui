@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+{{> head}}
+<title>{{title}} · Corn UI</title>
+</head>
+<body class="corn-body">
+<a class="skip-link" href="#main">跳到正文</a>
+{{> nav}}
+<div class="corn-shell docs">
+  <nav class="docs-side" aria-label="组件目录">
+    <a class="side-all" href="{{ROOT}}components/index.html">全部组件</a>
+    {{@component-nav}}
+  </nav>
+  <main id="main" class="docs-main">
+{{content}}
+  </main>
+</div>
+{{> footer}}
+{{> code-pop}}
+{{> scripts}}
+</body>
+</html>

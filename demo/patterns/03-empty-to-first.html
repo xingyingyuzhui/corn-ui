@@ -1,0 +1,50 @@
+<!-- @example {"title": "从空到第一条", "note": "空状态的主行动打开对话框；创建后空状态让位给新卡片（淡入），并给出 toast。", "layout": "wide", "js": true} -->
+<div class="corn-stack" id="pt-flow">
+  <div class="corn-empty" id="pt-empty">
+    <span class="corn-empty-mark" aria-hidden="true"></span>
+    <p class="corn-empty-title">还没有地块</p>
+    <p class="corn-empty-desc">先建一个地块，传感器接入后会自动出现读数。</p>
+    <div class="corn-empty-actions">
+      <button type="button" class="corn-btn corn-btn-maize corn-btn-sm" data-corn-dialog-open="pt-dlg">新建地块</button>
+    </div>
+  </div>
+  <div class="corn-grid" id="pt-list" style="--corn-min: 240px"></div>
+</div>
+<dialog class="corn-dialog" id="pt-dlg" aria-labelledby="pt-dlg-title">
+  <form method="dialog" id="pt-dlg-form">
+    <div class="corn-dialog-body">
+      <h2 class="corn-h3" id="pt-dlg-title">新建地块</h2>
+      <div class="corn-field">
+        <label class="corn-label" for="pt-dlg-name">名称</label>
+        <input class="corn-input" id="pt-dlg-name" value="河湾 3 号" required>
+      </div>
+    </div>
+    <div class="corn-dialog-foot">
+      <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-corn-dialog-close>取消</button>
+      <button type="submit" class="corn-btn corn-btn-ink corn-btn-sm" value="create">创建</button>
+    </div>
+  </form>
+</dialog>
+<script>
+  (function () {
+    var dlg = document.getElementById('pt-dlg');
+    dlg.addEventListener('close', function () {
+      if (dlg.returnValue !== 'create') return;
+      var name = document.getElementById('pt-dlg-name').value.trim() || '未命名地块';
+      var card = document.createElement('a');
+      card.className = 'corn-card corn-card-pad corn-enter';
+      card.href = '#pt-flow';
+      var eyebrow = document.createElement('span');
+      eyebrow.className = 'corn-eyebrow';
+      eyebrow.textContent = 'New field';
+      var title = document.createElement('h3');
+      title.className = 'corn-h3';
+      title.textContent = name;
+      card.append(eyebrow, title);
+      document.getElementById('pt-list').appendChild(card);
+      document.getElementById('pt-empty').hidden = true;
+      dlg.returnValue = '';
+      window.Corn.toast({ title: '已创建「' + name + '」', tone: 'brand' });
+    });
+  })();
+</script>

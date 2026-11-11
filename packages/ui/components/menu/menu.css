@@ -1,0 +1,41 @@
+/* Menu: absolutely positioned under its trigger inside .corn-menu-wrap. */
+.corn-menu-wrap { position: relative; display: inline-block; }
+.corn-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  min-width: 200px;
+  margin: 0;
+  padding: 5px;
+  list-style: none;
+  border: 1px solid var(--corn-border-strong);
+  border-radius: var(--corn-radius);
+  background: var(--corn-surface-raised);
+  box-shadow: var(--corn-shadow-pop);
+  transform-origin: top left;
+  animation: corn-pop-in var(--corn-dur) var(--corn-ease-out);
+}
+.corn-menu[data-align="end"] { left: auto; right: 0; transform-origin: top right; }
+.corn-menu[hidden] { display: none; }
+.corn-menu [role="menuitem"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: var(--corn-radius-sm);
+  background: transparent;
+  color: var(--corn-fg);
+  font: 0.875rem var(--corn-sans);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--corn-dur-fast) var(--corn-ease);
+}
+.corn-menu [role="menuitem"]:is(:hover, :focus) { outline: none; background: var(--corn-surface-hover); }
+.corn-menu [role="menuitem"]:focus-visible { box-shadow: inset 2px 0 0 var(--corn-accent); }
+.corn-menu-danger[role="menuitem"] { color: var(--corn-danger-text); }
+.corn-menu-kbd { font-family: var(--corn-mono); font-size: 0.6875rem; color: var(--corn-fg-subtle); }
+.corn-menu-sep { height: 1px; margin: 5px 4px; background: var(--corn-border); }

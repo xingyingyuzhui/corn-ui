@@ -1,0 +1,19 @@
+<!-- @example {"title": "危险操作确认", "note": "Tab 只在框内循环；Esc / 取消 / 点遮罩都会带动画关闭，焦点回到按钮。", "layout": "row", "js": true} -->
+<button type="button" class="corn-btn corn-btn-danger" data-corn-dialog-open="dlg-archive">归档 3 个地块</button>
+<span class="corn-mono corn-text-sm corn-text-muted" id="dlg-out" aria-live="polite"></span>
+<dialog class="corn-dialog" id="dlg-archive" aria-labelledby="dlg-archive-title" data-backdrop-close>
+  <div class="corn-dialog-body">
+    <span class="corn-eyebrow">Archive</span>
+    <h2 class="corn-h3" id="dlg-archive-title">归档 3 个地块？</h2>
+    <p>归档后地块停止采集数据，历史报告仍可查看，30 天内可以恢复。</p>
+  </div>
+  <div class="corn-dialog-foot">
+    <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-corn-dialog-close="cancel">取消</button>
+    <button type="button" class="corn-btn corn-btn-ink corn-btn-sm" data-corn-dialog-close="archive">归档 3 个地块</button>
+  </div>
+</dialog>
+<script>
+  document.getElementById('dlg-archive').addEventListener('corn:close', function (e) {
+    document.getElementById('dlg-out').textContent = '结果：' + (e.detail.value || '关闭');
+  });
+</script>

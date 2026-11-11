@@ -1,0 +1,11 @@
+{
+  "title": "标签 Tag",
+  "summary": "mono 小字标签承载状态与分类；状态点颜色只在 brand / accent / danger 里选，运行中的状态点可以呼吸。",
+  "group": "display",
+  "order": 2,
+  "rules": [
+    "tag 只做标识不做操作；可点的筛选用 tabs 或按钮。",
+    "corn-tag-live 只给“正在进行”的状态，一屏不超过两处。",
+    "颜色之外一定要有文字：不要只靠一个色点表达状态。"
+  ]
+}

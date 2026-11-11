@@ -1,0 +1,12 @@
+<!-- @example {"title": "脚本调用", "note": "Corn.toast() 返回 { close }，适合异步任务完成后提示。", "js": true} -->
+<button type="button" class="corn-btn corn-btn-maize" id="toast-api">开始同步</button>
+<script>
+  document.getElementById('toast-api').addEventListener('click', function () {
+    var btn = this;
+    btn.setAttribute('aria-busy', 'true');
+    setTimeout(function () {
+      btn.setAttribute('aria-busy', 'false');
+      window.Corn.toast({ title: '同步完成', message: '12 个地块，用时 1.4 秒。', tone: 'brand' });
+    }, 1400);
+  });
+</script>

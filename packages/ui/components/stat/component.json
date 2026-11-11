@@ -1,0 +1,12 @@
+{
+  "title": "指标 Stat",
+  "summary": "KPI 数字卡：mono 大数字、涨跌标记、可选迷你走势线。进入视口时数字从 0 计到目标值、走势线描绘出来；减少动效时直接显示终值。",
+  "group": "display",
+  "order": 4,
+  "rules": [
+    "一组 3–4 个，最重要的放第一个。",
+    "涨跌颜色只表达好坏（brand / danger），方向用 ↑↓ 文字表达。",
+    "数字动画只在首次进入视口时播放一次。"
+  ],
+  "usage": "计数动画：数值元素加 data-corn-count=\"目标数字\"，可选 data-decimals、data-suffix（需要 corn.js）；没有脚本时显示元素里的原始文字。"
+}

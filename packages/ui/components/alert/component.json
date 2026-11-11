@@ -1,0 +1,12 @@
+{
+  "title": "提示条 Alert",
+  "summary": "页内的持续性提示：中性、brand 成功、accent 注意、danger 错误四种语气；可关闭的提示收起时有离场动画。",
+  "group": "feedback",
+  "order": 1,
+  "rules": [
+    "提示条说明“现在的状态”，一次性的操作结果用 toast。",
+    "错误提示写清下一步：发生了什么 + 怎么办。",
+    "可关闭的提示加 data-corn-dismissible，关闭按钮加 data-corn-dismiss（需要 corn.js）。"
+  ],
+  "usage": "关闭行为：容器 data-corn-dismissible，按钮 data-corn-dismiss；移除前触发 corn:dismiss 事件。"
+}

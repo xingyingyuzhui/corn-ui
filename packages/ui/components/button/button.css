@@ -1,0 +1,107 @@
+/* Button: one base + variant variables (--_bg/--_fg/--_bd/--_hover). */
+.corn-btn {
+  --_bg: transparent;
+  --_fg: var(--corn-fg);
+  --_bd: transparent;
+  --_hover: var(--_bg);
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border: 1px solid var(--_bd);
+  border-radius: var(--corn-radius-sm);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--corn-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--corn-dur) var(--corn-ease),
+    border-color var(--corn-dur) var(--corn-ease),
+    color var(--corn-dur) var(--corn-ease),
+    box-shadow var(--corn-dur) var(--corn-ease),
+    transform var(--corn-dur) var(--corn-ease-out);
+}
+.corn-btn:hover {
+  background: var(--_hover);
+  transform: translateY(calc(var(--corn-lift-sm) * -1));
+}
+.corn-btn:active {
+  transform: translateY(0) scale(var(--corn-press));
+  transition-duration: var(--corn-dur-fast);
+}
+.corn-btn svg { flex: none; }
+
+.corn-btn-ink { --_bg: var(--corn-solid-bg); --_fg: var(--corn-solid-fg); --_hover: var(--corn-solid-hover); }
+.corn-btn-maize { --_bg: var(--corn-accent); --_fg: var(--corn-accent-fg); --_hover: var(--corn-accent-hover); }
+.corn-btn-maize:hover { box-shadow: 0 8px 18px -10px var(--corn-accent); }
+.corn-btn-husk { --_bg: var(--corn-brand); --_fg: var(--corn-brand-fg); --_hover: var(--corn-brand-hover); }
+.corn-btn-ghost { --_bd: var(--corn-control-border); --_hover: transparent; }
+.corn-btn-ghost:hover { --_bd: var(--corn-fg); }
+.corn-btn-soft { --_bg: var(--corn-surface); --_hover: var(--corn-surface-hover); }
+.corn-btn-danger { --_fg: var(--corn-danger-text); --_bd: var(--corn-danger-border); --_hover: var(--corn-danger-soft); }
+/* paper button for dark blocks; fixed colours on purpose */
+.corn-btn-light { --_bg: var(--corn-paper); --_fg: var(--corn-ink); --_hover: var(--corn-raised); }
+
+.corn-btn-sm { height: 40px; padding: 0 16px; font-size: 0.8125rem; }
+.corn-btn-lg { height: 54px; padding: 0 28px; font-size: 0.9375rem; }
+.corn-btn-block { width: 100%; }
+
+.corn-btn:disabled,
+.corn-btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  background: var(--_bg);
+}
+a.corn-btn[aria-disabled="true"] { pointer-events: none; }
+
+/* Loading: keep width, hide label, draw an arc in the label colour. */
+.corn-btn[aria-busy="true"] {
+  color: transparent;
+  pointer-events: none;
+}
+.corn-btn[aria-busy="true"] > * { visibility: hidden; }
+.corn-btn[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid var(--_fg);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: corn-spin 0.7s linear infinite;
+  animation-play-state: var(--corn-loop);
+}
+
+.corn-btn-icon {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--corn-control-border);
+  border-radius: var(--corn-radius-sm);
+  background: transparent;
+  color: var(--corn-fg);
+  cursor: pointer;
+  transition: border-color var(--corn-dur) var(--corn-ease),
+    background-color var(--corn-dur) var(--corn-ease),
+    transform var(--corn-dur-fast) var(--corn-ease);
+}
+.corn-btn-icon:hover { border-color: var(--corn-fg); background: var(--corn-surface-hover); }
+.corn-btn-icon:active { transform: scale(var(--corn-press)); }
+.corn-btn-icon-plain { border-color: transparent; }

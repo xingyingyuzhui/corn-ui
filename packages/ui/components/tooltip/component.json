@@ -1,0 +1,12 @@
+{
+  "title": "文字提示 Tooltip",
+  "summary": "悬停或键盘聚焦时出现的简短说明；气泡本身可悬停（不会一移开就消失），Esc 可关闭，通过 aria-describedby 被读出。",
+  "group": "overlay",
+  "order": 1,
+  "rules": [
+    "只放补充说明，不放唯一信息或可点击内容。",
+    "图标按钮的名字用 aria-label，说明用 tooltip，两者不要重复。",
+    "Esc 关闭需要 corn.js；不加脚本时悬停/聚焦显示仍然可用。"
+  ],
+  "usage": "外层 .corn-tooltip，触发元素 aria-describedby 指向 role=tooltip 的气泡；data-placement=\"bottom\" 放到下方。"
+}

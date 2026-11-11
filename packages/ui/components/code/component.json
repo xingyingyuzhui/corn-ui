@@ -1,0 +1,11 @@
+{
+  "title": "代码块 Code",
+  "summary": "墨色代码卡、行内 code 与 kbd 按键；可选的复制按钮带成功/失败反馈。",
+  "group": "display",
+  "order": 6,
+  "rules": [
+    "代码卡在浅色和深色主题下都是墨色底，作为页面里的“深色锚点”。",
+    "复制按钮复制的是 pre 的纯文本；成功或失败都要有反馈。"
+  ],
+  "usage": "复制：按钮 data-corn-copy=\"#目标元素选择器\"（需要 corn.js），复制后按钮出现 data-state=\"ok\" 或 \"error\"。"
+}

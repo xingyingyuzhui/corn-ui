@@ -1,0 +1,18 @@
+<!-- @example {"title": "指标组", "note": "进入视口时数字计数、走势线描绘一次；aria-label 保留终值给读屏器。", "layout": "grid", "js": true} -->
+<div class="corn-stat">
+  <span class="corn-stat-label">本季产量</span>
+  <span class="corn-stat-value"><span data-corn-count="612.4" data-decimals="1">612.4</span><span class="corn-stat-unit">吨</span></span>
+  <span class="corn-stat-delta" data-trend="good">↑ 8.2% 同比</span>
+  <svg class="corn-stat-spark" viewBox="0 0 120 36" aria-hidden="true"><path pathLength="1" d="M2 30 L18 26 L34 28 L50 20 L66 22 L82 12 L98 14 L118 4"/></svg>
+</div>
+<div class="corn-stat">
+  <span class="corn-stat-label">平均湿度</span>
+  <span class="corn-stat-value"><span data-corn-count="27" data-suffix="%">27%</span></span>
+  <span class="corn-stat-delta" data-trend="bad">↓ 3 个百分点</span>
+  <svg class="corn-stat-spark" viewBox="0 0 120 36" aria-hidden="true"><path pathLength="1" d="M2 8 L18 10 L34 9 L50 16 L66 14 L82 22 L98 24 L118 28"/></svg>
+</div>
+<div class="corn-stat">
+  <span class="corn-stat-label">在线设备</span>
+  <span class="corn-stat-value"><span data-corn-count="46">46</span><span class="corn-stat-unit">/ 48</span></span>
+  <span class="corn-stat-delta">2 台离线</span>
+</div>

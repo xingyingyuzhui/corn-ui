@@ -1,0 +1,35 @@
+<!-- {"title": "色板", "nav": "colors"} -->
+<header class="corn-shell page-head">
+  <span class="corn-eyebrow corn-enter">Foundations</span>
+  <h1 class="corn-h2 corn-enter" style="--i:1">色板</h1>
+  <p class="corn-lead corn-enter" style="--i:2">色值与变量名全部由 <code class="corn-mono">tokens.json</code> 生成，页面不再手抄 hex。点“复制变量”拿到 <code class="corn-mono">var(--corn-*)</code>。</p>
+</header>
+<section class="corn-shell site-section site-section-flush">
+  <h2 class="demo-label">Surface · 纸面由浅入深</h2>
+  {{@swatches void paper panel panel-hover paper-3 raised}}
+  <h2 class="demo-label">Ink · 墨绿</h2>
+  {{@swatches ink-deep ink ink-2 ink-3 muted muted-2 ondark-muted ondark-subtle}}
+  <h2 class="demo-label">Brand · 玉米田</h2>
+  {{@swatches maize maize-hover maize-soft maize-deep husk husk-deep sage celadon}}
+  <h2 class="demo-label">Semantic · 语义</h2>
+  {{@swatches danger alert control-line ondark-control-line}}
+</section>
+<section class="corn-shell site-section">
+  <span class="corn-eyebrow" data-reveal>Themes</span>
+  <h2 class="corn-h3 section-title" data-reveal>语义变量：浅色 / 深色</h2>
+  <p class="corn-lead" data-reveal>组件只读这一层。<code class="corn-mono">.corn-dark</code> 容器或 <code class="corn-mono">&lt;html data-corn-theme="dark"&gt;</code> 会整体换值。</p>
+  <div class="table-wrap" data-reveal>
+  {{@theme-table bg surface surface-raised surface-hover fg fg-muted fg-subtle border-strong control-border solid-bg accent accent-text brand-text danger-text focus code-bg}}
+  </div>
+</section>
+<section class="corn-shell site-section">
+  <span class="corn-eyebrow" data-reveal>Rules</span>
+  <h2 class="corn-h3 section-title" data-reveal>用量规则</h2>
+  <ul class="corn-list rules" data-reveal>
+    <li><strong>纸面阶梯方向固定：</strong>背景 ≤ 面板 ≤ 更深区域，不能用反。</li>
+    <li><strong>maize 是“被记住”的那一笔：</strong>eyebrow 方块、selection、focus、至多一处主强调；铺大背景即失效。</li>
+    <li><strong>husk / sage / celadon 只做辅助：</strong>tag、状态点、开关、弱强调。</li>
+    <li><strong>文字对比度有下限：</strong>正文 ≥ 4.5:1、控件边框 ≥ 3:1，由 <code class="corn-mono">scripts/check.py</code> 在两种主题下自动校验。</li>
+    <li><strong>禁止：</strong>暖米/奶油/桃粉/橘棕底色；大面积纯黑纯白；彩色渐变底。</li>
+  </ul>
+</section>

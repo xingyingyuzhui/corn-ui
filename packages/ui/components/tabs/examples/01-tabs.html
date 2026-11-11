@@ -1,0 +1,11 @@
+<!-- @example {"title": "带面板的标签页", "note": "点击或用 ← → / Home / End 切换；指示块滑动，面板淡入。", "layout": "wide", "js": true} -->
+<div data-corn-tabs>
+  <div class="corn-tabs" role="tablist" aria-label="地块视图">
+    <button type="button" role="tab" aria-selected="true">概览</button>
+    <button type="button" role="tab" aria-selected="false">灌溉记录</button>
+    <button type="button" role="tab" aria-selected="false">设置</button>
+  </div>
+  <div class="corn-tab-panel" role="tabpanel"><p class="corn-text-muted">东坡 7 号地：128.5 亩，种植期第 64 天，长势良好。</p></div>
+  <div class="corn-tab-panel" role="tabpanel" hidden><p class="corn-text-muted">最近一次灌溉：今天 05:30，持续 30 分钟，用水 42 m³。</p></div>
+  <div class="corn-tab-panel" role="tabpanel" hidden><p class="corn-text-muted">自动灌溉阈值 28%，霜冻预警已开启。</p></div>
+</div>

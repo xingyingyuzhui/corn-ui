@@ -1,0 +1,58 @@
+/* Progress bar (native <progress>), spinner, skeleton. */
+.corn-progress {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 6px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--corn-surface);
+  overflow: hidden;
+}
+.corn-progress::-webkit-progress-bar { background: var(--corn-surface); border-radius: 3px; }
+.corn-progress::-webkit-progress-value {
+  background: var(--corn-brand);
+  border-radius: 3px;
+  transition: inline-size var(--corn-dur-slow) var(--corn-ease-out);
+}
+.corn-progress::-moz-progress-bar { background: var(--corn-brand); border-radius: 3px; }
+.corn-progress-accent::-webkit-progress-value { background: var(--corn-accent); }
+.corn-progress-accent::-moz-progress-bar { background: var(--corn-accent); }
+
+/* indeterminate: a sliding segment */
+.corn-progress:indeterminate {
+  background: linear-gradient(90deg, transparent 0 35%, var(--corn-brand) 35% 65%, transparent 65%) var(--corn-surface);
+  background-size: 200% 100%;
+  animation: corn-shimmer 1.3s var(--corn-ease) infinite;
+  animation-play-state: var(--corn-loop);
+}
+.corn-progress:indeterminate::-webkit-progress-bar { background: transparent; }
+.corn-progress:indeterminate::-moz-progress-bar { background: transparent; }
+
+.corn-spinner {
+  display: inline-block;
+  width: var(--corn-spinner-size, 20px);
+  height: var(--corn-spinner-size, 20px);
+  border: 2px solid var(--corn-border-strong);
+  border-top-color: var(--corn-fg);
+  border-radius: 50%;
+  vertical-align: middle;
+  animation: corn-spin 0.8s linear infinite;
+  animation-play-state: var(--corn-loop);
+}
+.corn-spinner-sm { --corn-spinner-size: 14px; }
+.corn-spinner-lg { --corn-spinner-size: 32px; border-width: 3px; }
+
+.corn-skeleton {
+  display: block;
+  height: 12px;
+  border-radius: var(--corn-radius-xs);
+  background: linear-gradient(90deg, var(--corn-skeleton) 30%, var(--corn-skeleton-shine) 50%, var(--corn-skeleton) 70%);
+  background-size: 300% 100%;
+  animation: corn-shimmer 1.6s var(--corn-ease) infinite;
+  animation-play-state: var(--corn-loop);
+}
+.corn-skeleton-title { height: 20px; width: 60%; }
+.corn-skeleton-short { width: 80%; }
+.corn-skeleton-block { height: 88px; }
+.corn-skeleton-circle { width: 40px; height: 40px; border-radius: 50%; }

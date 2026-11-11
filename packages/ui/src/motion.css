@@ -1,0 +1,66 @@
+/* Motion primitives. Every component animates through these variables, so a
+   single switch (prefers-reduced-motion or data-corn-motion="reduce" on
+   <html>) calms the whole system without per-component overrides. */
+
+:root {
+  --corn-lift: 2px;      /* card / interactive surface hover */
+  --corn-lift-sm: 1px;   /* button hover */
+  --corn-press: 0.97;    /* :active squeeze */
+  --corn-loop: running;  /* play-state for spinners, shimmer, pulses */
+}
+
+@keyframes corn-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+}
+@keyframes corn-fade-in {
+  from { opacity: 0; }
+}
+@keyframes corn-pop-in {
+  from { opacity: 0; transform: translateY(4px) scale(0.97); }
+}
+@keyframes corn-pop-out {
+  to { opacity: 0; transform: translateY(4px) scale(0.97); }
+}
+@keyframes corn-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes corn-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; }
+  70% { box-shadow: 0 0 0 5px transparent; }
+}
+@keyframes corn-shimmer {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+
+/* Opt-in entrance: <div class="corn-enter" style="--i:2"> staggers by index. */
+.corn-enter {
+  animation: corn-fade-up var(--corn-dur-slow) var(--corn-ease-out) both;
+  animation-delay: calc(var(--i, 0) * var(--corn-stagger));
+}
+
+/* --- Reduced motion ------------------------------------------------------
+   Durations collapse to ~0, lifts to 0, loops pause on a static frame that
+   still communicates state (spinner arc, skeleton block). */
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-corn-motion="full"]) {
+    --corn-dur-fast: 1ms;
+    --corn-dur: 1ms;
+    --corn-dur-slow: 1ms;
+    --corn-stagger: 0ms;
+    --corn-lift: 0px;
+    --corn-lift-sm: 0px;
+    --corn-press: 1;
+    --corn-loop: paused;
+  }
+}
+:root[data-corn-motion="reduce"] {
+  --corn-dur-fast: 1ms;
+  --corn-dur: 1ms;
+  --corn-dur-slow: 1ms;
+  --corn-stagger: 0ms;
+  --corn-lift: 0px;
+  --corn-lift-sm: 0px;
+  --corn-press: 1;
+  --corn-loop: paused;
+}

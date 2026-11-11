@@ -1,0 +1,11 @@
+{
+  "title": "进度与加载 Progress",
+  "summary": "确定进度用原生 progress；不确定用无 value 的 progress 或 spinner；内容占位用骨架屏。减少动效时循环暂停在静止帧。",
+  "group": "feedback",
+  "order": 2,
+  "rules": [
+    "能算出百分比就给 value，不要用无限循环糊弄。",
+    "超过 1 秒的加载才显示 spinner；超过 3 秒给文字说明。",
+    "骨架屏形状贴近真实内容，加 aria-busy=\"true\" 到容器上。"
+  ]
+}

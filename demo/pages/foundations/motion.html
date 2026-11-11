@@ -1,0 +1,26 @@
+<!-- {"title": "动效", "nav": "motion"} -->
+<header class="corn-shell page-head">
+  <span class="corn-eyebrow corn-enter">Foundations</span>
+  <h1 class="corn-h2 corn-enter" style="--i:1">动效</h1>
+  <p class="corn-lead corn-enter" style="--i:2">动效回答三个问题：这是什么（入场）、我能点吗（hover / focus）、发生了什么（切换与反馈）。不用弹性曲线，不做无目的的循环。</p>
+</header>
+<section class="corn-shell site-section site-section-flush">
+  <h2 class="demo-label">缓动与时长 · 悬停或聚焦色块回放</h2>
+  <div class="motion-lanes">
+    <button type="button" class="motion-lane" style="--lane-ease:var(--corn-ease);--lane-dur:var(--corn-dur-slow)"><span class="corn-mono">ease · dur-slow 0.55s</span><span class="motion-dot" aria-hidden="true"></span><span class="motion-use">卡片浮起、开关滑块、面板展开</span></button>
+    <button type="button" class="motion-lane" style="--lane-ease:var(--corn-ease-out);--lane-dur:var(--corn-dur)"><span class="corn-mono">ease-out · dur 0.2s</span><span class="motion-dot" aria-hidden="true"></span><span class="motion-use">浮层弹出、勾选描绘、提示淡入</span></button>
+    <button type="button" class="motion-lane" style="--lane-ease:var(--corn-ease-in);--lane-dur:var(--corn-dur)"><span class="corn-mono">ease-in · dur 0.2s</span><span class="motion-dot" aria-hidden="true"></span><span class="motion-use">离场：通知退出、弹窗关闭</span></button>
+    <button type="button" class="motion-lane" style="--lane-ease:var(--corn-ease);--lane-dur:var(--corn-dur-fast)"><span class="corn-mono">ease · dur-fast 0.12s</span><span class="motion-dot" aria-hidden="true"></span><span class="motion-use">按下轻压、复选框缩放</span></button>
+  </div>
+  <h2 class="demo-label">变量</h2>
+  <div class="table-wrap">{{@token-table motion}}</div>
+</section>
+<section class="corn-shell site-section">
+  <span class="corn-eyebrow" data-reveal>Reduced motion</span>
+  <h2 class="corn-h3 section-title" data-reveal>一个开关收敛全部动效</h2>
+  <ul class="corn-list rules" data-reveal>
+    <li>系统开启“减少动态效果”，或 <code class="corn-mono">&lt;html data-corn-motion="reduce"&gt;</code>（右上角“减少动效”按钮）时：时长 → 1ms，浮起 → 0，循环动画暂停在静止帧。</li>
+    <li>暂停的 spinner 仍保留弧线、骨架屏仍保留色块，状态信息不丢；按钮仍有 <code class="corn-mono">aria-busy</code> 语义。</li>
+    <li>组件全部通过 <code class="corn-mono">--corn-dur*</code>、<code class="corn-mono">--corn-lift*</code>、<code class="corn-mono">--corn-loop</code> 取值，没有组件需要单独适配。</li>
+  </ul>
+</section>

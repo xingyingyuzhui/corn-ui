@@ -1,0 +1,21 @@
+<!-- @example {"title": "表单对话框", "note": "打开后焦点落在第一个输入框；method=dialog 的表单提交即关闭。", "layout": "row", "js": true} -->
+<button type="button" class="corn-btn corn-btn-maize" data-corn-dialog-open="dlg-new">新建地块</button>
+<dialog class="corn-dialog" id="dlg-new" aria-labelledby="dlg-new-title">
+  <form method="dialog">
+    <div class="corn-dialog-body">
+      <h2 class="corn-h3" id="dlg-new-title">新建地块</h2>
+      <div class="corn-field">
+        <label class="corn-label" for="dlg-new-name">名称</label>
+        <input class="corn-input" id="dlg-new-name" required placeholder="例如：河湾 3 号" autofocus>
+      </div>
+      <div class="corn-field">
+        <label class="corn-label" for="dlg-new-area">面积</label>
+        <div class="corn-input-group"><input class="corn-input corn-mono" id="dlg-new-area" type="number" value="80"><span class="corn-addon">亩</span></div>
+      </div>
+    </div>
+    <div class="corn-dialog-foot">
+      <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-corn-dialog-close>取消</button>
+      <button type="submit" class="corn-btn corn-btn-ink corn-btn-sm" value="create">创建</button>
+    </div>
+  </form>
+</dialog>

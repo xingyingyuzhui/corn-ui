@@ -1,11 +1,13 @@
 {
   "name": "@corn-ui/css",
-  "version": "0.0.1",
-  "description": "Corn UI component layer: 纯 CSS 组件 + HTML 片段，零依赖零构建",
-  "type": "module",
-  "files": ["corn.css", "components/"],
+  "version": "0.1.0",
+  "private": true,
+  "description": "Corn UI component layer: corn.css + optional corn.js (generated from src/ and components/<name>/)",
+  "files": ["corn.css", "corn.js", "src/", "components/"],
   "exports": {
     ".": "./corn.css",
+    "./css": "./corn.css",
+    "./js": "./corn.js",
     "./components/*": "./components/*"
   },
   "dependencies": {

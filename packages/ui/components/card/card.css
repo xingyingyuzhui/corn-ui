@@ -1,0 +1,71 @@
+/* Card / panel / well. Static cards stay still; only links/buttons lift. */
+.corn-card {
+  box-sizing: border-box;
+  display: block;
+  background: var(--corn-surface-raised);
+  color: var(--corn-fg);
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-lg);
+  box-shadow: var(--corn-shadow-card);
+}
+.corn-card-pad { padding: 28px; }
+.corn-card-pad > * + * { margin-top: 10px; }
+
+.corn-card-link,
+a.corn-card,
+button.corn-card {
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  transition: transform var(--corn-dur-slow) var(--corn-ease-out),
+    box-shadow var(--corn-dur-slow) var(--corn-ease-out),
+    border-color var(--corn-dur) var(--corn-ease);
+}
+:is(.corn-card-link, a.corn-card, button.corn-card):is(:hover, :focus-visible) {
+  transform: translateY(calc(var(--corn-lift) * -1));
+  box-shadow: var(--corn-shadow-card-hover);
+  border-color: transparent;
+}
+:is(.corn-card-link, a.corn-card, button.corn-card):active {
+  transform: translateY(0);
+  transition-duration: var(--corn-dur-fast);
+}
+
+.corn-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.corn-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--corn-border);
+}
+.corn-card-desc { margin: 0; font-size: 0.875rem; color: var(--corn-fg-muted); }
+
+.corn-panel {
+  box-sizing: border-box;
+  background: var(--corn-surface);
+  color: var(--corn-fg);
+  border-radius: var(--corn-radius);
+}
+
+.corn-well {
+  box-sizing: border-box;
+  background: var(--corn-surface);
+  color: var(--corn-fg);
+  border: 1px dashed var(--corn-border-strong);
+  border-radius: var(--corn-radius-sm);
+  transition: border-color var(--corn-dur) var(--corn-ease), background-color var(--corn-dur) var(--corn-ease);
+}
+.corn-well:hover,
+.corn-well[data-active] {
+  border-color: var(--corn-accent-text);
+  background: var(--corn-surface-hover);
+}

@@ -1,0 +1,114 @@
+/* Checkbox, radio and switch on native inputs (appearance: none). */
+.corn-choice {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.corn-choice-text { display: grid; gap: 2px; }
+.corn-choice-hint { font-size: 0.78125rem; color: var(--corn-fg-subtle); }
+.corn-choice:has(:disabled) { opacity: 0.5; cursor: not-allowed; }
+
+.corn-fieldset { margin: 0; padding: 0; border: 0; display: grid; gap: 10px; }
+.corn-fieldset > legend { margin-bottom: 4px; padding: 0; }
+
+.corn-checkbox,
+.corn-radio {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  border: 1.5px solid var(--corn-control-border);
+  background: var(--corn-surface-raised);
+  cursor: inherit;
+  transition: background-color var(--corn-dur) var(--corn-ease),
+    border-color var(--corn-dur) var(--corn-ease),
+    transform var(--corn-dur-fast) var(--corn-ease);
+}
+.corn-checkbox { border-radius: var(--corn-radius-xs); }
+.corn-radio { border-radius: 50%; }
+:is(.corn-checkbox, .corn-radio):hover { border-color: var(--corn-fg); }
+:is(.corn-checkbox, .corn-radio):active { transform: scale(0.9); }
+:is(.corn-checkbox, .corn-radio):checked,
+.corn-checkbox:indeterminate {
+  border-color: var(--corn-solid-bg);
+  background: var(--corn-solid-bg);
+}
+
+/* tick: an L rotated 45°, drawn by scaling in */
+.corn-checkbox::after {
+  content: "";
+  position: absolute;
+  left: 4.5px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--corn-solid-fg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transform-origin: 60% 70%;
+  transition: transform var(--corn-dur) var(--corn-ease-out);
+}
+.corn-checkbox:checked::after { transform: rotate(45deg) scale(1); }
+.corn-checkbox:indeterminate::after {
+  left: 3px;
+  top: 6.5px;
+  width: 9px;
+  height: 0;
+  border-width: 0 0 2px;
+  transform: none;
+}
+
+.corn-radio::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--corn-solid-fg);
+  transform: scale(0);
+  transition: transform var(--corn-dur) var(--corn-ease-out);
+}
+.corn-radio:checked::after { transform: scale(1); }
+
+/* switch: track + thumb; thumb stretches while pressed */
+.corn-switch {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 22px;
+  margin: 0;
+  border: 1.5px solid var(--corn-control-border);
+  border-radius: 11px;
+  background: var(--corn-surface);
+  cursor: inherit;
+  transition: background-color var(--corn-dur) var(--corn-ease), border-color var(--corn-dur) var(--corn-ease);
+}
+.corn-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  background: var(--corn-fg-muted);
+  transition: transform var(--corn-dur-slow) var(--corn-ease-out),
+    width var(--corn-dur) var(--corn-ease), background-color var(--corn-dur) var(--corn-ease);
+}
+.corn-switch:hover { border-color: var(--corn-fg); }
+.corn-switch:active::after { width: 19px; }
+.corn-switch:checked { background: var(--corn-brand); border-color: var(--corn-brand); }
+.corn-switch:checked::after { background: var(--corn-brand-fg); transform: translateX(16px); }
+.corn-switch:checked:active::after { transform: translateX(12px); }
+
+:is(.corn-checkbox, .corn-radio, .corn-switch):focus-visible {
+  outline: 2px solid var(--corn-focus);
+  outline-offset: 2px;
+}

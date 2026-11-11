@@ -1,0 +1,11 @@
+{
+  "title": "卡片与容器 Card",
+  "summary": "三种容器层级：card 浮起、panel 平面分区、well 虚线井；只有可点的卡片才有浮起 + maize 描边的签名交互。",
+  "group": "display",
+  "order": 1,
+  "rules": [
+    "可点、可进入下一级的容器用 a.corn-card 或 .corn-card-link，键盘聚焦与 hover 效果一致。",
+    "纯展示分区用 panel / well，不要全页卡片化。",
+    "卡片内部按 eyebrow → serif 标题 → 说明 → 链接组织，不在卡内堆按钮。"
+  ]
+}

@@ -1,0 +1,12 @@
+<!-- @example {"title": "加载与禁用", "note": "点“保存设置”：aria-busy 切换 1.2 秒后恢复，按钮宽度不跳动。", "js": false} -->
+<button type="button" class="corn-btn corn-btn-ink" id="save-demo"><span>保存设置</span></button>
+<button type="button" class="corn-btn corn-btn-maize" aria-busy="true"><span>正在提交</span></button>
+<button type="button" class="corn-btn corn-btn-ghost" disabled>已归档</button>
+<a class="corn-btn corn-btn-soft" href="#" aria-disabled="true">链接禁用</a>
+<script>
+  document.getElementById('save-demo').addEventListener('click', function () {
+    var btn = this;
+    btn.setAttribute('aria-busy', 'true');
+    setTimeout(function () { btn.setAttribute('aria-busy', 'false'); }, 1200);
+  });
+</script>

@@ -1,0 +1,36 @@
+/* Table. */
+.corn-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius);
+  background: var(--corn-surface-raised);
+}
+.corn-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84375rem;
+  color: var(--corn-fg);
+}
+.corn-table th,
+.corn-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--corn-border);
+  text-align: left;
+  vertical-align: middle;
+}
+.corn-table thead th {
+  font-family: var(--corn-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--corn-fg-muted);
+  white-space: nowrap;
+}
+.corn-table tbody th { font-weight: 500; }
+.corn-table tbody tr:last-child > * { border-bottom: 0; }
+.corn-table tbody tr { transition: background-color var(--corn-dur-fast) var(--corn-ease); }
+.corn-table tbody tr:hover { background: var(--corn-surface-hover); }
+.corn-table tbody tr[aria-selected="true"] { background: var(--corn-accent-soft); box-shadow: inset 3px 0 0 var(--corn-accent); }
+.corn-table .corn-num { text-align: right; font-family: var(--corn-mono); font-variant-numeric: tabular-nums; }
+.corn-table caption { padding: 0 0 10px; text-align: left; font-size: 0.8125rem; color: var(--corn-fg-muted); }

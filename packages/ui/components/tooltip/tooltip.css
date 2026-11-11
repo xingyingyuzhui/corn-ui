@@ -1,0 +1,39 @@
+/* Tooltip: CSS shows it on hover / focus-within; JS only adds Esc dismissal. */
+.corn-tooltip { position: relative; display: inline-flex; }
+.corn-tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 50;
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 10px;
+  border-radius: var(--corn-radius-sm);
+  background: var(--corn-solid-bg);
+  color: var(--corn-solid-fg);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 4px);
+  transition: opacity var(--corn-dur) var(--corn-ease), transform var(--corn-dur) var(--corn-ease-out),
+    visibility 0s linear var(--corn-dur);
+}
+.corn-tooltip-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 5px solid transparent;
+  border-top-color: var(--corn-solid-bg);
+  transform: translateX(-50%);
+}
+.corn-tooltip[data-placement="bottom"] .corn-tooltip-bubble { top: calc(100% + 8px); bottom: auto; transform: translate(-50%, -4px); }
+.corn-tooltip[data-placement="bottom"] .corn-tooltip-bubble::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--corn-solid-bg); }
+
+.corn-tooltip:is(:hover, :focus-within):not([data-dismissed]) .corn-tooltip-bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0.12s, 0.12s, 0s;
+}

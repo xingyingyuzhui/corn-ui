@@ -1,0 +1,12 @@
+{
+  "title": "下拉菜单 Menu",
+  "summary": "按钮打开的操作菜单：从触发点展开、方向键移动、Enter 选择、Esc 或点外部关闭并把焦点还给按钮。",
+  "group": "overlay",
+  "order": 2,
+  "rules": [
+    "菜单放“动作”，不放导航链接列表；导航用链接。",
+    "危险动作放最后，用分隔线隔开，并标 danger。",
+    "超过 7 项时考虑分组或换成命令面板。"
+  ],
+  "usage": "<div class=\"corn-menu-wrap\"> 内：按钮 data-corn-menu + aria-controls 指向 role=menu 的列表（hidden）。选择时在菜单上触发 corn:select，detail.value 为菜单项 value/文字。"
+}

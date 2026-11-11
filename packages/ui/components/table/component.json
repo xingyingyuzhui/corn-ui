@@ -1,0 +1,11 @@
+{
+  "title": "表格 Table",
+  "summary": "mono 表头、细线分隔、数字右对齐等宽；行 hover 微亮，选中行左侧玉米黄短线。",
+  "group": "display",
+  "order": 3,
+  "rules": [
+    "数字列加 .corn-num：右对齐 + tabular-nums，方便纵向比较。",
+    "表头用 th scope=\"col\"，行标题用 th scope=\"row\"。",
+    "宽表放进 .corn-table-wrap 里横向滚动，不要压缩列。"
+  ]
+}

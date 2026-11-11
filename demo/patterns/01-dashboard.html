@@ -1,0 +1,37 @@
+<!-- @example {"title": "运行看板", "note": "指标组 + 周期切换 + 地块表 + 一条需要处理的提示：一个主角（指标），其余退后。", "layout": "wide", "js": true} -->
+<section class="corn-stack corn-gap-lg" aria-labelledby="pt-dash-title">
+  <div class="corn-split">
+    <div class="corn-stack corn-gap-sm">
+      <span class="corn-eyebrow">Dashboard · 东区</span>
+      <h3 class="corn-h3" id="pt-dash-title">本季运行概况</h3>
+    </div>
+    <div class="corn-tabs" data-corn-segmented role="group" aria-label="统计周期">
+      <button type="button" value="week" aria-pressed="false">本周</button>
+      <button type="button" value="season" aria-pressed="true">本季</button>
+      <button type="button" value="year" aria-pressed="false">全年</button>
+    </div>
+  </div>
+  <div class="corn-grid" style="--corn-min: 200px">
+    <div class="corn-stat"><span class="corn-stat-label">产量</span><span class="corn-stat-value"><span data-corn-count="612.4" data-decimals="1">612.4</span><span class="corn-stat-unit">吨</span></span><span class="corn-stat-delta" data-trend="good">↑ 8.2%</span></div>
+    <div class="corn-stat"><span class="corn-stat-label">用水</span><span class="corn-stat-value"><span data-corn-count="18420">18,420</span><span class="corn-stat-unit">m³</span></span><span class="corn-stat-delta" data-trend="good">↓ 3.1%</span></div>
+    <div class="corn-stat"><span class="corn-stat-label">在线设备</span><span class="corn-stat-value"><span data-corn-count="46">46</span><span class="corn-stat-unit">/ 48</span></span><span class="corn-stat-delta" data-trend="bad">2 台离线</span></div>
+  </div>
+  <div class="corn-alert corn-alert-danger" role="alert">
+    <span class="corn-alert-icon" aria-hidden="true">×</span>
+    <p class="corn-alert-title">北岭 3 号泵站离线</p>
+    <p class="corn-alert-body">最后心跳 14 分钟前，地块湿度已降到 19%。</p>
+    <div class="corn-alert-actions">
+      <button type="button" class="corn-btn corn-btn-ink corn-btn-sm" data-corn-toast data-toast-title="已派单" data-toast-message="维修小组预计 40 分钟到场。" data-toast-tone="brand">派维修单</button>
+    </div>
+  </div>
+  <div class="corn-table-wrap">
+    <table class="corn-table">
+      <thead><tr><th scope="col">地块</th><th scope="col">状态</th><th scope="col" class="corn-num">湿度</th><th scope="col" class="corn-num">亩产（kg）</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">东坡 7 号</th><td><span class="corn-tag corn-tag-brand corn-tag-dot corn-tag-live corn-tag-sm">灌溉中</span></td><td class="corn-num">31%</td><td class="corn-num">712</td></tr>
+        <tr><th scope="row">河湾 2 号</th><td><span class="corn-tag corn-tag-accent corn-tag-dot corn-tag-sm">待收割</span></td><td class="corn-num">24%</td><td class="corn-num">698</td></tr>
+        <tr><th scope="row">北岭 3 号</th><td><span class="corn-tag corn-tag-danger corn-tag-dot corn-tag-sm">泵站离线</span></td><td class="corn-num">19%</td><td class="corn-num">655</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>

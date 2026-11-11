@@ -1,7 +1,8 @@
 {
   "name": "@corn-ui/tokens",
-  "version": "0.0.1",
-  "description": "Corn UI design tokens: CSS variables + JSON",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Corn UI design tokens: tokens.json (source) + corn-tokens.css (generated)",
   "type": "module",
   "files": ["corn-tokens.css", "tokens.json"],
   "exports": {

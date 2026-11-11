@@ -1,0 +1,43 @@
+/* Accordion on native <details>. Height animation is progressive
+   enhancement (interpolate-size + ::details-content); elsewhere it snaps. */
+.corn-accordion {
+  border-bottom: 1px solid var(--corn-border);
+  interpolate-size: allow-keywords;
+}
+.corn-accordion:first-of-type { border-top: 1px solid var(--corn-border); }
+.corn-accordion > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 4px;
+  list-style: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--corn-dur) var(--corn-ease);
+}
+.corn-accordion > summary::-webkit-details-marker { display: none; }
+.corn-accordion > summary::after {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-right: 4px;
+  border: solid var(--corn-fg-muted);
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--corn-dur) var(--corn-ease-out), border-color var(--corn-dur) var(--corn-ease);
+}
+.corn-accordion > summary:hover { color: var(--corn-accent-text); }
+.corn-accordion > summary:hover::after { border-color: var(--corn-accent-text); }
+.corn-accordion[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.corn-accordion > summary:focus-visible { outline: 2px solid var(--corn-focus); outline-offset: 2px; }
+
+.corn-accordion::details-content {
+  block-size: 0;
+  overflow: hidden;
+  transition: block-size var(--corn-dur-slow) var(--corn-ease-out), content-visibility var(--corn-dur-slow) allow-discrete;
+}
+.corn-accordion[open]::details-content { block-size: auto; }
+.corn-accordion-body { padding: 0 4px 18px; color: var(--corn-fg-muted); font-size: 0.875rem; }
+.corn-accordion-body > * { margin: 0; }

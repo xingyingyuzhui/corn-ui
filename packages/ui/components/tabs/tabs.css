@@ -1,0 +1,71 @@
+/* Tabs & segmented control. corn.js adds .is-enhanced and drives the sliding
+   indicator through --_x / --_w; without JS the selected item is filled. */
+.corn-tabs {
+  position: relative;
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: var(--corn-radius-sm);
+  background: var(--corn-surface);
+}
+.corn-tabs > button {
+  position: relative;
+  z-index: 1;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: var(--corn-radius-xs);
+  background: transparent;
+  color: var(--corn-fg-muted);
+  font-family: var(--corn-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color var(--corn-dur) var(--corn-ease), background-color var(--corn-dur) var(--corn-ease);
+}
+.corn-tabs > button:hover { color: var(--corn-fg); }
+.corn-tabs > :is([aria-selected="true"], [aria-pressed="true"]) {
+  background: var(--corn-surface-raised);
+  color: var(--corn-fg);
+  box-shadow: var(--corn-shadow-sm);
+}
+.corn-tabs > button:focus-visible { outline: 2px solid var(--corn-focus); outline-offset: 1px; }
+
+.corn-tabs.is-enhanced > button { background: transparent; box-shadow: none; }
+.corn-tabs.is-enhanced::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  width: var(--_w, 0);
+  transform: translateX(var(--_x, 0));
+  border-radius: var(--corn-radius-xs);
+  background: var(--corn-surface-raised);
+  box-shadow: var(--corn-shadow-sm);
+  transition: transform var(--corn-dur-slow) var(--corn-ease-out), width var(--corn-dur-slow) var(--corn-ease-out);
+}
+.corn-tabs.is-enhanced.is-instant::before { transition: none; }
+
+/* underline variant for section-level tabs */
+.corn-tabs-line {
+  gap: 4px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 1px solid var(--corn-border);
+}
+.corn-tabs-line > button { height: 40px; padding: 0 4px; margin-right: 14px; border-radius: 0; }
+.corn-tabs-line > :is([aria-selected="true"], [aria-pressed="true"]) { background: transparent; box-shadow: inset 0 -2px 0 var(--corn-accent); }
+.corn-tabs-line.is-enhanced::before {
+  top: auto;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 0;
+  background: var(--corn-accent);
+  box-shadow: none;
+}
+
+.corn-tab-panel { padding-top: 18px; }
+.corn-tab-panel:not([hidden]) { animation: corn-fade-up var(--corn-dur) var(--corn-ease-out); }
+.corn-tab-panel:focus-visible { outline: 2px solid var(--corn-focus); outline-offset: 4px; }

@@ -1,0 +1,13 @@
+<!-- @example {"title": "Segmented 分段选择", "note": "切换一个值而非一组内容：aria-pressed 表达选中，事件 corn:change 拿到当前值。", "js": true} -->
+<div class="corn-tabs" data-corn-segmented role="group" aria-label="统计周期">
+  <button type="button" value="day" aria-pressed="true">日</button>
+  <button type="button" value="week" aria-pressed="false">周</button>
+  <button type="button" value="month" aria-pressed="false">月</button>
+  <button type="button" value="year" aria-pressed="false">年</button>
+</div>
+<span class="corn-mono corn-text-sm corn-text-muted" id="seg-out">当前：day</span>
+<script>
+  document.getElementById('seg-out').previousElementSibling.addEventListener('corn:change', function (e) {
+    document.getElementById('seg-out').textContent = '当前：' + e.detail.value;
+  });
+</script>

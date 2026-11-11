@@ -1,0 +1,24 @@
+<!-- @example {"title": "复选框", "note": "勾号由中心描绘展开；“全选”展示 indeterminate 半选态。", "layout": "stack"} -->
+<label class="corn-choice">
+  <input type="checkbox" class="corn-checkbox" id="ck-all">
+  <span class="corn-choice-text">全选地块<span class="corn-choice-hint">部分选中时显示横线</span></span>
+</label>
+<label class="corn-choice"><input type="checkbox" class="corn-checkbox ck-item" checked> 东坡 7 号</label>
+<label class="corn-choice"><input type="checkbox" class="corn-checkbox ck-item"> 河湾 2 号</label>
+<label class="corn-choice"><input type="checkbox" class="corn-checkbox" disabled> 已收割（不可选）</label>
+<script>
+  (function () {
+    var all = document.getElementById('ck-all');
+    var items = document.querySelectorAll('.ck-item');
+    function sync() {
+      var n = [].filter.call(items, function (i) { return i.checked; }).length;
+      all.checked = n === items.length;
+      all.indeterminate = n > 0 && n < items.length;
+    }
+    all.addEventListener('change', function () {
+      items.forEach(function (i) { i.checked = all.checked; });
+    });
+    items.forEach(function (i) { i.addEventListener('change', sync); });
+    sync();
+  })();
+</script>

@@ -1,0 +1,33 @@
+{
+  "$doc": "Hand-written source size budget used by scripts/check.py. Default: 300 lines / 16 KB per file — small enough to review in one sitting and to keep one responsibility per file. Generated files (corn-tokens.css, corn.css, corn.js, dist/) are exempt and listed under 'generated'. Any exception must name a reason here.",
+  "default": { "lines": 300, "bytes": 16384 },
+  "exceptions": {},
+  "generated": [
+    "packages/tokens/corn-tokens.css",
+    "packages/ui/corn.css",
+    "packages/ui/corn.js"
+  ],
+  "include": [
+    "package.json",
+    "pnpm-workspace.yaml",
+    ".gitignore",
+    ".github/workflows/*.yml",
+    ".github/workflows/*.yaml",
+    "packages/*/package.json",
+    "packages/tokens/*.json",
+    "packages/ui/src/*",
+    "packages/ui/components/*.json",
+    "packages/ui/components/*/*",
+    "packages/ui/components/*/examples/*.html",
+    "demo/**/*.html",
+    "demo/assets/**/*.css",
+    "demo/assets/**/*.js",
+    "scripts/*.py",
+    "scripts/*.json",
+    "scripts/*/*.py",
+    "tests/**/*.mjs",
+    "*.md",
+    "docs/*.md",
+    "references/*.md"
+  ]
+}

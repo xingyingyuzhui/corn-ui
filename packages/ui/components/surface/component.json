@@ -1,0 +1,12 @@
+{
+  "title": "深色区块与主题 Surface",
+  "summary": "任意容器加 .corn-dark，或 <html data-corn-theme=\"dark\"> 整页切换：所有组件改读深底语义变量，不需要写任何特例。",
+  "group": "structure",
+  "order": 3,
+  "rules": [
+    "一页一到两处深色区块，用来打断节奏或收尾压轴；不要深浅交替成斑马。",
+    "深色区块里不要写死浅色值——组件只读语义变量，换容器即可。",
+    "在深色区块里再嵌浅色内容用 .corn-light。"
+  ],
+  "usage": "整页：<html data-corn-theme=\"dark\">；局部：<section class=\"corn-dark corn-block\">。.corn-block 只负责内边距与圆角。"
+}

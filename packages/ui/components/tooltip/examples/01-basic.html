@@ -1,0 +1,13 @@
+<!-- @example {"title": "图标按钮说明", "note": "悬停 120ms 后浮现，Tab 聚焦同样出现；聚焦时按 Esc 收起。", "layout": "center", "js": true} -->
+<div class="corn-cluster">
+  <span class="corn-tooltip">
+    <button type="button" class="corn-btn-icon" aria-label="刷新数据" aria-describedby="tip-refresh">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8a5 5 0 1 1-1.5-3.5M13 2.5v3h-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <span class="corn-tooltip-bubble" role="tooltip" id="tip-refresh">上次刷新 09:42 · 快捷键 R</span>
+  </span>
+  <span class="corn-tooltip" data-placement="bottom">
+    <span class="corn-tag corn-tag-accent" tabindex="0" aria-describedby="tip-beta">BETA</span>
+    <span class="corn-tooltip-bubble" role="tooltip" id="tip-beta">功能仍在试验，数据可能变化</span>
+  </span>
+</div>

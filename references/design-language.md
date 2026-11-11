@@ -1,6 +1,6 @@
 # Corn UI 设计语言规范
 
-> 单一来源：`packages/tokens/corn-tokens.css` 与 `tokens.json`。本文档解释用法与边界，不重复定义值。
+> 单一来源：`packages/tokens/tokens.json`（`corn-tokens.css` 由它生成）。本文档解释用法与边界，不重复定义值。
 
 ## 色彩
 
@@ -39,7 +39,7 @@
 
 ## 深色区块
 
-- `.corn-dark` 容器内 token 自动重映射（line/muted 切换为 inkline/ondark-muted）。
+- `.corn-dark` 容器（或 `<html data-corn-theme="dark">`）内全部语义变量切换为 `theme.dark`；组件只读语义变量，因此所有组件在深色区块里都自动可读。
 - 深色上文字 `paper`，次要文字 `ondark-muted`，强调仍是 `maize`，focus 描边切 `maize`。
 - 深色区块用于打断长页面的节奏，一个页面一到两处即可。
 

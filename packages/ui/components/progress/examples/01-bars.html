@@ -1,0 +1,17 @@
+<!-- @example {"title": "进度条", "note": "点“推进”看宽度平滑增长；无 value 时显示不确定进度。", "layout": "stack"} -->
+<div class="corn-field">
+  <div class="corn-label-row"><span class="corn-label" id="pg-label">上传地块数据</span><span class="corn-mono corn-text-sm" id="pg-num">40%</span></div>
+  <progress class="corn-progress" id="pg-bar" max="100" value="40" aria-labelledby="pg-label">40%</progress>
+</div>
+<div class="corn-field">
+  <span class="corn-label" id="pg-label2">等待服务器响应</span>
+  <progress class="corn-progress corn-progress-accent" aria-labelledby="pg-label2"></progress>
+</div>
+<div><button type="button" class="corn-btn corn-btn-soft corn-btn-sm" id="pg-step">推进 20%</button></div>
+<script>
+  document.getElementById('pg-step').addEventListener('click', function () {
+    var bar = document.getElementById('pg-bar');
+    bar.value = bar.value >= 100 ? 0 : bar.value + 20;
+    document.getElementById('pg-num').textContent = bar.value + '%';
+  });
+</script>

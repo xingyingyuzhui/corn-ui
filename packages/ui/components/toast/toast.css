@@ -1,0 +1,71 @@
+/* Toast region + item. The thin bar shows remaining time and pauses on hover. */
+.corn-toast-region {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+.corn-toast {
+  --_accent: var(--corn-fg-muted);
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  width: min(360px, calc(100vw - 40px));
+  padding: 14px 14px 16px 18px;
+  overflow: hidden;
+  border: 1px solid var(--corn-border);
+  border-left: 3px solid var(--_accent);
+  border-radius: var(--corn-radius);
+  background: var(--corn-surface-raised);
+  color: var(--corn-fg);
+  box-shadow: var(--corn-shadow-pop);
+  font-size: 0.875rem;
+  pointer-events: auto;
+  animation: corn-toast-in var(--corn-dur-slow) var(--corn-ease-out);
+}
+.corn-toast-brand { --_accent: var(--corn-brand-text); }
+.corn-toast-accent { --_accent: var(--corn-accent-text); }
+.corn-toast-danger { --_accent: var(--corn-danger-text); }
+.corn-toast[data-leaving] { animation: corn-toast-out var(--corn-dur) var(--corn-ease-in) forwards; }
+.corn-toast-title { margin: 0; font-weight: 600; }
+.corn-toast-body { grid-column: 1; margin: 0; color: var(--corn-fg-muted); }
+.corn-toast-close {
+  grid-column: 2;
+  grid-row: 1;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: var(--corn-radius-sm);
+  background: transparent;
+  color: var(--corn-fg-muted);
+  cursor: pointer;
+}
+.corn-toast-close:hover { background: var(--corn-surface-hover); color: var(--corn-fg); }
+.corn-toast-timer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--_accent);
+  transform-origin: left;
+  animation: corn-toast-timer var(--_life, 4s) linear forwards;
+}
+.corn-toast:hover .corn-toast-timer,
+.corn-toast:focus-within .corn-toast-timer { animation-play-state: paused; }
+
+@keyframes corn-toast-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+}
+@keyframes corn-toast-out {
+  to { opacity: 0; transform: translateX(24px); }
+}
+@keyframes corn-toast-timer {
+  to { transform: scaleX(0); }
+}

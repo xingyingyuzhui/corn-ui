@@ -1,0 +1,42 @@
+/* Tag: mono caps label; tone via --_fg/--_bg/--_bd. */
+.corn-tag {
+  --_fg: var(--corn-fg-muted);
+  --_bg: transparent;
+  --_bd: var(--corn-border-strong);
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--_bd);
+  border-radius: var(--corn-radius-xs);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--corn-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.corn-tag-maize,
+.corn-tag-accent { --_fg: var(--corn-accent-text); --_bg: var(--corn-accent-soft); --_bd: transparent; }
+.corn-tag-husk,
+.corn-tag-brand { --_fg: var(--corn-brand-text); --_bg: var(--corn-brand-soft); --_bd: transparent; }
+.corn-tag-danger { --_fg: var(--corn-danger-text); --_bg: var(--corn-danger-soft); --_bd: transparent; }
+.corn-tag-solid { --_fg: var(--corn-solid-fg); --_bg: var(--corn-solid-bg); --_bd: transparent; }
+
+.corn-tag-dot::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.corn-tag-live::before {
+  animation: corn-pulse 1.8s var(--corn-ease) infinite;
+  animation-play-state: var(--corn-loop);
+}
+
+.corn-tag-sm { height: 20px; padding: 0 7px; font-size: 0.625rem; }

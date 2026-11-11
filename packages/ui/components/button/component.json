@@ -1,0 +1,14 @@
+{
+  "title": "按钮 Button",
+  "summary": "六种变体对应六种权重；三档尺寸、图标按钮，以及禁用与加载两种状态。",
+  "group": "action",
+  "order": 1,
+  "rules": [
+    "一屏一个主操作：ink 或 maize 至多各出现一次，其余降级为 ghost / soft / arrow-link。",
+    "maize 按钮留给真正要人记住的动作（提交、发布、购买），不是默认主色。",
+    "hover 浮起 1px、按下轻压 0.97；禁用态不浮起，透明度 0.45。",
+    "加载中用 aria-busy=\"true\"：文字隐去、原宽度保留、旋转弧线顶替，读屏器读到“忙碌”。",
+    "图标按钮必须有 aria-label。"
+  ],
+  "usage": "纯 CSS。加载态由你的代码切换 aria-busy=\"true\"/\"false\"；链接按钮禁用用 aria-disabled=\"true\"。"
+}

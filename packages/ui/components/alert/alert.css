@@ -1,0 +1,43 @@
+/* Alert: tone via --_accent (left rule + icon) and --_bg. */
+.corn-alert {
+  --_accent: var(--corn-fg-muted);
+  --_bg: var(--corn-surface);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 4px 12px;
+  align-items: start;
+  padding: 14px 16px;
+  border-left: 3px solid var(--_accent);
+  border-radius: var(--corn-radius-sm);
+  background: var(--_bg);
+  color: var(--corn-fg);
+  font-size: 0.875rem;
+  animation: corn-fade-up var(--corn-dur) var(--corn-ease-out);
+}
+.corn-alert-brand { --_accent: var(--corn-brand-text); --_bg: var(--corn-brand-soft); }
+.corn-alert-accent { --_accent: var(--corn-accent-text); --_bg: var(--corn-accent-soft); }
+.corn-alert-danger { --_accent: var(--corn-danger-text); --_bg: var(--corn-danger-soft); }
+
+.corn-alert-icon { grid-row: span 2; display: grid; place-items: center; width: 18px; height: 22px; color: var(--_accent); }
+.corn-alert-title { margin: 0; font-weight: 600; line-height: 1.6; }
+.corn-alert-body { grid-column: 2; margin: 0; color: var(--corn-fg-muted); }
+.corn-alert-actions { grid-column: 2; display: flex; gap: 14px; margin-top: 6px; }
+.corn-alert-close {
+  grid-column: 3;
+  grid-row: 1;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin: -2px -4px 0 0;
+  border: 0;
+  border-radius: var(--corn-radius-sm);
+  background: transparent;
+  color: var(--corn-fg-muted);
+  cursor: pointer;
+  transition: background-color var(--corn-dur) var(--corn-ease), color var(--corn-dur) var(--corn-ease);
+}
+.corn-alert-close:hover { background: var(--corn-surface-hover); color: var(--corn-fg); }
+
+[data-corn-dismissible][data-leaving] { animation: corn-pop-out var(--corn-dur) var(--corn-ease-in) forwards; }

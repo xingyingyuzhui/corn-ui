@@ -1,0 +1,17 @@
+<!-- @example {"title": "操作菜单", "note": "点击或 ↓ 打开，↑↓ 移动、Enter 选择、Esc 关闭；选择结果显示在右侧。", "layout": "row", "js": true} -->
+<div class="corn-menu-wrap">
+  <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-corn-menu aria-controls="menu-field">地块操作 <span aria-hidden="true">▾</span></button>
+  <div class="corn-menu" role="menu" id="menu-field" aria-label="地块操作" hidden>
+    <button type="button" role="menuitem" value="rename">重命名 <span class="corn-menu-kbd">F2</span></button>
+    <button type="button" role="menuitem" value="duplicate">复制地块 <span class="corn-menu-kbd">⌘D</span></button>
+    <button type="button" role="menuitem" value="export">导出 CSV</button>
+    <div class="corn-menu-sep" role="separator"></div>
+    <button type="button" role="menuitem" value="archive" class="corn-menu-danger">归档</button>
+  </div>
+</div>
+<span class="corn-mono corn-text-sm corn-text-muted" id="menu-out" aria-live="polite">尚未选择</span>
+<script>
+  document.getElementById('menu-field').addEventListener('corn:select', function (e) {
+    document.getElementById('menu-out').textContent = '已选择：' + e.detail.value;
+  });
+</script>

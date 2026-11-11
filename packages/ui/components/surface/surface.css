@@ -1,0 +1,8 @@
+/* Surface block: padding + radius for a themed region. Theme switching
+   itself lives in the tokens (.corn-dark / .corn-light remap semantics). */
+.corn-block {
+  box-sizing: border-box;
+  padding: clamp(24px, 4vw, 48px);
+  border-radius: var(--corn-radius-lg);
+}
+.corn-block > * + * { margin-top: 16px; }

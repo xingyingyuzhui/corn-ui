@@ -1,0 +1,14 @@
+<!-- @example {"title": "地块列表", "note": "数字列右对齐；选中行用 aria-selected 标出；状态列复用 tag。", "layout": "wide"} -->
+<div class="corn-table-wrap">
+  <table class="corn-table">
+    <thead>
+      <tr><th scope="col">地块</th><th scope="col">状态</th><th scope="col" class="corn-num">面积（亩）</th><th scope="col" class="corn-num">湿度</th><th scope="col" class="corn-num">亩产（kg）</th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">东坡 7 号</th><td><span class="corn-tag corn-tag-brand corn-tag-dot corn-tag-sm">灌溉中</span></td><td class="corn-num">128.5</td><td class="corn-num">31%</td><td class="corn-num">712</td></tr>
+      <tr aria-selected="true"><th scope="row">河湾 2 号</th><td><span class="corn-tag corn-tag-accent corn-tag-dot corn-tag-sm">待收割</span></td><td class="corn-num">86.0</td><td class="corn-num">24%</td><td class="corn-num">698</td></tr>
+      <tr><th scope="row">北岭 3 号</th><td><span class="corn-tag corn-tag-danger corn-tag-dot corn-tag-sm">泵站离线</span></td><td class="corn-num">142.2</td><td class="corn-num">19%</td><td class="corn-num">655</td></tr>
+      <tr><th scope="row">南洼 1 号</th><td><span class="corn-tag corn-tag-dot corn-tag-sm">休耕</span></td><td class="corn-num">64.8</td><td class="corn-num">—</td><td class="corn-num">—</td></tr>
+    </tbody>
+  </table>
+</div>

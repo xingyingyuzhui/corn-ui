@@ -1,0 +1,54 @@
+<!-- @example {"title": "项目设置", "note": "分组表单：即时生效的用开关，需要保存的用表单控件；保存时按钮进入加载态，完成后 toast 告知结果。", "layout": "wide", "js": true} -->
+<form class="corn-card corn-card-pad corn-stack corn-gap-lg" id="pt-settings" novalidate>
+  <div class="corn-stack corn-gap-sm">
+    <span class="corn-eyebrow">Settings</span>
+    <h3 class="corn-h3">东坡试验田</h3>
+  </div>
+  <div class="corn-grid" style="--corn-min: 260px">
+    <div class="corn-field">
+      <label class="corn-label" for="pt-name">项目名称</label>
+      <input class="corn-input" id="pt-name" value="东坡试验田" aria-describedby="pt-name-msg" required minlength="2">
+      <p class="corn-error-text" id="pt-name-msg" hidden>名称至少 2 个字。</p>
+    </div>
+    <div class="corn-field">
+      <label class="corn-label" for="pt-threshold">灌溉阈值</label>
+      <div class="corn-input-group"><input class="corn-input corn-mono" id="pt-threshold" type="number" value="28" min="10" max="60"><span class="corn-addon">%</span></div>
+    </div>
+  </div>
+  <fieldset class="corn-fieldset">
+    <legend class="corn-label">通知</legend>
+    <label class="corn-choice"><input type="checkbox" role="switch" class="corn-switch" checked><span class="corn-choice-text">霜冻预警<span class="corn-choice-hint">立即生效</span></span></label>
+    <label class="corn-choice"><input type="checkbox" role="switch" class="corn-switch"><span class="corn-choice-text">每日简报<span class="corn-choice-hint">每天 07:00 推送</span></span></label>
+  </fieldset>
+  <details class="corn-accordion">
+    <summary>高级：数据保留</summary>
+    <div class="corn-accordion-body"><p>原始读数保留 400 天，汇总数据永久保留。</p></div>
+  </details>
+  <div class="corn-card-foot">
+    <span class="corn-text-sm corn-text-subtle">上次保存 09:42</span>
+    <div class="corn-cluster">
+      <button type="reset" class="corn-btn corn-btn-ghost corn-btn-sm">还原</button>
+      <button type="submit" class="corn-btn corn-btn-ink corn-btn-sm"><span>保存设置</span></button>
+    </div>
+  </div>
+</form>
+<script>
+  (function () {
+    var form = document.getElementById('pt-settings');
+    var name = document.getElementById('pt-name');
+    var msg = document.getElementById('pt-name-msg');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var ok = name.value.trim().length >= 2;
+      name.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      msg.hidden = ok;
+      if (!ok) { name.focus(); return; }
+      var btn = form.querySelector('[type="submit"]');
+      btn.setAttribute('aria-busy', 'true');
+      setTimeout(function () {
+        btn.setAttribute('aria-busy', 'false');
+        window.Corn.toast({ title: '设置已保存', message: '灌溉阈值 ' + document.getElementById('pt-threshold').value + '%。', tone: 'brand' });
+      }, 900);
+    });
+  })();
+</script>

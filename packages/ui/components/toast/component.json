@@ -1,0 +1,12 @@
+{
+  "title": "通知 Toast",
+  "summary": "一次性操作结果的轻提示：右下角滑入、倒计时细线显示剩余时间、悬停暂停、可手动关闭；在 role=status 区域里被读屏器播报。",
+  "group": "feedback",
+  "order": 3,
+  "rules": [
+    "toast 只说结果（已保存、已发送），需要用户处理的问题用 alert 或 dialog。",
+    "默认 4 秒；带操作按钮的 toast 至少 6 秒，并且操作在别处也能完成。",
+    "同时最多 3 条，旧的先走。"
+  ],
+  "usage": "声明式：按钮加 data-corn-toast 与 data-toast-title / data-toast-message / data-toast-tone(brand|accent|danger)。脚本：Corn.toast({ title, message, tone, duration })，返回 { close }。"
+}

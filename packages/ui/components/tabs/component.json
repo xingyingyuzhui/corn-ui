@@ -1,0 +1,12 @@
+{
+  "title": "标签页 Tabs",
+  "summary": "两种形态：带面板的标签页（WAI-ARIA Tabs，方向键切换）与 segmented 分段选择（aria-pressed）。选中指示块在选项之间滑动。",
+  "group": "structure",
+  "order": 1,
+  "rules": [
+    "有对应内容面板的才用 role=tab；只是切换一个值（日/周/月）用 segmented。",
+    "标签页是平级视图切换，不做页面导航（导航用链接）。",
+    "选项不超过 5 个；更多时改用下拉菜单。"
+  ],
+  "usage": "<div data-corn-tabs> 内放 role=tablist 与 role=tabpanel，按顺序一一对应；<div data-corn-segmented> 内放按钮。切换时触发 corn:change 事件，detail.index / detail.value。"
+}

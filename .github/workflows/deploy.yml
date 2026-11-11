@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read
   pages: write
   id-token: write
 
@@ -18,8 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build demo site
-        run: python3 scripts/build-demo.py
+      - name: Build
+        run: python3 scripts/build.py
+      - name: Static checks (tokens, contrast, size budget, links)
+        run: python3 scripts/check.py
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
