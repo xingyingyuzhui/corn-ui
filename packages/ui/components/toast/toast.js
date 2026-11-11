@@ -42,13 +42,29 @@
     function dismiss() {
       if (gone) return;
       gone = true;
+      clearTimeout(clock.id);
       toast.setAttribute('data-leaving', '');
       Corn.afterAnimation(toast, function () { toast.remove(); });
     }
     close.addEventListener('click', dismiss);
+    // Normal motion: the timer bar's animation is the clock (CSS pauses it on
+    // hover/focus). Reduced motion: the bar is static (--corn-loop: paused),
+    // so a JS clock runs instead and pauses on the same hover/focus.
+    var clock = { id: 0, left: life, since: 0 };
     if (Corn.reducedMotion()) {
-      // timer bar is frozen in reduced motion; fall back to a plain timeout
-      setTimeout(dismiss, life);
+      var run = function () { clock.since = Date.now(); clock.id = setTimeout(dismiss, clock.left); };
+      var hold = function () {
+        if (!clock.id) return;
+        clearTimeout(clock.id);
+        clock.id = 0;
+        clock.left -= Date.now() - clock.since;
+      };
+      var resume = function () { if (!clock.id && !gone && !toast.matches(':hover, :focus-within')) run(); };
+      toast.addEventListener('mouseenter', hold);
+      toast.addEventListener('focusin', hold);
+      toast.addEventListener('mouseleave', resume);
+      toast.addEventListener('focusout', function () { setTimeout(resume, 0); });
+      run();
     } else {
       timer.addEventListener('animationend', dismiss);
     }
@@ -57,6 +73,10 @@
     if (items.length > MAX) items[0].querySelector('.corn-toast-close').click();
     return { close: dismiss, element: toast };
   };
+
+  // Create the live region up front: a region inserted together with its
+  // first message is often not announced by screen readers.
+  Corn.define('toast-region', 'body', function () { getRegion(); });
 
   Corn.define('toast-trigger', '[data-corn-toast]', function (btn) {
     btn.addEventListener('click', function () {

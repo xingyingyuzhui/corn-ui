@@ -67,6 +67,17 @@
 .code-pop-tab[aria-selected="true"] { color: var(--corn-fg); }
 .code-pop-tab[aria-selected="true"]::after { transform: scaleX(1); }
 
+.code-pop-note {
+  margin: 0;
+  padding: 8px 18px;
+  border-bottom: 1px solid var(--corn-border);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--corn-fg-muted);
+}
+.code-pop-note[hidden] { display: none; }
+.code-pop-tab:focus-visible { outline: 2px solid var(--corn-focus); outline-offset: -2px; }
+
 .code-pop-code {
   flex: 1;
   min-height: 0;

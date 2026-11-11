@@ -26,17 +26,14 @@
 
 .specimen-stage {
   position: relative;
-  padding: 32px 28px;
+  padding: 40px 28px 32px;
   border-radius: 0 0 var(--corn-radius-lg) var(--corn-radius-lg);
   background: var(--corn-bg);
 }
-.specimen-stage--dark { background: var(--corn-bg); }
+/* "plain": the example brings its own surface (e.g. a .corn-dark block). The
+   stage never adds layout: wrappers live in the example source so copied
+   code renders the same on its own. */
 .specimen-stage--plain { padding: 0; background: transparent; }
-.specimen-layout--row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
-.specimen-layout--stack { display: grid; gap: 18px; max-width: 460px; }
-.specimen-layout--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-.specimen-layout--center { display: grid; place-items: center; min-height: 180px; }
-.specimen-layout--wide { display: block; }
 
 /* --- the code trigger (sits outside the stage: never hijacks the component) --- */
 .code-trigger {

@@ -13,6 +13,8 @@ import codePop from './specs/code-pop.mjs';
 import components from './specs/components.mjs';
 import theme from './specs/theme.mjs';
 import motion from './specs/motion.mjs';
+import fidelity from './specs/fidelity.mjs';
+import regressions from './specs/regressions.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const DIST = join(ROOT, 'dist');
@@ -37,14 +39,18 @@ const server = await serve(DIST);
 const base = `http://127.0.0.1:${server.address().port}/`;
 const browser = await chromium.launch();
 const report = new Report();
-const suites = { pages, codePop, components, theme, motion };
+const suites = { pages, codePop, components, theme, motion, fidelity, regressions };
 const only = process.argv.slice(2);
 try {
   for (const [name, spec] of Object.entries(suites)) {
     if (only.length && !only.includes(name)) continue;
     const t0 = Date.now();
     const before = report.failed.length;
-    await spec({ browser, base, dist: DIST, report });
+    try {
+      await spec({ browser, base, dist: DIST, report });
+    } catch (err) {
+      report.check(`${name} completed without crashing`, false, err.message.split('\n')[0]);
+    }
     console.log(`  ${name.padEnd(11)} ${report.failed.length === before ? 'ok  ' : 'FAIL'} (${Date.now() - t0} ms)`);
   }
 } finally {

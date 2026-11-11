@@ -28,7 +28,13 @@
   }
 
   Corn.define('stat-count', '[data-corn-count]', function (el) {
-    el.setAttribute('aria-label', el.textContent.trim());
+    // Screen readers get the final value from a hidden twin; the counting
+    // digits are aria-hidden so intermediate numbers are never announced.
+    var twin = document.createElement('span');
+    twin.className = 'corn-sr-only';
+    twin.textContent = el.textContent.trim();
+    el.setAttribute('aria-hidden', 'true');
+    el.after(twin);
     if (!('IntersectionObserver' in window)) return run(el);
     var io = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) {

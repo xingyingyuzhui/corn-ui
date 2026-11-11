@@ -1,4 +1,4 @@
-<!-- @example {"title": "从空到第一条", "note": "空状态的主行动打开对话框；创建后空状态让位给新卡片（淡入），并给出 toast。", "layout": "wide", "js": true} -->
+<!-- @example {"title": "从空到第一条", "note": "空状态的主行动打开对话框；创建后空状态让位给新卡片（淡入），并给出 toast。", "js": true} -->
 <div class="corn-stack" id="pt-flow">
   <div class="corn-empty" id="pt-empty">
     <span class="corn-empty-mark" aria-hidden="true"></span>
@@ -43,6 +43,7 @@
       card.append(eyebrow, title);
       document.getElementById('pt-list').appendChild(card);
       document.getElementById('pt-empty').hidden = true;
+      card.focus(); // the opener is now hidden: keep keyboard focus on the new item
       dlg.returnValue = '';
       window.Corn.toast({ title: '已创建「' + name + '」', tone: 'brand' });
     });

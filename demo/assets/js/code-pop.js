@@ -12,12 +12,13 @@
   var codeEl = pop.querySelector('.code-pop-code code');
   var preEl = pop.querySelector('.code-pop-code');
   var metaEl = pop.querySelector('.code-pop-meta');
+  var noteEl = pop.querySelector('.code-pop-note');
   var statusEl = pop.querySelector('.code-pop-status');
   var copyBtn = pop.querySelector('[data-pop-copy]');
   var copyLabel = pop.querySelector('.code-pop-copy-label');
   var KINDS = [
     ['html', 'HTML', 'codeHtml'], ['css', 'CSS', 'codeCss'],
-    ['js', 'JS', 'codeJs'], ['deps', '引入', 'codeDeps']
+    ['js', 'JS', 'codeJs'], ['deps', '引入', 'codeDeps'], ['page', '整页', 'codePage']
   ];
   var trigger = null;
   var current = { text: '', ok: false };
@@ -26,7 +27,11 @@
   function readTemplate(id) {
     var tpl = id && document.getElementById(id);
     if (!tpl || !tpl.content) return null;
-    return { text: tpl.content.textContent, lang: tpl.getAttribute('data-lang') || 'html' };
+    return {
+      text: tpl.content.textContent,
+      lang: tpl.getAttribute('data-lang') || 'html',
+      note: tpl.getAttribute('data-note') || ''
+    };
   }
 
   function setStatus(msg, tone) {
@@ -47,7 +52,10 @@
       var on = t.getAttribute('data-kind') === kind;
       t.setAttribute('aria-selected', on ? 'true' : 'false');
       t.tabIndex = on ? 0 : -1;
+      if (on) preEl.setAttribute('aria-labelledby', t.id);
     });
+    noteEl.textContent = src ? src.note : '';
+    noteEl.hidden = !noteEl.textContent;
     if (!src) {
       current = { text: '', ok: false };
       codeEl.textContent = '找不到这段代码的源（模板缺失），请刷新页面或检查构建。';
@@ -80,6 +88,8 @@
       tab.className = 'code-pop-tab';
       tab.setAttribute('role', 'tab');
       tab.setAttribute('data-kind', k[0]);
+      tab.id = 'code-pop-tab-' + k[0];
+      tab.setAttribute('aria-controls', 'code-pop-panel');
       tab.textContent = k[1];
       tab.addEventListener('click', function () { show(k[0], k[1], readTemplate(id)); });
       tabsEl.appendChild(tab);
@@ -93,6 +103,11 @@
     var r = trigger.getBoundingClientRect();
     var vw = document.documentElement.clientWidth;
     var vh = window.innerHeight;
+    if (r.bottom < 0 || r.top > vh) {
+      // anchor scrolled out of view: a detached popover is confusing, close it
+      close(pop.contains(document.activeElement));
+      return;
+    }
     var w = pop.offsetWidth;
     var h = pop.offsetHeight;
     var gap = 8;
@@ -116,7 +131,9 @@
     btn.setAttribute('aria-expanded', 'true');
     btn.setAttribute('aria-controls', 'code-pop');
     place();
-    pop.focus({ preventScroll: true });
+    // focus the selected tab: a real control with a visible focus ring
+    var selected = tabsEl.querySelector('[aria-selected="true"]');
+    (selected || pop).focus({ preventScroll: true });
   }
 
   function close(returnFocus) {

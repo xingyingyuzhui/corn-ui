@@ -7,7 +7,7 @@ from html import escape
 
 from . import tokens as tk
 from .paths import BuildError
-from .specimen import deps_text, specimen, template
+from .specimen import NOTES, deps_text, specimen, template
 
 
 class Directives:
@@ -84,18 +84,17 @@ class Directives:
                 yield gid, label, items
 
     def component_grid(self):
-        blocks, i = [], 0
+        blocks = []
         for gid, label, items in self._by_group():
             cards = []
             for c in items:
                 badge = '<span class="corn-tag corn-tag-brand">JS</span>' if c.js else ""
                 cards.append(
-                    f'<a class="corn-card corn-card-link comp-card" data-reveal style="--i:{i}" '
+                    f'<a class="corn-card corn-card-link comp-card" data-reveal '
                     f'href="{self.prefix}components/{c.name}.html"><span class="comp-path corn-mono">'
                     f'components/{c.name}</span><span class="comp-name">{escape(c.title)}</span>'
                     f'<span class="comp-desc">{escape(c.summary)}</span><span class="comp-foot">'
                     f'<span class="corn-tag">{len(c.examples)} 个示例</span>{badge}</span></a>')
-                i += 1
             blocks.append(f'<section class="comp-group"><h2 class="corn-eyebrow">{escape(label)}</h2>'
                           f'<div class="comp-grid">{"".join(cards)}</div></section>')
         return "".join(blocks)
@@ -112,9 +111,9 @@ class Directives:
         return "".join(out)
 
     def render_patterns(self):
-        deps = (template("deps-pattern-css", deps_text(False), "html")
-                + template("deps-pattern-js", deps_text(True), "html"))
+        deps = (template("deps-pattern-css", deps_text(False), "html", NOTES["deps"])
+                + template("deps-pattern-js", deps_text(True), "html", NOTES["deps"]))
         cards = [specimen(p, f"pattern-{p.slug}", f"场景 · {p.title}",
-                          deps_tpl="deps-pattern-js" if p.js else "deps-pattern-css", index=i)
-                 for i, p in enumerate(self.patterns)]
+                          deps_tpl="deps-pattern-js" if p.js else "deps-pattern-css", needs_js=p.js)
+                 for p in self.patterns]
         return deps + "\n".join(cards)

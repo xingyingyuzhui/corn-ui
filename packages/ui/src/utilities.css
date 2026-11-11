@@ -27,6 +27,8 @@
   gap: var(--corn-gap, var(--corn-space-4));
 }
 
+.corn-narrow { max-width: 30rem; }
+
 .corn-gap-sm { --corn-gap: var(--corn-space-2); }
 .corn-gap-lg { --corn-gap: var(--corn-space-5); }
 

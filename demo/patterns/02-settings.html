@@ -1,4 +1,4 @@
-<!-- @example {"title": "项目设置", "note": "分组表单：即时生效的用开关，需要保存的用表单控件；保存时按钮进入加载态，完成后 toast 告知结果。", "layout": "wide", "js": true} -->
+<!-- @example {"title": "项目设置", "note": "分组表单：即时生效的用开关，需要保存的用表单控件；保存时按钮进入加载态，完成后 toast 告知结果。", "js": true} -->
 <form class="corn-card corn-card-pad corn-stack corn-gap-lg" id="pt-settings" novalidate>
   <div class="corn-stack corn-gap-sm">
     <span class="corn-eyebrow">Settings</span>
@@ -12,7 +12,8 @@
     </div>
     <div class="corn-field">
       <label class="corn-label" for="pt-threshold">灌溉阈值</label>
-      <div class="corn-input-group"><input class="corn-input corn-mono" id="pt-threshold" type="number" value="28" min="10" max="60"><span class="corn-addon">%</span></div>
+      <div class="corn-input-group"><input class="corn-input corn-mono" id="pt-threshold" type="number" value="28" min="10" max="60" aria-describedby="pt-threshold-msg"><span class="corn-addon">%</span></div>
+        <p class="corn-error-text" id="pt-threshold-msg" hidden>阈值需在 10–60% 之间。</p>
     </div>
   </div>
   <fieldset class="corn-fieldset">
@@ -36,13 +37,19 @@
   (function () {
     var form = document.getElementById('pt-settings');
     var name = document.getElementById('pt-name');
-    var msg = document.getElementById('pt-name-msg');
+    var threshold = document.getElementById('pt-threshold');
+    function mark(input, ok) {
+      input.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      document.getElementById(input.getAttribute('aria-describedby')).hidden = ok;
+      return ok;
+    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var ok = name.value.trim().length >= 2;
-      name.setAttribute('aria-invalid', ok ? 'false' : 'true');
-      msg.hidden = ok;
-      if (!ok) { name.focus(); return; }
+      var nameOk = mark(name, name.value.trim().length >= 2);
+      var value = Number(threshold.value);
+      var thresholdOk = mark(threshold, threshold.value !== '' && value >= 10 && value <= 60);
+      if (!nameOk) { name.focus(); return; }
+      if (!thresholdOk) { threshold.focus(); return; }
       var btn = form.querySelector('[type="submit"]');
       btn.setAttribute('aria-busy', 'true');
       setTimeout(function () {

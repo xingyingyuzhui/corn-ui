@@ -32,12 +32,12 @@
   if (!('IntersectionObserver' in window) || (window.Corn && window.Corn.reducedMotion())) {
     showAll();
   } else {
+    var MAX_STEP = 4; // stagger at most 4 × --corn-stagger (240ms)
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) {
-          en.target.classList.add('is-in');
-          io.unobserve(en.target);
-        }
+      entries.filter(function (en) { return en.isIntersecting; }).forEach(function (en, n) {
+        en.target.style.setProperty('--reveal-i', String(Math.min(n, MAX_STEP)));
+        en.target.classList.add('is-in');
+        io.unobserve(en.target);
       });
     }, { rootMargin: '0px 0px -40px 0px' });
     items.forEach(function (el) { io.observe(el); });

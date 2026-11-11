@@ -1,13 +1,15 @@
-<!-- @example {"title": "单选组", "note": "fieldset + legend 给出组名，方向键在组内切换（原生行为）。", "layout": "stack"} -->
-<fieldset class="corn-fieldset">
-  <legend class="corn-label">灌溉策略</legend>
-  <label class="corn-choice">
-    <input type="radio" class="corn-radio" name="irrigation" checked>
-    <span class="corn-choice-text">按湿度自动<span class="corn-choice-hint">低于 28% 时开启</span></span>
-  </label>
-  <label class="corn-choice">
-    <input type="radio" class="corn-radio" name="irrigation">
-    <span class="corn-choice-text">定时<span class="corn-choice-hint">每天 05:30，30 分钟</span></span>
-  </label>
-  <label class="corn-choice"><input type="radio" class="corn-radio" name="irrigation"> 手动</label>
-</fieldset>
+<!-- @example {"title": "单选组", "note": "fieldset + legend 给出组名，方向键在组内切换（原生行为）。"} -->
+<div class="corn-stack corn-narrow">
+  <fieldset class="corn-fieldset">
+    <legend class="corn-label">灌溉策略</legend>
+    <label class="corn-choice">
+      <input type="radio" class="corn-radio" name="irrigation" checked>
+      <span class="corn-choice-text">按湿度自动<span class="corn-choice-hint">低于 28% 时开启</span></span>
+    </label>
+    <label class="corn-choice">
+      <input type="radio" class="corn-radio" name="irrigation">
+      <span class="corn-choice-text">定时<span class="corn-choice-hint">每天 05:30，30 分钟</span></span>
+    </label>
+    <label class="corn-choice"><input type="radio" class="corn-radio" name="irrigation"> 手动</label>
+  </fieldset>
+</div>

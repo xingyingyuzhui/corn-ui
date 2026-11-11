@@ -6,7 +6,8 @@
 Covers: generated files up to date, token references and theme parity,
 token contrast (both themes), token-only colours in the library, CSS
 comment/brace balance, example hygiene, hand-written file size budget,
-JS syntax, and (if dist/ exists) local links + leaked template markers.
+JS syntax, CI step order, and (if dist/ exists) local links + leaked
+template markers.
 """
 import sys
 from pathlib import Path
@@ -15,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from corn_build.paths import BuildError, rel  # noqa: E402
 from corn_build.site import Site, generated_files, stale  # noqa: E402
-from corn_check import contrast, css, dist, examples, scripts, size  # noqa: E402
+from corn_check import contrast, css, dist, examples, scripts, size, workflow  # noqa: E402
 
 
 class Report:
@@ -42,7 +43,7 @@ def main() -> int:
         report.fail(f"generated: {rel(path)} is stale — run python3 scripts/build.py")
     if not bad:
         report.info("generated: corn-tokens.css / corn.css / corn.js up to date")
-    for module in (contrast, css, examples, size, scripts, dist):
+    for module in (contrast, css, examples, size, scripts, workflow, dist):
         try:
             module.check(report)
         except BuildError as exc:

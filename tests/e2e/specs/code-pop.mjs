@@ -59,7 +59,7 @@ async function exercise(page, trigger, label, i, count, report) {
         const same = await page.evaluate((idx) => {
           const trig = document.querySelector('.code-trigger[aria-expanded="true"]');
           const kind = document.querySelectorAll('#code-pop [role="tab"]')[idx].dataset.kind;
-          const key = { html: 'codeHtml', css: 'codeCss', js: 'codeJs', deps: 'codeDeps' }[kind];
+          const key = { html: 'codeHtml', css: 'codeCss', js: 'codeJs', deps: 'codeDeps', page: 'codePage' }[kind];
           const tpl = document.getElementById(trig.dataset[key]).content.textContent;
           return { ok: document.querySelector('#code-pop code').textContent === tpl, tpl, kind };
         }, t);

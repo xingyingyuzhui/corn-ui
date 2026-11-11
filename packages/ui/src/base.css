@@ -34,6 +34,13 @@
   color: var(--corn-ink);
 }
 
+/* Components set their own display (grid, flex…), which would beat the UA
+   [hidden] rule; this keeps the hidden attribute working on every corn-*
+   element without touching the host page's other elements. */
+[hidden]:where([class^="corn-"], [class*=" corn-"]) {
+  display: none !important;
+}
+
 .corn-shell {
   box-sizing: border-box;
   width: 100%;

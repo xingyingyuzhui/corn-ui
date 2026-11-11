@@ -1,11 +1,13 @@
-<!-- @example {"title": "即时校验", "note": "输入少于 2 个字后离开输入框：aria-invalid 打开，错误文案淡入并被读出。", "layout": "stack"} -->
-<div class="corn-field">
-  <label class="corn-label" for="fm-slug">访问路径 / Slug</label>
-  <div class="corn-input-group">
-    <span class="corn-addon">corn.app/</span>
-    <input id="fm-slug" class="corn-input" type="text" value="d" aria-invalid="true" aria-describedby="fm-slug-msg">
+<!-- @example {"title": "即时校验", "note": "输入少于 2 个字后离开输入框：aria-invalid 打开，错误文案淡入并被读出。"} -->
+<div class="corn-stack corn-narrow">
+  <div class="corn-field">
+    <label class="corn-label" for="fm-slug">访问路径 / Slug</label>
+    <div class="corn-input-group">
+      <span class="corn-addon">corn.app/</span>
+      <input id="fm-slug" class="corn-input" type="text" value="d" aria-invalid="true" aria-describedby="fm-slug-msg">
+    </div>
+    <p class="corn-error-text" id="fm-slug-msg" role="alert">至少 2 个字符，只能用小写字母和连字符。</p>
   </div>
-  <p class="corn-error-text" id="fm-slug-msg" role="alert">至少 2 个字符，只能用小写字母和连字符。</p>
 </div>
 <script>
   (function () {

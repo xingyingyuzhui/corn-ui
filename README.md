@@ -34,7 +34,12 @@ pnpm test:e2e     # 浏览器回归（需要环境里有 Playwright；见 tests/
 
 - 切深色：整页用 `<html data-corn-theme="dark">`，局部用 `.corn-dark`。
 - 减少动效：跟随系统设置，也可以手动设 `<html data-corn-motion="reduce">`。
-- 每个组件的示例和可复制代码见站点“组件”页，示例右上角有“代码”按钮。
+- 每个组件的示例和可复制代码见站点“组件”页，示例右上角有“代码”按钮：
+  - **HTML**：示例源文件本身（布局容器、深色包装都在里面）。
+  - **CSS / JS**：组件源码，已包含在 `corn.css` / `corn.js` 中，仅供阅读和改造；单独粘贴不完整。
+  - **引入**：页面骨架（含 `class="corn-body"`），把 HTML 粘到标注处即可。
+  - **整页**：骨架加上该示例的完整页面，另存为 `.html` 并与三个文件放在同一目录即可打开。
+- 组件元素上可以直接用 `hidden` 属性切换显隐（`corn.css` 已保证它压过组件自身的 `display`）。
 
 ## 结构
 
@@ -56,9 +61,9 @@ dist/                                构建产物（gitignore），部署即拷�
 ## 已知限制
 
 - **移动宽度未专项适配**：基础盒模型已修，但 docs 侧栏与首页 hero 双栏在窄屏会拥挤。
-- **浏览器覆盖**：e2e 只跑 Chromium；Safari / Firefox 未测。
+- **浏览器覆盖**：e2e 只跑 Chromium（headless）；Safari / Firefox、读屏器、真实 Windows 高对比度未测。详见 [docs/compatibility.md](docs/compatibility.md)。
 - **折叠面板高度动画**依赖 `interpolate-size`（Chromium 131+）；其他浏览器直接展开，无动画。
-- **CI 不跑 e2e**：Playwright 不是项目依赖；`deploy.yml` 只执行 build + `check.py`。
+- **CI 不跑 e2e**：Playwright 不是项目依赖；`deploy.yml` 依次执行 `build.py --check`（拦截提交的生成物过期）、build、`check.py`。
 - **tooltip / menu 无碰撞检测与自动翻转**（tooltip 可手动 `data-placement="bottom"`）。
 - **代码高亮**是最小实现，只区分注释、标签、属性、字符串、关键字。
 

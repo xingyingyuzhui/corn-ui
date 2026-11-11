@@ -10,7 +10,7 @@ from .directives import Directives
 from .paths import (CORN_CSS, CORN_JS, DEMO_ASSETS, DEMO_LAYOUTS, DEMO_PAGES, DIST,
                     TOKENS_CSS, BuildError, rel)
 from .registry import load_components, load_groups, load_patterns
-from .specimen import deps_text, specimen, template
+from .specimen import NOTES, deps_text, specimen, template
 from .templating import check_resolved, render
 
 PAGE_META = re.compile(r"\A<!--\s*(\{.*?\})\s*-->[ \t]*\n", re.S)
@@ -75,17 +75,17 @@ class Site:
 
     def component_page(self, i: int):
         c = self.components[i]
-        tpls = [template(f"src-{c.name}-css", c.css.read_text(encoding="utf-8"), "css"),
-                template(f"deps-{c.name}", deps_text(False, c.usage), "html"),
-                template(f"deps-{c.name}-js", deps_text(True, c.usage), "html")]
+        tpls = [template(f"src-{c.name}-css", c.css.read_text(encoding="utf-8"), "css", NOTES["css"]),
+                template(f"deps-{c.name}", deps_text(False, c.usage), "html", NOTES["deps"]),
+                template(f"deps-{c.name}-js", deps_text(True, c.usage), "html", NOTES["deps"])]
         if c.js:
-            tpls.append(template(f"src-{c.name}-js", c.js.read_text(encoding="utf-8"), "js"))
+            tpls.append(template(f"src-{c.name}-js", c.js.read_text(encoding="utf-8"), "js", NOTES["js"]))
         cards = []
-        for n, ex in enumerate(c.examples):
+        for ex in c.examples:
             deps = f"deps-{c.name}-js" if ex.js else f"deps-{c.name}"
             cards.append(specimen(ex, f"{c.name}-{ex.slug}", f"{c.title} · {ex.title}",
                                   f"src-{c.name}-css", f"src-{c.name}-js" if c.js else "",
-                                  deps, n))
+                                  deps, needs_js=ex.js))
         js_tag = (f'<span class="corn-tag corn-tag-brand corn-tag-dot">JS · {c.name}.js</span>'
                   if c.js else '<span class="corn-tag">纯 CSS</span>')
         rules = "".join(f"<li>{escape(r)}</li>" for r in c.rules)

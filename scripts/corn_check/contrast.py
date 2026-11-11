@@ -4,16 +4,18 @@ from corn_build import tokens as tk
 TEXT = 4.5
 NON_TEXT = 3.0
 # (foreground, [backgrounds], minimum)
+# surface-hover is the background of hovered / keyboard-focused rows, menu
+# items and soft buttons, so every text role is checked on it too.
 PAIRS = [
     ("fg", ["bg", "surface", "surface-raised", "surface-hover"], TEXT),
-    ("fg-muted", ["bg", "surface", "surface-raised"], TEXT),
-    ("fg-subtle", ["bg", "surface", "surface-raised"], TEXT),
+    ("fg-muted", ["bg", "surface", "surface-raised", "surface-hover", "accent-soft"], TEXT),
+    ("fg-subtle", ["bg", "surface", "surface-raised", "surface-hover"], TEXT),
     ("solid-fg", ["solid-bg", "solid-hover"], TEXT),
     ("accent-fg", ["accent", "accent-hover"], TEXT),
-    ("accent-text", ["bg", "surface-raised", "accent-soft"], TEXT),
+    ("accent-text", ["bg", "surface-raised", "surface-hover", "accent-soft"], TEXT),
     ("brand-fg", ["brand", "brand-hover"], TEXT),
-    ("brand-text", ["bg", "surface-raised", "brand-soft"], TEXT),
-    ("danger-text", ["bg", "surface-raised", "danger-soft"], TEXT),
+    ("brand-text", ["bg", "surface-raised", "surface-hover", "brand-soft"], TEXT),
+    ("danger-text", ["bg", "surface-raised", "surface-hover", "danger-soft"], TEXT),
     ("code-fg", ["code-bg"], TEXT),
     ("control-border", ["bg", "surface", "surface-raised"], NON_TEXT),
     ("focus", ["bg", "surface-raised"], NON_TEXT),

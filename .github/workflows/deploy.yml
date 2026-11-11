@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Committed generated files are up to date
+        # must run before Build: Build rewrites corn.css / corn.js / corn-tokens.css
+        run: python3 scripts/build.py --check
       - name: Build
         run: python3 scripts/build.py
       - name: Static checks (tokens, contrast, size budget, links)

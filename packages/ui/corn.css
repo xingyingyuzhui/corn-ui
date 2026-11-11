@@ -38,6 +38,13 @@
   color: var(--corn-ink);
 }
 
+/* Components set their own display (grid, flex…), which would beat the UA
+   [hidden] rule; this keeps the hidden attribute working on every corn-*
+   element without touching the host page's other elements. */
+[hidden]:where([class^="corn-"], [class*=" corn-"]) {
+  display: none !important;
+}
+
 .corn-shell {
   box-sizing: border-box;
   width: 100%;
@@ -235,6 +242,8 @@
   grid-template-columns: repeat(auto-fill, minmax(var(--corn-min, 220px), 1fr));
   gap: var(--corn-gap, var(--corn-space-4));
 }
+
+.corn-narrow { max-width: 30rem; }
 
 .corn-gap-sm { --corn-gap: var(--corn-space-2); }
 .corn-gap-lg { --corn-gap: var(--corn-space-5); }
@@ -575,6 +584,16 @@ a.corn-btn[aria-disabled="true"] { pointer-events: none; }
   outline-offset: 2px;
 }
 
+/* Windows high contrast: backgrounds are forced to Canvas, which would erase
+   the radio dot and switch thumb; draw them with system colours instead. */
+@media (forced-colors: active) {
+  .corn-radio::after,
+  .corn-switch::after { background: CanvasText; }
+  :is(.corn-checkbox, .corn-radio, .corn-switch):checked { border-color: Highlight; }
+  .corn-radio:checked::after,
+  .corn-switch:checked::after { background: Highlight; }
+}
+
 /* --- packages/ui/components/card/card.css --- */
 /* Card / panel / well. Static cards stay still; only links/buttons lift. */
 .corn-card {
@@ -765,7 +784,7 @@ button.corn-card {
   stroke-dashoffset: 0;
 }
 .corn-stat.is-counting .corn-stat-spark path {
-  animation: corn-spark-draw 1.2s var(--corn-ease-out) both;
+  animation: corn-spark-draw calc(var(--corn-dur-slow) * 2) var(--corn-ease-out) both;
 }
 @keyframes corn-spark-draw {
   from { stroke-dashoffset: 1; }
@@ -965,6 +984,14 @@ button.corn-card {
 .corn-skeleton-block { height: 88px; }
 .corn-skeleton-circle { width: 40px; height: 40px; border-radius: 50%; }
 
+/* High contrast: keep the track outline and fill visible. */
+@media (forced-colors: active) {
+  .corn-progress { border: 1px solid CanvasText; }
+  .corn-progress::-webkit-progress-value { background: Highlight; }
+  .corn-progress::-moz-progress-bar { background: Highlight; }
+  .corn-progress:indeterminate { background: linear-gradient(90deg, Canvas 0 35%, Highlight 35% 65%, Canvas 65%); }
+}
+
 /* --- packages/ui/components/toast/toast.css --- */
 /* Toast region + item. The thin bar shows remaining time and pauses on hover. */
 .corn-toast-region {
@@ -1024,6 +1051,7 @@ button.corn-card {
   background: var(--_accent);
   transform-origin: left;
   animation: corn-toast-timer var(--_life, 4s) linear forwards;
+  animation-play-state: var(--corn-loop); /* static under reduced motion */
 }
 .corn-toast:hover .corn-toast-timer,
 .corn-toast:focus-within .corn-toast-timer { animation-play-state: paused; }
@@ -1212,7 +1240,8 @@ button.corn-card {
   box-shadow: var(--corn-shadow-sm);
   transition: transform var(--corn-dur-slow) var(--corn-ease-out), width var(--corn-dur-slow) var(--corn-ease-out);
 }
-.corn-tabs.is-enhanced.is-instant::before { transition: none; }
+.corn-tabs.is-enhanced.is-instant::before,
+.corn-tabs.is-instant > button { transition: none; } /* no fade/flash on first measure */
 
 /* underline variant for section-level tabs */
 .corn-tabs-line {
@@ -1236,6 +1265,15 @@ button.corn-card {
 .corn-tab-panel { padding-top: 18px; }
 .corn-tab-panel:not([hidden]) { animation: corn-fade-up var(--corn-dur) var(--corn-ease-out); }
 .corn-tab-panel:focus-visible { outline: 2px solid var(--corn-focus); outline-offset: 4px; }
+
+/* High contrast: the sliding indicator's background is forced away, so mark
+   the selected item with a system-colour outline. */
+@media (forced-colors: active) {
+  .corn-tabs > :is([aria-selected="true"], [aria-pressed="true"]) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}
 
 /* --- packages/ui/components/accordion/accordion.css --- */
 /* Accordion on native <details>. Height animation is progressive

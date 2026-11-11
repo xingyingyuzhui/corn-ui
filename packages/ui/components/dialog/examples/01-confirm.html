@@ -1,6 +1,8 @@
-<!-- @example {"title": "危险操作确认", "note": "Tab 只在框内循环；Esc / 取消 / 点遮罩都会带动画关闭，焦点回到按钮。", "layout": "row", "js": true} -->
-<button type="button" class="corn-btn corn-btn-danger" data-corn-dialog-open="dlg-archive">归档 3 个地块</button>
-<span class="corn-mono corn-text-sm corn-text-muted" id="dlg-out" aria-live="polite"></span>
+<!-- @example {"title": "危险操作确认", "note": "Tab 只在框内循环；Esc / 取消 / 点遮罩都会带动画关闭，焦点回到按钮。", "js": true} -->
+<div class="corn-cluster">
+  <button type="button" class="corn-btn corn-btn-danger" data-corn-dialog-open="dlg-archive">归档 3 个地块</button>
+  <span class="corn-mono corn-text-sm corn-text-muted" id="dlg-out" aria-live="polite"></span>
+</div>
 <dialog class="corn-dialog" id="dlg-archive" aria-labelledby="dlg-archive-title" data-backdrop-close>
   <div class="corn-dialog-body">
     <span class="corn-eyebrow">Archive</span>

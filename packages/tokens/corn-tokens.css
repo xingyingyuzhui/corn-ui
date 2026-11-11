@@ -14,7 +14,7 @@
   --corn-ink-2: #252922;
   --corn-ink-3: #32372c;
   --corn-muted: #58635a;
-  --corn-muted-2: #5f6a61;
+  --corn-muted-2: #5c675e;
   --corn-ondark-muted: #aeb9ae;
   --corn-ondark-subtle: #9aa59b;
   --corn-control-line: #7d877e;
@@ -29,6 +29,7 @@
   --corn-celadon: #a9bc9c;
   --corn-danger: #ad342c;
   --corn-alert: #fa5c57;
+  --corn-alert-text: #ff7b75;
   /* font */
   --corn-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "STSong", "SimSun", serif;
   --corn-sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
@@ -138,7 +139,7 @@
   --corn-brand-fg: var(--corn-paper);
   --corn-brand-text: var(--corn-celadon);
   --corn-brand-soft: rgba(169, 188, 156, 0.14);
-  --corn-danger-text: var(--corn-alert);
+  --corn-danger-text: var(--corn-alert-text);
   --corn-danger-soft: rgba(250, 92, 87, 0.12);
   --corn-danger-border: var(--corn-alert);
   --corn-focus: var(--corn-maize);

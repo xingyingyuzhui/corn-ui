@@ -56,3 +56,11 @@
 .corn-skeleton-short { width: 80%; }
 .corn-skeleton-block { height: 88px; }
 .corn-skeleton-circle { width: 40px; height: 40px; border-radius: 50%; }
+
+/* High contrast: keep the track outline and fill visible. */
+@media (forced-colors: active) {
+  .corn-progress { border: 1px solid CanvasText; }
+  .corn-progress::-webkit-progress-value { background: Highlight; }
+  .corn-progress::-moz-progress-bar { background: Highlight; }
+  .corn-progress:indeterminate { background: linear-gradient(90deg, Canvas 0 35%, Highlight 35% 65%, Canvas 65%); }
+}

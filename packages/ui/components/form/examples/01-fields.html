@@ -1,18 +1,20 @@
-<!-- @example {"title": "基础字段", "note": "文本、下拉、多行；提示文字用 aria-describedby 关联到输入框。", "layout": "stack"} -->
-<div class="corn-field">
-  <label class="corn-label" for="fm-name">项目名称 / Name</label>
-  <input id="fm-name" class="corn-input" type="text" placeholder="例如：东坡试验田" aria-describedby="fm-name-hint">
-  <p class="corn-hint" id="fm-name-hint">2–24 个字，创建后可修改。</p>
-</div>
-<div class="corn-field">
-  <label class="corn-label" for="fm-type">类型 / Type</label>
-  <select id="fm-type" class="corn-select">
-    <option>内部项目</option>
-    <option>客户项目</option>
-    <option>开源项目</option>
-  </select>
-</div>
-<div class="corn-field">
-  <label class="corn-label" for="fm-desc">描述 / Description</label>
-  <textarea id="fm-desc" class="corn-textarea" rows="3" placeholder="这个项目要解决什么问题……"></textarea>
+<!-- @example {"title": "基础字段", "note": "文本、下拉、多行；提示文字用 aria-describedby 关联到输入框。"} -->
+<div class="corn-stack corn-narrow">
+  <div class="corn-field">
+    <label class="corn-label" for="fm-name">项目名称 / Name</label>
+    <input id="fm-name" class="corn-input" type="text" placeholder="例如：东坡试验田" aria-describedby="fm-name-hint">
+    <p class="corn-hint" id="fm-name-hint">2–24 个字，创建后可修改。</p>
+  </div>
+  <div class="corn-field">
+    <label class="corn-label" for="fm-type">类型 / Type</label>
+    <select id="fm-type" class="corn-select">
+      <option>内部项目</option>
+      <option>客户项目</option>
+      <option>开源项目</option>
+    </select>
+  </div>
+  <div class="corn-field">
+    <label class="corn-label" for="fm-desc">描述 / Description</label>
+    <textarea id="fm-desc" class="corn-textarea" rows="3" placeholder="这个项目要解决什么问题……"></textarea>
+  </div>
 </div>

@@ -32,7 +32,7 @@
   stroke-dashoffset: 0;
 }
 .corn-stat.is-counting .corn-stat-spark path {
-  animation: corn-spark-draw 1.2s var(--corn-ease-out) both;
+  animation: corn-spark-draw calc(var(--corn-dur-slow) * 2) var(--corn-ease-out) both;
 }
 @keyframes corn-spark-draw {
   from { stroke-dashoffset: 1; }

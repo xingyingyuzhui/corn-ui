@@ -218,5 +218,7 @@ body { margin: 0; }
   opacity: 1;
   transform: none;
   transition: opacity var(--corn-dur-slow) var(--corn-ease-out), transform var(--corn-dur-slow) var(--corn-ease-out);
-  transition-delay: calc(var(--i, 0) * var(--corn-stagger));
+  /* --reveal-i is the position inside the batch that entered together,
+     capped by site.js, so late items never wait more than ~4 steps */
+  transition-delay: calc(var(--reveal-i, 0) * var(--corn-stagger));
 }

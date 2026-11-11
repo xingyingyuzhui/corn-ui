@@ -45,7 +45,8 @@
   box-shadow: var(--corn-shadow-sm);
   transition: transform var(--corn-dur-slow) var(--corn-ease-out), width var(--corn-dur-slow) var(--corn-ease-out);
 }
-.corn-tabs.is-enhanced.is-instant::before { transition: none; }
+.corn-tabs.is-enhanced.is-instant::before,
+.corn-tabs.is-instant > button { transition: none; } /* no fade/flash on first measure */
 
 /* underline variant for section-level tabs */
 .corn-tabs-line {
@@ -69,3 +70,12 @@
 .corn-tab-panel { padding-top: 18px; }
 .corn-tab-panel:not([hidden]) { animation: corn-fade-up var(--corn-dur) var(--corn-ease-out); }
 .corn-tab-panel:focus-visible { outline: 2px solid var(--corn-focus); outline-offset: 4px; }
+
+/* High contrast: the sliding indicator's background is forced away, so mark
+   the selected item with a system-colour outline. */
+@media (forced-colors: active) {
+  .corn-tabs > :is([aria-selected="true"], [aria-pressed="true"]) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

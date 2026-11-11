@@ -112,3 +112,13 @@
   outline: 2px solid var(--corn-focus);
   outline-offset: 2px;
 }
+
+/* Windows high contrast: backgrounds are forced to Canvas, which would erase
+   the radio dot and switch thumb; draw them with system colours instead. */
+@media (forced-colors: active) {
+  .corn-radio::after,
+  .corn-switch::after { background: CanvasText; }
+  :is(.corn-checkbox, .corn-radio, .corn-switch):checked { border-color: Highlight; }
+  .corn-radio:checked::after,
+  .corn-switch:checked::after { background: Highlight; }
+}

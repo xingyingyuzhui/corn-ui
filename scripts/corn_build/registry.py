@@ -16,8 +16,8 @@ from pathlib import Path
 from .paths import COMPONENTS, GROUPS_JSON, PATTERNS, BuildError, rel
 
 FRONT = re.compile(r"\A<!--\s*@example\s+(\{.*?\})\s*-->[ \t]*\n", re.S)
-STAGES = {"light", "dark", "plain"}
-LAYOUTS = {"row", "stack", "grid", "center", "wide"}
+STAGES = {"light", "plain"}
+EXAMPLE_KEYS = {"title", "note", "stage", "js"}
 NAME = re.compile(r"^[a-z][a-z0-9-]*$")
 META_KEYS = {"title", "summary", "group", "order", "rules", "usage"}
 
@@ -28,7 +28,6 @@ class Example:
     title: str
     note: str
     stage: str
-    layout: str
     code: str
     path: Path
     js: bool = False
@@ -66,16 +65,23 @@ def parse_example(path: Path) -> Example:
         meta = json.loads(m.group(1))
     except json.JSONDecodeError as exc:
         raise BuildError(f"{rel(path)}: bad @example JSON ({exc})") from exc
-    stage, layout = meta.get("stage", "light"), meta.get("layout", "row")
     if not meta.get("title"):
         raise BuildError(f"{rel(path)}: @example needs a title")
-    if stage not in STAGES or layout not in LAYOUTS:
-        raise BuildError(f"{rel(path)}: stage must be {sorted(STAGES)}, layout {sorted(LAYOUTS)}")
+    unknown = set(meta) - EXAMPLE_KEYS
+    if unknown:
+        # "layout" and stage "dark" were removed on purpose: the stage used to
+        # add wrappers the copied code did not contain.
+        raise BuildError(f"{rel(path)}: unknown @example keys {sorted(unknown)} — put layout "
+                         "(corn-cluster / corn-stack / corn-grid) and .corn-dark wrappers in the source")
+    stage = meta.get("stage", "light")
+    if stage not in STAGES:
+        raise BuildError(f"{rel(path)}: stage must be one of {sorted(STAGES)} "
+                         "(for a dark variant wrap the source in <section class=\"corn-dark corn-block\">)")
     code = text[m.end():].strip() + "\n"
     if "{{" in code:
         raise BuildError(f"{rel(path)}: '{{{{' is reserved for templates")
     slug = re.sub(r"^\d+-", "", path.stem)
-    return Example(slug, meta["title"], meta.get("note", ""), stage, layout, code, path,
+    return Example(slug, meta["title"], meta.get("note", ""), stage, code, path,
                    js=bool(meta.get("js")))
 
 

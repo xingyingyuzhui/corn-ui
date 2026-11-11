@@ -27,14 +27,16 @@
 
 ## 防线
 
-`python3 scripts/check.py`（CI 在 build 之后运行）检查以下内容：
+CI（`deploy.yml`）的顺序是：`build.py --check` → `build.py` → `check.py`。第一步必须在构建之前：构建会重写 `corn.css` 等生成文件，放在后面就永远发现不了“提交的生成物已过期”。
 
-- 生成文件是否最新。
+`python3 scripts/check.py` 检查以下内容：
+
+- 生成文件是否最新；workflow 中 `build.py --check` 是否排在 build 之前。
 - token 引用是否都存在，light/dark 两套语义的键是否一致。
-- 62 组语义前景/背景对比度，两种主题都查：文本 ≥ 4.5，控件边框和焦点 ≥ 3。
+- 74 组语义前景/背景对比度，两种主题都查，包含 hover / 键盘聚焦行的 `surface-hover` 背景：文本 ≥ 4.5，控件边框和焦点 ≥ 3。
 - 组件 CSS 中不允许出现颜色字面量。
 - 所有 CSS 的注释和花括号是否配平（防止生成头注释里的 `*/` 提前结束注释、吞掉后面的规则）。
-- 示例 hygiene：行内 style 只允许写自定义属性；同一页面内 id 不重复；ARIA 和 for 引用都能找到目标。
+- 示例 hygiene：行内 style 只允许写自定义属性；同一页面内 id 不重复；ARIA 和 for 引用都能找到目标；用到 `data-corn-*`、`Corn.*` 或任何 `Corn.define` 选择器（如 `.corn-tooltip`）的示例必须标 `"js": true`，否则“引入 / 整页”会漏掉 `corn.js`。
 - 手写文件体积门槛：默认 300 行 / 16 KB，覆盖组件、demo、脚本、测试、文档和仓库配置（含 `groups.json`、各 `package.json`、workflow），例外必须在 `scripts/size-budget.json` 写明原因。
 - 所有 JS 通过 `node --check`。
 - dist 中的本地链接都能解析，且没有遗留模板标记。
@@ -46,3 +48,5 @@
 - `components`：交互组件的键盘路径。
 - `theme`：全部 18 个组件页在浅色和深色下逐元素计算文字对比度（正文 ≥ 4.5，大字 ≥ 3）。
 - `motion`：减少动效（系统设置 + 站内开关）以及主题开关。
+- `fidelity`：每个示例按两种用户路径独立打开——“整页”页签原样打开，以及“引入”骨架里粘入 HTML 页签——与站内渲染比较正文字体、两层行结构、内容背后的底色，并要求控制台无问题。
+- `regressions`：第二轮审查发现的每个缺陷各一条，均已确认在 8ccd195 上失败：`hidden` 显隐、两个场景流程、对话框内初始化的 tabs / segmented、嵌套 tabs、toast live region 预创建、菜单聚焦态对比度（双主题）、入场延迟上限、代码浮层的焦点 / tabpanel / 依赖说明 / 锚点滚走即关闭、全站标题层级、指标读屏终值、forced-colors 下选中态（Chromium 模拟）、减少动效下 toast 计时条与悬停暂停及走势线。

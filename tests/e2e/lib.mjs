@@ -52,3 +52,22 @@ export function contrast(a, b) {
   const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
 }
+
+/**
+ * Serve `html` at assets/corn/__fixture-N.html (next to corn-tokens.css,
+ * corn.css and corn.js) and open it, so relative href="corn.css" in copied
+ * code resolves exactly as it would for a user. Returns { page, problems }.
+ */
+let fixtureSeq = 0;
+export async function openFixture(ctx, base, html) {
+  const url = `${base}assets/corn/__fixture-${++fixtureSeq}.html`;
+  await ctx.route(url, (route) => route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: html }));
+  return openTracked(ctx, url);
+}
+
+/** Minimal page that loads the distributed bundle, for behaviour fixtures. */
+export function fixturePage(body, { theme = '' } = {}) {
+  return `<!doctype html><html lang="zh-CN"${theme ? ` data-corn-theme="${theme}"` : ''}><head><meta charset="utf-8">
+<link rel="stylesheet" href="corn-tokens.css"><link rel="stylesheet" href="corn.css">
+<script src="corn.js" defer></script></head><body class="corn-body">${body}</body></html>`;
+}
