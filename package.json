@@ -13,6 +13,8 @@
     "test:e2e": "node tests/e2e/run.mjs",
     "test": "python3 scripts/check.py && node tests/e2e/run.mjs"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "playwright": "1.64.0"
+  },
   "packageManager": "pnpm@10.28.2"
 }

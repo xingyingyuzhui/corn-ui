@@ -32,11 +32,127 @@
   from { background-position: 150% 0; }
   to { background-position: -50% 0; }
 }
+/* Directional entrances for edge-anchored surfaces; used via .corn-enter-*. */
+@keyframes corn-fade-down {
+  from { opacity: 0; transform: translateY(-10px); }
+}
+@keyframes corn-fade-left {
+  from { opacity: 0; transform: translateX(10px); }
+}
+@keyframes corn-fade-right {
+  from { opacity: 0; transform: translateX(-10px); }
+}
+/* Feedback: a restrained two-step wiggle for rejected input / failed actions. */
+@keyframes corn-shake {
+  20%, 60% { transform: translateX(-2px); }
+  40%, 80% { transform: translateX(2px); }
+}
+/* Feedback: the surface flashes a tint then settles back to its own colour;
+   --corn-flash (default accent-soft) picks the tint per context. */
+@keyframes corn-flash {
+  from { background-color: var(--corn-flash, var(--corn-accent-soft)); }
+}
 
 /* Opt-in entrance: <div class="corn-enter" style="--i:2"> staggers by index. */
 .corn-enter {
   animation: corn-fade-up var(--corn-dur-slow) var(--corn-ease-out) both;
   animation-delay: calc(var(--i, 0) * var(--corn-stagger));
+}
+/* Direction modifiers: <div class="corn-enter corn-enter-down">. Scoped to
+   .corn-enter so replay() removing the base class also drops the name —
+   otherwise the browser sees the same animation and never restarts it. */
+.corn-enter.corn-enter-down { animation-name: corn-fade-down; }
+.corn-enter.corn-enter-left { animation-name: corn-fade-left; }
+.corn-enter.corn-enter-right { animation-name: corn-fade-right; }
+
+/* Feedback: an accent ring pings outward once — "done / celebratory" cues.
+   --corn-burst picks the ring colour per context. */
+@keyframes corn-burst {
+  from { box-shadow: 0 0 0 0 var(--corn-burst, var(--corn-accent)); }
+  to { box-shadow: 0 0 0 14px transparent; }
+}
+/* SVG stroke draw-in: paths opt in with pathLength="1" + dasharray 1
+   (same trick as the stat sparkline, generalised). */
+@keyframes corn-draw {
+  from { stroke-dashoffset: var(--corn-dash, 1); }
+}
+
+/* One-shot feedback utilities. Retrigger by toggling the class — Corn.replay
+   does the remove → reflow → add sequence. */
+.corn-shake { animation: corn-shake calc(var(--corn-dur) * 2) var(--corn-ease); }
+.corn-flash { animation: corn-flash var(--corn-dur-slow) var(--corn-ease-out); }
+.corn-burst { animation: corn-burst var(--corn-dur-slow) var(--corn-ease-out); }
+.corn-repop {
+  animation: corn-pop-in var(--corn-dur) var(--corn-ease-out);
+  transform-origin: var(--corn-pop-origin, 50% 50%);
+}
+/* Spring timing modifier for entrances / repops (kept off exits). */
+.corn-enter-spring { animation-timing-function: var(--corn-ease-spring); }
+.corn-draw { animation: corn-draw var(--corn-dur-slow) var(--corn-ease-out) both; }
+.corn-leave { animation: corn-pop-out var(--corn-dur) var(--corn-ease-in) forwards; }
+
+/* Signature: popcorn — springs up from a kernel with an overshoot. */
+@keyframes corn-pop {
+  0% { opacity: 0; transform: scale(0.4); }
+  55% { opacity: 1; transform: scale(1.14); }
+  78% { transform: scale(0.96); }
+}
+/* Husk peel: the surface opens from its centre line outwards. */
+@keyframes corn-unveil {
+  from { clip-path: inset(0 50% 0 50% round var(--corn-radius-lg)); }
+  to { clip-path: inset(0 0 0 0 round var(--corn-radius-lg)); }
+}
+/* Highlighter: a maize marker sweeps in behind inline text. */
+@keyframes corn-mark {
+  from { background-size: 0% 0.42em; }
+}
+/* Kernel ripple: --row/--col place each kernel; delay grows with distance. */
+@keyframes corn-wave {
+  40% { transform: translateY(-3px) scale(1.18); }
+}
+.corn-pop {
+  animation: corn-pop var(--corn-dur-slow) var(--corn-ease-out) both;
+  transform-origin: var(--corn-pop-origin, 50% 50%);
+}
+.corn-unveil { animation: corn-unveil calc(var(--corn-dur-slow) * 1.3) var(--corn-ease-out) both; }
+.corn-mark {
+  background: linear-gradient(var(--corn-mark, var(--corn-accent-soft)), var(--corn-mark, var(--corn-accent-soft))) 0 88% / 100% 0.42em no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: inherit;
+  animation: corn-mark var(--corn-dur-slow) var(--corn-ease-out) both;
+  animation-delay: calc(var(--i, 0) * var(--corn-dur-slow));
+}
+.corn-wave {
+  animation: corn-wave var(--corn-dur-slow) var(--corn-ease) both;
+  animation-delay: calc((var(--row, 0) + var(--col, 0)) * var(--corn-wave-step, 35ms));
+}
+
+/* Scroll-in entrance: data-corn-reveal adds .corn-reveal (hidden) up front,
+   the shared observer flips .is-in when it enters — no JS, no hiding. */
+.corn-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--corn-dur-slow) var(--corn-ease-out), transform var(--corn-dur-slow) var(--corn-ease-out);
+  transition-delay: calc(var(--reveal-i, 0) * var(--corn-stagger));
+}
+.corn-reveal.is-in { opacity: 1; transform: none; }
+
+/* Theme crossfade: Corn.setTheme flags <html data-corn-theming> for the length
+   of the swap, so every colour fades together instead of snapping element by
+   element. !important keeps one uniform wipe over per-component transitions. */
+:root[data-corn-theming],
+:root[data-corn-theming] *,
+:root[data-corn-theming] *::before,
+:root[data-corn-theming] *::after {
+  transition: background-color var(--corn-dur-slow) var(--corn-ease),
+    color var(--corn-dur-slow) var(--corn-ease),
+    border-color var(--corn-dur-slow) var(--corn-ease),
+    outline-color var(--corn-dur-slow) var(--corn-ease),
+    text-decoration-color var(--corn-dur-slow) var(--corn-ease),
+    box-shadow var(--corn-dur-slow) var(--corn-ease),
+    fill var(--corn-dur-slow) var(--corn-ease),
+    stroke var(--corn-dur-slow) var(--corn-ease) !important;
 }
 
 /* --- Reduced motion ------------------------------------------------------
@@ -48,6 +164,7 @@
     --corn-dur: 1ms;
     --corn-dur-slow: 1ms;
     --corn-stagger: 0ms;
+    --corn-wave-step: 0ms;
     --corn-lift: 0px;
     --corn-lift-sm: 0px;
     --corn-press: 1;
@@ -59,6 +176,7 @@
   --corn-dur: 1ms;
   --corn-dur-slow: 1ms;
   --corn-stagger: 0ms;
+  --corn-wave-step: 0ms;
   --corn-lift: 0px;
   --corn-lift-sm: 0px;
   --corn-press: 1;

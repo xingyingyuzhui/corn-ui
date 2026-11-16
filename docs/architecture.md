@@ -23,11 +23,11 @@
 - **同源示例**。`examples/*.html` 在页面上原样插入一次，作为运行中的示例；再转义后放进 `<template>` 一次。代码浮层读取模板的 textContent，所以复制到的代码就是正在运行的那份文件。
 - **动效全部经过变量**：`--corn-dur*`、`--corn-lift*`、`--corn-loop`。减少动效只需改这几个变量，组件不需要单独适配。
 - **border-box 只在 `.corn-root` / `.corn-body` 内生效**，`.corn-shell` 和输入控件自己也显式声明。这样拷进别的项目不会改动对方的布局。
-- **依赖**：构建与静态检查只用 Python 标准库；e2e 使用环境里已有的 Playwright，不写进 package.json。
+- **依赖**：构建与静态检查只用 Python 标准库；e2e 用固定开发依赖 `playwright@1.64.0`（pnpm-lock 锁定，纯测试工具，不进分发包）。`CORN_BROWSER` 选引擎：chromium（默认）/ firefox / webkit。
 
 ## 防线
 
-CI（`deploy.yml`）的顺序是：`build.py --check` → `build.py` → `check.py`。第一步必须在构建之前：构建会重写 `corn.css` 等生成文件，放在后面就永远发现不了“提交的生成物已过期”。
+CI 分两层：`.github/workflows/test.yml` 是可复用的浏览器门禁（chromium / firefox / webkit 矩阵，chromium 跑全套件，其余跑 edges / components / workbench），在 PR 上独立触发；`deploy.yml` 通过 `workflow_call` 引用它，build 任务 `needs: browser`，浏览器回归不过不部署。build 任务内部仍是 `build.py --check` → `build.py` → `check.py`：第一步必须在构建之前——构建会重写 `corn.css` 等生成文件，放在后面就永远发现不了“提交的生成物已过期”。
 
 `python3 scripts/check.py` 检查以下内容：
 
@@ -49,4 +49,6 @@ CI（`deploy.yml`）的顺序是：`build.py --check` → `build.py` → `check.
 - `theme`：全部 18 个组件页在浅色和深色下逐元素计算文字对比度（正文 ≥ 4.5，大字 ≥ 3）。
 - `motion`：减少动效（系统设置 + 站内开关）以及主题开关。
 - `fidelity`：每个示例按两种用户路径独立打开——“整页”页签原样打开，以及“引入”骨架里粘入 HTML 页签——与站内渲染比较正文字体、两层行结构、内容背后的底色，并要求控制台无问题。
+- `edges`：边界回归——菜单 JS 定位回退（视口适配、翻转、限高内滚、跟随 / 离屏关闭、空列表）、tooltip 悬停态 Esc 关闭与重新武装、toast 在运行中切换动效偏好后仍按原截止期消失、悬停 / 聚焦暂停。
+- `workbench`：组件目录 `<search>` 筛选（中英文、搜索 ∩ 分组、无结果重置、无 JS 全量显示）与按钮工作台（全变体 / 尺寸 / 状态、HTML 样式文字转义、复制当前代码、片段独立复现、窄屏与深色）。
 - `regressions`：第二轮审查发现的每个缺陷各一条，均已确认在 8ccd195 上失败：`hidden` 显隐、两个场景流程、对话框内初始化的 tabs / segmented、嵌套 tabs、toast live region 预创建、菜单聚焦态对比度（双主题）、入场延迟上限、代码浮层的焦点 / tabpanel / 依赖说明 / 锚点滚走即关闭、全站标题层级、指标读屏终值、forced-colors 下选中态（Chromium 模拟）、减少动效下 toast 计时条与悬停暂停及走势线。

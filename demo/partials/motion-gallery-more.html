@@ -1,0 +1,79 @@
+<!-- Motion gallery (2/2): loops + interaction/orchestration + page scripts. -->
+<h2 class="demo-label">循环与状态 · 播放开关都在 --corn-loop</h2>
+<div class="mfx-grid">
+  <article class="mfx" id="e-spin">
+    <div class="mfx-stage"><div class="mfx-li"><span class="corn-spinner corn-spinner-sm" role="status" aria-label="加载中"></span><span class="corn-text-sm corn-text-muted">上传中…</span></div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-spin / spinner</h3><p class="mfx-use">加载中旋转弧线</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-spin" data-code-html="t-spin"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-shimmer">
+    <div class="mfx-stage"><div class="mfx-li" style="width:82%" aria-busy="true" aria-label="加载中">
+      <span class="corn-skeleton corn-skeleton-circle"></span>
+      <span class="corn-stack corn-gap-sm" style="flex:1"><span class="corn-skeleton"></span><span class="corn-skeleton corn-skeleton-short"></span></span>
+    </div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-shimmer / skeleton</h3><p class="mfx-use">骨架屏扫光</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-shimmer" data-code-html="t-shimmer"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-live">
+    <div class="mfx-stage"><div class="mfx-stat" style="width:82%"><span class="corn-text-sm">api-01</span><span class="corn-tag corn-tag-brand corn-tag-dot corn-tag-live">运行中</span></div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-pulse / tag-live</h3><p class="mfx-use">状态点呼吸环</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-pulse" data-code-html="t-pulse"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button></div>
+    </footer>
+  </article>
+</div>
+
+<h2 class="demo-label">交互与编排</h2>
+<div class="mfx-grid">
+  <article class="mfx" id="e-lift">
+    <div class="mfx-stage"><button type="button" class="corn-card corn-card-pad mfx-mini"><b class="corn-text-sm">项目 Alpha</b><span class="corn-text-sm corn-text-muted">悬停浮起</span></button></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">--corn-lift</h3><p class="mfx-use">卡片/按钮悬停浮起</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="--corn-lift" data-code-html="t-lift"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-press">
+    <div class="mfx-stage"><button type="button" class="corn-btn corn-btn-ink corn-btn-sm">按住我</button></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">--corn-press</h3><p class="mfx-use">按下轻压反馈</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="--corn-press" data-code-html="t-press"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-flip">
+    <div class="mfx-stage"><div class="mfx-list" id="mfx-flip-list">
+      <div class="mfx-li"><i class="mfx-dot"></i><span class="corn-text-sm">一</span></div>
+      <div class="mfx-li"><i class="mfx-dot"></i><span class="corn-text-sm">二</span></div>
+      <div class="mfx-li"><i class="mfx-dot"></i><span class="corn-text-sm">三</span></div>
+      <div class="mfx-li"><i class="mfx-dot"></i><span class="corn-text-sm">四</span></div>
+    </div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">Corn.flip</h3><p class="mfx-use">重排时元素滑位</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="Corn.flip" data-code-js="t-flip"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="corn-btn corn-btn-soft corn-btn-sm" id="mfx-flip-btn">移一位</button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="motion-reveal">
+    <div class="mfx-stage"><div class="mfx-bars">
+      <span class="mfx-tile" data-corn-reveal style="--tile:var(--corn-accent-soft)"></span>
+      <span class="mfx-tile" data-corn-reveal style="--tile:var(--corn-brand-soft)"></span>
+      <span class="mfx-tile" data-corn-reveal style="--tile:var(--corn-skeleton)"></span>
+    </div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">data-corn-reveal</h3><p class="mfx-use">滚动入场 · 无 JS 不隐藏</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="data-corn-reveal" data-code-html="t-reveal"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" id="e-reveal-btn" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-theme">
+    <div class="mfx-stage" style="flex-direction:column;gap:10px">
+      <span class="mfx-scr"><i class="mfx-scr-l">Aa</i><i class="mfx-scr-r">Aa</i></span>
+      <div class="corn-cluster">
+        <button type="button" class="corn-btn corn-btn-soft corn-btn-sm" data-corn-set-theme="light">浅色</button>
+        <button type="button" class="corn-btn corn-btn-ink corn-btn-sm" data-corn-set-theme="dark">深色</button>
+      </div>
+    </div>
+    <footer class="mfx-meta"><h3 class="mfx-name">Corn.setTheme</h3><p class="mfx-use">全站换色同帧渐变</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="Corn.setTheme" data-code-js="t-theme"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button></div>
+    </footer>
+  </article>
+</div>
+
+<!-- Page behaviour moved to demo/assets/js/motion-gallery.js (flip, reveal
+     replay, leave restore, cob, autoplay, hover replay). -->

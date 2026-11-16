@@ -1,4 +1,6 @@
-/* Menu: absolutely positioned under its trigger inside .corn-menu-wrap. */
+/* Menu: a [popover] pinned to its trigger. JS flags data-popover once it
+   confirms support, so pre-popover engines keep the absolute fallback below;
+   anchor positioning adds viewport-edge flips where available. */
 .corn-menu-wrap { position: relative; display: inline-block; }
 .corn-menu {
   position: absolute;
@@ -13,11 +15,41 @@
   border-radius: var(--corn-radius);
   background: var(--corn-surface-raised);
   box-shadow: var(--corn-shadow-pop);
-  transform-origin: top left;
+  transform-origin: var(--corn-pop-origin, top left);
   animation: corn-pop-in var(--corn-dur) var(--corn-ease-out);
 }
-.corn-menu[data-align="end"] { left: auto; right: 0; transform-origin: top right; }
+.corn-menu[data-align="end"] { left: auto; right: 0; transform-origin: var(--corn-pop-origin, top right); }
 .corn-menu[hidden] { display: none; }
+
+/* Popover path: top layer, so transform/overflow ancestors can't clip it.
+   inset:auto clears both the fallback offsets and the UA centring. */
+.corn-menu[data-popover] { position: fixed; inset: auto; margin: 0; }
+
+/* Anchor positioning (JS wires position-anchor + data-anchored): pinned to
+   the trigger itself; the browser flips it at viewport edges. */
+@supports (position-area: block-end) and (top: anchor(bottom)) {
+  .corn-menu[data-anchored] {
+    margin-block-start: 6px;
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+  }
+  .corn-menu[data-anchored][data-align="end"] { position-area: block-end span-inline-start; }
+}
+
+/* Top-layer exit transition where the discrete stack exists (overlay =
+   Chromium): fade + shrink out instead of vanishing; entry stays the
+   corn-pop-in keyframe everywhere. */
+@supports (overlay: auto) and (transition-behavior: allow-discrete) {
+  .corn-menu[data-popover] {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+    transition-property: opacity, transform, display, overlay;
+    transition-duration: var(--corn-dur);
+    transition-timing-function: var(--corn-ease-in);
+    transition-behavior: allow-discrete;
+  }
+  .corn-menu[data-popover]:popover-open { opacity: 1; transform: none; }
+}
 .corn-menu [role="menuitem"] {
   display: flex;
   align-items: center;

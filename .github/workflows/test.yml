@@ -1,0 +1,47 @@
+name: Browser regression
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
+      - run: python3 scripts/build.py --check
+      - run: python3 scripts/build.py
+      - run: python3 scripts/check.py
+      - name: Browser checks
+        shell: bash
+        env:
+          CORN_BROWSER: ${{ matrix.browser }}
+        run: |
+          mkdir -p artifacts
+          set -o pipefail
+          if [ "$CORN_BROWSER" = chromium ]; then
+            node tests/e2e/run.mjs 2>&1 | tee artifacts/e2e.log
+          else
+            node tests/e2e/run.mjs edges components workbench 2>&1 | tee artifacts/e2e.log
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-${{ matrix.browser }}
+          path: artifacts/
+          if-no-files-found: ignore

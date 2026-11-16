@@ -1,0 +1,170 @@
+/* Shared hero band, cob visual, scroll hairline and the card hover standard.
+   Every top-level page opens with a dark .site-hero; the right slot
+   (.site-hero-art) carries a page-specific interactive corn visual. */
+.site-progress { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .site-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 2px;
+      background: var(--corn-accent);
+      transform-origin: 0 50%;
+      z-index: 200;
+      animation: site-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@keyframes site-progress { from { transform: scaleX(0); } }
+
+/* Dark hero: serif title + copy on the left, interactive art on the right. */
+.site-hero { padding-block: 64px 56px; border-bottom: 1px solid var(--corn-border); }
+/* Dark theme: sink the band one step so it doesn't merge with the page. */
+:root[data-corn-theme="dark"] .site-hero { background: var(--corn-ink-deep); }
+.site-hero + .site-section-flush { padding-top: 48px; }
+.site-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 64px;
+}
+.site-hero-copy > * + * { margin-top: 14px; }
+.site-hero-title { margin: 0; font-size: clamp(3.5rem, 8vw, 5.5rem); line-height: 1; }
+.site-hero-title .corn-enter { display: inline-block; }
+.site-hero .corn-lead { max-width: 46ch; margin-top: 22px; }
+.site-hero-art { display: grid; justify-items: start; gap: 18px; }
+@media (max-width: 759px) {
+  .site-hero-inner { grid-template-columns: 1fr; gap: 36px; }
+}
+
+/* Cob: kernels in a grid ([data-cols], JS sets --k-cols) or stacked .cob-row
+   containers for uneven rows. Odd rows shift half a kernel via the individual
+   `translate` property so it composes with hover/wave transforms. */
+.cob { display: flex; flex-direction: column; gap: var(--k-gap, 6px); }
+.cob-row { display: flex; gap: var(--k-gap-x, 5px); }
+.cob[data-cols] {
+  display: grid;
+  grid-template-columns: repeat(var(--k-cols, 14), var(--k-w, 14px));
+  gap: var(--k-gap, 6px) var(--k-gap-x, 5px);
+}
+.cob-row-odd { translate: calc(var(--k-w, 14px) / 2) 0; }
+.cob i, .cob .cob-k {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--k-w, 14px);
+  height: var(--k-h, 18px);
+  border: 0;
+  padding: 0;
+  border-radius: var(--corn-radius-md);
+  background: var(--k, color-mix(in srgb, var(--corn-accent) 14%, transparent));
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 1.2s var(--corn-ease), color 1.2s var(--corn-ease);
+}
+.cob i.is-ripe { background: color-mix(in srgb, var(--corn-accent) 45%, transparent); }
+.cob i:hover { background: var(--corn-accent); transition-duration: 0.08s; }
+.cob .cob-k {
+  outline: 1px solid color-mix(in srgb, var(--corn-paper) 18%, transparent);
+  outline-offset: -1px;
+}
+.cob .cob-k:is(:hover, :focus-visible) {
+  box-shadow: 0 0 0 2px var(--corn-accent);
+}
+.cob .cob-k-label:is(:hover, :focus-visible) {
+  background: var(--corn-accent);
+  color: var(--corn-ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-corn-motion="reduce"]) .cob :is(i, .cob-k) {
+    transition: transform 0.9s var(--corn-ease), background-color 1.2s var(--corn-ease),
+      color 1.2s var(--corn-ease), box-shadow var(--corn-dur) var(--corn-ease);
+  }
+  :root:not([data-corn-motion="reduce"]) .cob i:hover {
+    transform: translateY(-2px) scale(1.25);
+    transition-duration: 0.08s;
+  }
+  :root:not([data-corn-motion="reduce"]) .cob .cob-k:is(:hover, :focus-visible) {
+    transform: scale(1.12);
+    transition-duration: 0.08s;
+  }
+}
+@media (min-width: 760px) {
+  .site-hero .cob { --k-w: 22px; --k-h: 28px; --k-gap: 6px; --k-gap-x: 6px; }
+}
+.cob-status {
+  margin: 0;
+  min-height: 1em;
+  font: 500 0.6875rem/1 var(--corn-mono);
+  color: var(--corn-fg-muted);
+  letter-spacing: 0.08em;
+}
+
+/* Page-specific art. */
+.typo-art { justify-items: center; text-align: center; }
+.typo-glyph {
+  font-family: var(--corn-serif);
+  font-size: 12rem;
+  line-height: 1;
+  color: var(--corn-paper);
+  cursor: default;
+  user-select: none;
+}
+.typo-switch { display: flex; gap: 6px; }
+.typo-switch .corn-btn[aria-pressed="true"] {
+  border-color: var(--corn-accent);
+  color: var(--corn-accent);
+}
+.typo-cap { margin: 0; font: 500 0.6875rem/1 var(--corn-mono); letter-spacing: 0.12em; color: var(--corn-fg-muted); }
+@media (max-width: 759px) { .typo-glyph { font-size: 8rem; } }
+
+.live-tile {
+  display: grid;
+  gap: 14px;
+  width: min(320px, 100%);
+  padding: 20px 22px;
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-lg);
+}
+.live-tile-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.live-tile-num { font: 500 2.5rem/1 var(--corn-mono); color: var(--corn-fg); }
+.live-tile-unit { margin-left: 6px; font-size: 1rem; color: var(--corn-fg-muted); }
+.live-tile-spark { display: block; width: 100%; height: 40px; color: var(--corn-accent); }
+
+/* Card hover standard: lift + maize border + soft ring. Specimen cards get
+   only border/ring — they contain interactive demos of their own. */
+:is(.comp-card, .principle, .pager-link, .swatch) {
+  transition: transform var(--corn-dur) var(--corn-ease),
+    border-color var(--corn-dur) var(--corn-ease),
+    box-shadow var(--corn-dur) var(--corn-ease);
+}
+:is(.comp-card, .principle, .pager-link):is(:hover, :focus-visible, :focus-within) {
+  transform: translateY(calc(var(--corn-lift) * -1));
+  border-color: var(--corn-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--corn-accent) 20%, transparent);
+}
+.swatch { border: 1px solid transparent; border-radius: var(--corn-radius-sm); }
+.swatch:is(:hover, :focus-within) {
+  transform: translateY(calc(var(--corn-lift) * -1));
+  border-color: var(--corn-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--corn-accent) 20%, transparent);
+}
+.specimen { transition: border-color var(--corn-dur) var(--corn-ease), box-shadow var(--corn-dur) var(--corn-ease); }
+.specimen:is(:hover, :focus-within) {
+  border-color: var(--corn-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--corn-accent) 20%, transparent);
+}
+/* Pager labels nudge toward the travel direction. */
+.pager-link > * { transition: translate var(--corn-dur) var(--corn-ease); }
+.pager-prev:is(:hover, :focus-visible) > * { translate: -2px 0; }
+.pager-next:is(:hover, :focus-visible) > * { translate: 2px 0; }
+
+/* Principle badges pop once their data-reveal block enters. */
+.principle.is-in .corn-tag-accent {
+  animation: corn-pop var(--corn-dur-slow) var(--corn-ease-out) both;
+  animation-delay: calc(var(--reveal-i, 0) * var(--corn-stagger));
+}

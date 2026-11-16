@@ -20,7 +20,8 @@
     btn.setAttribute('aria-pressed', String(isOn(p)));
     btn.addEventListener('click', function () {
       var value = isOn(p) ? p.off : p.on;
-      root.setAttribute(p.attr, value);
+      if (p.key === 'corn-theme' && window.Corn && window.Corn.setTheme) window.Corn.setTheme(value);
+      else root.setAttribute(p.attr, value);
       btn.setAttribute('aria-pressed', String(value === p.on));
       try { localStorage.setItem(p.key, value); } catch (e) { /* not persisted */ }
     });
@@ -57,4 +58,22 @@
       }, 1600);
     });
   });
+  // Narrow screens scroll the nav links: keep the current page's link in view.
+  var current = document.querySelector('.site-links [aria-current="page"]');
+  if (current) {
+    var bar = current.parentNode;
+    var a = current.getBoundingClientRect(), b = bar.getBoundingClientRect();
+    bar.scrollLeft += a.left - b.left - (b.width - a.width) / 2;
+  }
+
+  /* docs directory <details>: open on desktop, collapsed on mobile.
+     Synced to the media query only — manual toggles survive resizes. */
+  var dir = document.querySelector('.docs-directory');
+  if (dir) {
+    var mq = window.matchMedia('(max-width: 900px)');
+    var syncDir = function () { dir.open = !mq.matches; };
+    dir.classList.add('is-enhanced');
+    syncDir();
+    if (mq.addEventListener) mq.addEventListener('change', syncDir);
+  }
 })();

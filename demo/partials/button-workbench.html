@@ -1,0 +1,46 @@
+<section class="wb corn-card" data-wb aria-labelledby="wb-title" data-reveal>
+  <div class="wb-head">
+    <h2 id="wb-title" class="corn-h3">试试参数</h2>
+  </div>
+  <div class="wb-grid">
+    <fieldset class="wb-params" data-wb-params disabled>
+      <legend class="corn-eyebrow">参数</legend>
+      <label class="wb-field" for="wb-variant">变体
+        <select id="wb-variant" name="variant">
+          <option value="ink" selected>ink 墨</option>
+          <option value="maize">maize 玉米黄</option>
+          <option value="husk">husk 苞叶</option>
+          <option value="soft">soft 灰底</option>
+          <option value="ghost">ghost 描边</option>
+          <option value="danger">danger 危险</option>
+        </select></label>
+      <label class="wb-field" for="wb-size">尺寸
+        <select id="wb-size" name="size">
+          <option value="sm">sm</option>
+          <option value="default" selected>default</option>
+          <option value="lg">lg</option>
+        </select></label>
+      <label class="wb-field" for="wb-state">状态
+        <select id="wb-state" name="state">
+          <option value="normal" selected>normal</option>
+          <option value="disabled">disabled</option>
+          <option value="busy">busy</option>
+        </select></label>
+      <label class="wb-field" for="wb-label">文字
+        <input id="wb-label" name="label" type="text" maxlength="24" autocomplete="off" value="保存设置"></label>
+      <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-wb-reset>重置</button>
+    </fieldset>
+    <div class="wb-preview">
+      <div class="wb-stage" data-wb-stage>
+        <button type="button" class="corn-btn corn-btn-ink">保存设置</button>
+      </div>
+      <pre class="wb-code"><code class="corn-mono" data-wb-code>&lt;button type="button" class="corn-btn corn-btn-ink"&gt;保存设置&lt;/button&gt;</code></pre>
+      <div class="wb-actions">
+        <button type="button" class="corn-btn corn-btn-soft corn-btn-sm" data-wb-copy disabled>复制 HTML</button>
+        <span class="wb-note" role="status" aria-live="polite" data-wb-note></span>
+      </div>
+    </div>
+  </div>
+</section>
+<link rel="stylesheet" href="{{ROOT}}assets/css/workbench.css">
+<script src="{{ROOT}}assets/js/workbench.js" defer></script>

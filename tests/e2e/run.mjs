@@ -1,7 +1,8 @@
 // Corn UI browser regression suite.
 //   node tests/e2e/run.mjs            (expects dist/ — run `pnpm build` first)
-// Playwright is not a project dependency: it is resolved from the
-// environment (`playwright` on the module path, or CORN_PLAYWRIGHT=/path/to/playwright).
+// Playwright is a pinned devDependency (playwright@1.64.0); it can also be
+// overridden via CORN_PLAYWRIGHT=/abs/path/node_modules/playwright.
+// CORN_BROWSER selects the engine: chromium (default) | firefox | webkit.
 import { existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
@@ -13,8 +14,12 @@ import codePop from './specs/code-pop.mjs';
 import components from './specs/components.mjs';
 import theme from './specs/theme.mjs';
 import motion from './specs/motion.mjs';
+import motionLab from './specs/motion-lab.mjs';
+import home from './specs/home.mjs';
 import fidelity from './specs/fidelity.mjs';
+import edges from './specs/edges.mjs';
 import regressions from './specs/regressions.mjs';
+import workbench from './specs/workbench.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const DIST = join(ROOT, 'dist');
@@ -34,13 +39,23 @@ if (!existsSync(join(DIST, 'index.html'))) {
   process.exit(2);
 }
 
-const { chromium } = loadPlaywright();
+const suites = { pages, home, codePop, components, theme, motion, motionLab, fidelity, edges, regressions, workbench };
+const only = process.argv.slice(2);
+const unknown = only.filter((n) => !Object.hasOwn(suites, n));
+if (unknown.length) {
+  console.error(`Unknown suite(s): ${unknown.join(', ')} — expected one of ${Object.keys(suites).join(', ')}`);
+  process.exit(2);
+}
+const engineName = process.env.CORN_BROWSER || 'chromium';
+if (!['chromium', 'firefox', 'webkit'].includes(engineName)) {
+  console.error(`Unknown CORN_BROWSER '${engineName}' — expected chromium, firefox or webkit`);
+  process.exit(2);
+}
+const engines = loadPlaywright();
 const server = await serve(DIST);
 const base = `http://127.0.0.1:${server.address().port}/`;
-const browser = await chromium.launch();
+const browser = await engines[engineName].launch();
 const report = new Report();
-const suites = { pages, codePop, components, theme, motion, fidelity, regressions };
-const only = process.argv.slice(2);
 try {
   for (const [name, spec] of Object.entries(suites)) {
     if (only.length && !only.includes(name)) continue;

@@ -45,7 +45,19 @@ body { margin: 0; }
   transition: transform var(--corn-dur-slow) var(--corn-ease-out);
 }
 .site-brand:hover .site-brand-dot { transform: rotate(45deg); }
-.site-links { display: flex; gap: 2px; flex: 1; }
+.site-links { display: flex; gap: 2px; flex: 1; min-width: 0; }
+@media (max-width: 720px) {
+  .site-nav-inner { gap: 12px; }
+  /* Links scroll inside the nav instead of pushing the toggles off-page. */
+  .site-links {
+    overflow-x: auto;
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+  }
+  .site-links::-webkit-scrollbar { display: none; }
+  .site-links a { flex: none; white-space: nowrap; }
+  .site-toggle { flex: none; }
+}
 .site-links a {
   position: relative;
   display: inline-flex;
@@ -117,7 +129,7 @@ body { margin: 0; }
 }
 .demo-label:first-child { margin-top: 0; }
 .rules { max-width: 68ch; }
-.table-wrap { max-width: 860px; }
+.table-wrap { max-width: 860px; overflow-x: auto; }
 
 /* --- home --- */
 .hero { padding-block: 64px 72px; }
@@ -184,6 +196,20 @@ body { margin: 0; }
 .docs-side li a:hover { color: var(--corn-fg); padding-left: 14px; }
 .docs-side li a[aria-current="page"] { color: var(--corn-fg); border-left-color: var(--corn-accent); font-weight: 500; }
 .docs-main { min-width: 0; padding-block: 40px 72px; }
+.docs-directory > summary {
+  display: list-item;
+  min-height: 48px;
+  align-content: center;
+  padding-inline-end: 8px;
+  font-size: 0.8125rem;
+  color: var(--corn-fg-muted);
+  cursor: pointer;
+}
+.docs-directory > summary:hover { color: var(--corn-fg); }
+.docs-directory > summary:focus-visible { outline: 2px solid var(--corn-fg); outline-offset: 2px; }
+/* JS decides open state per breakpoint; once enhanced, the summary is
+   desktop-only chrome and gets out of the way of the sticky nav. */
+.docs-directory.is-enhanced > summary { display: none; }
 .doc-head > * + * { margin-top: 14px; }
 .doc-facts { display: flex; flex-wrap: wrap; gap: 6px; }
 .doc-rules { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--corn-border); }
@@ -205,6 +231,20 @@ body { margin: 0; }
 .pager-link:hover { border-color: var(--corn-accent-text); transform: translateY(calc(var(--corn-lift) * -1)); }
 .pager-next { grid-column: 2; text-align: right; }
 .pager-next .corn-eyebrow { justify-self: end; }
+
+@media (max-width: 900px) {
+  .hero-grid, .quickstart, .docs { grid-template-columns: 1fr; }
+  .principles { grid-template-columns: 1fr; }
+  /* the summary is a real disclosure row on mobile, enhanced or not */
+  .docs-directory.is-enhanced > summary { display: list-item; }
+  .docs-directory { margin-block-end: 8px; }
+  .docs-directory .docs-side {
+    position: static;
+    max-height: calc(100svh - 160px);
+    overflow-y: auto;
+    padding-block: 12px 0;
+  }
+}
 
 /* --- footer --- */
 .site-footer { padding-block: 32px; border-top: 1px solid var(--corn-border); }

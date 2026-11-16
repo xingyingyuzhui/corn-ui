@@ -2,6 +2,7 @@
 .specimen-list { display: grid; gap: 22px; margin-top: 32px; }
 
 .specimen {
+  min-width: 0;
   border: 1px solid var(--corn-border);
   border-radius: var(--corn-radius-lg);
   background: var(--corn-bg-subtle);
@@ -13,6 +14,7 @@
 
 .specimen-head {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;

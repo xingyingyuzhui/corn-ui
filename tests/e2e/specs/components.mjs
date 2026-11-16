@@ -29,15 +29,27 @@ export default async function components({ browser, base, report }) {
   await go('menu');
   await page.focus('[data-corn-menu]');
   await page.keyboard.press('ArrowDown');
-  report.check('menu opens on ArrowDown', await ev(() => !document.getElementById('menu-field').hidden && document.activeElement.value === 'rename'));
+  report.check('menu opens on ArrowDown', await ev(() => document.getElementById('menu-field').matches(':popover-open') && document.activeElement.value === 'rename'));
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
   await page.waitForTimeout(50);
   report.check('menu Enter selects', (await page.textContent('#menu-out')).includes('duplicate'));
-  report.check('menu closes + focus returns', await ev(() => document.getElementById('menu-field').hidden && document.activeElement.hasAttribute('data-corn-menu')));
+  report.check('menu closes + focus returns', await ev(() => !document.getElementById('menu-field').matches(':popover-open') && document.activeElement.hasAttribute('data-corn-menu')));
   await page.click('[data-corn-menu]');
   await page.keyboard.press('Escape');
-  report.check('menu Esc closes', await ev(() => document.getElementById('menu-field').hidden));
+  report.check('menu Esc closes', await ev(() => !document.getElementById('menu-field').matches(':popover-open')));
+  // anchor-positioned where supported: JS wires name + position-anchor
+  const anchored = await ev(() => {
+    const btn = document.querySelector('[data-corn-menu]');
+    const menu = document.getElementById('menu-field');
+    return {
+      has: CSS.supports('anchor-name: --a') && CSS.supports('position-area: block-end') &&
+        CSS.supports('top: anchor(bottom)'),
+      wired: menu.hasAttribute('data-anchored') &&
+        menu.style.getPropertyValue('position-anchor') === btn.style.getPropertyValue('anchor-name')
+    };
+  });
+  if (anchored.has) report.check('menu anchor-positioned to trigger', anchored.wired, JSON.stringify(anchored));
 
   // dialog: open, Esc animates closed, focus returns, result event
   await go('dialog');

@@ -55,7 +55,7 @@
   width: 100%;
   background: var(--_accent);
   transform-origin: left;
-  animation: corn-toast-timer var(--_life, 4s) linear forwards;
+  animation: corn-toast-timer var(--_left, var(--_life, 4s)) linear forwards;
   animation-play-state: var(--corn-loop); /* static under reduced motion */
 }
 .corn-toast:hover .corn-toast-timer,
@@ -68,5 +68,6 @@
   to { opacity: 0; transform: translateX(24px); }
 }
 @keyframes corn-toast-timer {
+  from { transform: scaleX(var(--_remaining, 1)); }
   to { transform: scaleX(0); }
 }

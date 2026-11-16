@@ -1,6 +1,7 @@
 /* Toast: Corn.toast(options) + declarative [data-corn-toast] triggers.
-   Lifetime is driven by the timer bar's animationend, so hover/focus pause
-   (CSS animation-play-state) also pauses the dismissal. */
+   A JS monotonic clock owns expiry in every motion mode — hover/focus pauses
+   it, and the timer bar is a pure visual that is re-synced (never restarted)
+   whenever the global motion preference changes. */
 (function (Corn) {
   'use strict';
   var MAX = 3;
@@ -38,39 +39,72 @@
     var timer = el('span', 'corn-toast-timer');
     toast.appendChild(timer);
 
+    // --- lifetime clock: pause on hover/focus, expire on a real deadline ---
     var gone = false;
+    var clockId = 0, left = life, since = 0;
+    var reduced = Corn.reducedMotion();
+    function remaining() {
+      return Math.max(0, left - (clockId ? performance.now() - since : 0));
+    }
+    function run() {
+      left = remaining();
+      since = performance.now();
+      clockId = setTimeout(dismiss, left);
+    }
+    function hold() {
+      if (!clockId) return;
+      var rem = remaining(); // capture BEFORE clearing the clock
+      clearTimeout(clockId);
+      clockId = 0;
+      left = rem;
+    }
+    function resume() {
+      if (clockId || gone || toast.matches(':hover, :focus-within')) return;
+      run();
+    }
+
+    // --- timer bar: visual only, kept in step with `remaining()` ---
+    function syncBar() {
+      var rem = remaining(), frac = Math.max(0, rem / life);
+      toast.style.setProperty('--_remaining', frac);
+      toast.style.setProperty('--_left', rem + 'ms');
+      // restart the CSS clock from `frac` in BOTH directions — under reduce,
+      // --corn-loop simply keeps the restarted animation on its from frame.
+      timer.style.animation = 'none';
+      void timer.offsetWidth;
+      timer.style.animation = '';
+    }
+    function onPref() {
+      var now = Corn.reducedMotion();
+      if (now === reduced) return;
+      reduced = now;
+      syncBar();
+    }
+    var prefObs = new MutationObserver(onPref);
+    prefObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-corn-motion'] });
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.addEventListener) mq.addEventListener('change', onPref);
+
     function dismiss() {
       if (gone) return;
       gone = true;
-      clearTimeout(clock.id);
+      if (clockId) { clearTimeout(clockId); clockId = 0; }
+      prefObs.disconnect();
+      if (mq.removeEventListener) mq.removeEventListener('change', onPref);
       toast.setAttribute('data-leaving', '');
       Corn.afterAnimation(toast, function () { toast.remove(); });
     }
     close.addEventListener('click', dismiss);
-    // Normal motion: the timer bar's animation is the clock (CSS pauses it on
-    // hover/focus). Reduced motion: the bar is static (--corn-loop: paused),
-    // so a JS clock runs instead and pauses on the same hover/focus.
-    var clock = { id: 0, left: life, since: 0 };
-    if (Corn.reducedMotion()) {
-      var run = function () { clock.since = Date.now(); clock.id = setTimeout(dismiss, clock.left); };
-      var hold = function () {
-        if (!clock.id) return;
-        clearTimeout(clock.id);
-        clock.id = 0;
-        clock.left -= Date.now() - clock.since;
-      };
-      var resume = function () { if (!clock.id && !gone && !toast.matches(':hover, :focus-within')) run(); };
-      toast.addEventListener('mouseenter', hold);
-      toast.addEventListener('focusin', hold);
-      toast.addEventListener('mouseleave', resume);
-      toast.addEventListener('focusout', function () { setTimeout(resume, 0); });
-      run();
-    } else {
-      timer.addEventListener('animationend', dismiss);
-    }
+    toast.addEventListener('mouseenter', hold);
+    toast.addEventListener('focusin', hold);
+    toast.addEventListener('mouseleave', resume);
+    toast.addEventListener('focusout', function () { setTimeout(resume, 0); });
+
     list.appendChild(toast);
     var items = list.querySelectorAll('.corn-toast:not([data-leaving])');
     if (items.length > MAX) items[0].querySelector('.corn-toast-close').click();
+    syncBar();
+    if (!toast.matches(':hover, :focus-within')) run(); // appended under the cursor stays paused
     return { close: dismiss, element: toast };
   };
 

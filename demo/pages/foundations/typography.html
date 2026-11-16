@@ -1,8 +1,21 @@
 <!-- {"title": "字体", "nav": "typography"} -->
-<header class="corn-shell page-head">
-  <span class="corn-eyebrow corn-enter">Foundations</span>
-  <h1 class="corn-h2 corn-enter" style="--i:1">字体</h1>
-  <p class="corn-lead corn-enter" style="--i:2">三种字体各司其职：serif 给标题重量，sans 给正文阅读，mono 给数据精度。字号使用 rem，跟随用户的浏览器字号设置。</p>
+<header class="corn-dark site-hero">
+  <div class="corn-shell site-hero-inner">
+    <div class="site-hero-copy">
+      <span class="corn-eyebrow corn-enter">Foundations</span>
+      <h1 class="corn-h2 site-hero-title" data-split>字体</h1>
+      <p class="corn-lead corn-enter" style="--i:3">三种字体各司其职：serif 给标题重量，sans 给正文阅读，mono 给数据精度。字号使用 rem，跟随用户的浏览器字号设置。</p>
+    </div>
+    <div class="site-hero-art typo-art">
+      <div class="typo-glyph" id="typo-glyph" aria-hidden="true">玉</div>
+      <div class="typo-switch" role="group" aria-label="切换字体栈">
+        <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-font="var(--corn-serif)" aria-pressed="true">serif</button>
+        <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-font="var(--corn-sans)" aria-pressed="false">sans</button>
+        <button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-font="var(--corn-mono)" aria-pressed="false">mono</button>
+      </div>
+      <p class="typo-cap corn-mono" id="typo-cap">corn-serif</p>
+    </div>
+  </div>
 </header>
 <section class="corn-shell site-section site-section-flush type-specimens">
   <h2 class="demo-label">Serif · 标题（宋体系）</h2>

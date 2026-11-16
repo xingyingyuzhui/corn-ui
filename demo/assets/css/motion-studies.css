@@ -1,0 +1,157 @@
+/* Motion page only: three tactile mini-experiments (motion-studies.html).
+   Cards share .mfx anatomy but opt out of gallery autoplay via
+   [data-manual-motion]. */
+.studies-head { display: grid; gap: 8px; max-width: 60ch; }
+.studies-head .corn-h3 { margin: 0; }
+
+.motion-studies {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+#study-type { grid-column: 1 / -1; }
+@media (max-width: 759px) {
+  .motion-studies { grid-template-columns: 1fr; }
+}
+
+.mfx-study .mfx-stage { min-height: 300px; }
+.mfx-study .mfx-name { flex: 1; }
+#study-type .mfx-stage { min-height: 210px; }
+.study-ctl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-top: 1px solid var(--corn-border);
+  font-size: 0.75rem;
+}
+.study-ctl label { color: var(--corn-fg-muted); }
+.study-ctl input[type="range"] { flex: 1; min-width: 120px; accent-color: var(--corn-accent); }
+.study-ctl output { font-family: var(--corn-mono); font-size: 0.6875rem; min-width: 3.5ch; }
+
+/* 01 peel: a paper poster under two husk leaves that swing open in 3D. */
+.study-peel { position: relative; }
+.peel-poster {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 10px;
+  width: 100%;
+  min-height: 220px;
+  padding: 24px 26px;
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-lg);
+  background: var(--corn-surface-raised);
+}
+.peel-poster-tag { display: inline-flex; align-items: center; gap: 8px; font: 500 0.625rem/1 var(--corn-mono); letter-spacing: 0.16em; color: var(--corn-fg-muted); }
+.peel-poster-tag::before { content: ""; width: 6px; height: 6px; background: var(--corn-accent); }
+.peel-poster-title { margin: 0; font-family: var(--corn-serif); font-size: 2rem; font-weight: 600; line-height: 1.3; }
+.peel-poster-mark {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--corn-accent);
+}
+.peel-stage-inner {
+  position: relative;
+  width: min(280px, calc(100% - 44px));
+  perspective: 800px;
+}
+.peel-leaf {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: calc(50% + 8px);
+  backface-visibility: hidden;
+  background:
+    repeating-linear-gradient(100deg,
+      transparent 0 9px,
+      color-mix(in srgb, var(--corn-brand) 55%, transparent) 9px 10px),
+    linear-gradient(160deg, var(--corn-brand), color-mix(in srgb, var(--corn-brand) 70%, var(--corn-ink)));
+  clip-path: polygon(0 0, 100% 0, 86% 50%, 100% 100%, 0 100%);
+  pointer-events: none;
+}
+.peel-leaf-l {
+  left: -8px;
+  transform-origin: left center;
+  transform: rotateY(calc(var(--peel, 1) * -100deg)) translateX(calc(var(--peel, 1) * -12px));
+}
+.peel-leaf-r {
+  right: -8px;
+  transform-origin: right center;
+  transform: rotateY(calc(var(--peel, 1) * 100deg)) translateX(calc(var(--peel, 1) * 12px));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 14% 50%);
+}
+
+/* 02 stamp: a paper receipt; the approval stamp lands once per confirm. */
+.study-stamp { perspective: 700px; }
+.stamp-ticket {
+  position: relative;
+  width: 260px;
+  min-height: 220px;
+  padding: 18px 20px 14px;
+  border: 1px solid var(--corn-border-strong);
+  border-radius: var(--corn-radius-sm);
+  background: var(--corn-surface-raised);
+  font-family: var(--corn-mono);
+  font-size: 0.6875rem;
+}
+.stamp-ticket h4 { margin: 0 0 12px; font: 500 0.6875rem/1 var(--corn-mono); letter-spacing: 0.14em; }
+.stamp-row { display: flex; justify-content: space-between; padding: 5px 0; }
+.stamp-row b { font-weight: 500; }
+.stamp-cut { margin: 12px -20px; border-top: 1px dashed var(--corn-border-strong); }
+.stamp-serial { letter-spacing: 0.14em; color: var(--corn-fg-muted); }
+.stamp-area {
+  position: relative;
+  height: 78px;
+  margin: 8px -6px;
+}
+.stamp-seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  padding: 6px 10px;
+  border: 2px solid var(--corn-accent-text);
+  border-radius: var(--corn-radius-xs);
+  color: var(--corn-accent-text);
+  font: 600 0.875rem/1.1 var(--corn-serif);
+  text-align: center;
+  transform: rotate(-10deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.stamp-seal small { display: block; margin-top: 3px; font: 500 0.5rem/1 var(--corn-mono); letter-spacing: 0.12em; }
+.stamp-seal.is-stamped { opacity: 1; }
+.stamp-fleck {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 8px;
+  border-radius: var(--corn-radius-xs);
+  background: var(--corn-accent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 03 type: giant serif glyphs ride a soft pointer breeze. */
+.study-type { background: var(--corn-ink); }
+.type-line {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 3vw, 34px);
+  font-family: var(--corn-serif);
+  font-size: clamp(3rem, 9vw, 6rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--corn-paper);
+}
+.type-line span { display: inline-block; will-change: transform; }
+#study-type .mfx-stage { position: relative; flex-direction: column; gap: 18px; }
