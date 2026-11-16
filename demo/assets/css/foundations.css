@@ -14,7 +14,6 @@
   border-radius: var(--corn-radius-sm);
   transition: transform var(--corn-dur) var(--corn-ease-out), box-shadow var(--corn-dur) var(--corn-ease);
 }
-.swatch:hover .swatch-chip { transform: translateY(calc(var(--corn-lift) * -1)); box-shadow: var(--corn-shadow-card); }
 .swatch-name { font-family: var(--corn-mono); font-size: 0.75rem; color: var(--corn-fg); }
 .swatch-hex { font-size: 0.6875rem; color: var(--corn-fg-muted); }
 .swatch-copy {
@@ -91,3 +90,10 @@
 }
 .motion-lane:is(:hover, :focus-visible) .motion-dot { transform: translateX(min(260px, 30vw)) rotate(90deg); }
 .motion-use { color: var(--corn-fg-muted); }
+@media (max-width: 599px) {
+  .motion-lane { grid-template-columns: 1fr; }
+  .motion-lane::before, .motion-dot { grid-column: 1; grid-row: 2; }
+  .motion-use { grid-row: 3; }
+  .motion-lane:is(:hover, :focus-visible) .motion-dot { transform: translateX(min(200px, 60vw)) rotate(90deg); }
+}
+

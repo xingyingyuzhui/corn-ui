@@ -1,0 +1,94 @@
+/* Button workbench: parameter fieldset + live preview + current HTML. */
+.wb {
+  margin: 32px 0;
+  padding: 28px;
+}
+.wb-head { margin-block-end: 18px; }
+.wb-head .corn-h3 { margin: 0; }
+.wb-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: 28px;
+}
+.wb-params {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  margin: 0;
+  padding: 18px;
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-sm, 10px);
+}
+.wb-params legend { padding: 0 6px; }
+.wb-params:disabled { opacity: 0.55; }
+.wb-field {
+  display: grid;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--corn-fg-muted);
+}
+.wb-field select,
+.wb-field input {
+  height: 48px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--corn-fg);
+  background: var(--corn-surface);
+  border: 1px solid var(--corn-control-border);
+  border-radius: var(--corn-radius-sm, 10px);
+  padding: 0 12px;
+}
+.wb-field select:focus-visible,
+.wb-field input:focus-visible {
+  outline: 2px solid var(--corn-fg);
+  outline-offset: 2px;
+}
+.wb-preview {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  min-width: 0;
+}
+.wb-stage {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 140px;
+  padding: 16px;
+  overflow-x: auto;
+  border: 1px dashed var(--corn-border);
+  border-radius: var(--corn-radius-sm, 10px);
+}
+.wb-stage > .corn-btn {
+  flex-shrink: 0;
+  margin-inline: auto; /* centered when it fits, left-start scroll when wider */
+}
+.wb-code {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  background: var(--corn-surface);
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-sm, 10px);
+  white-space: pre;
+}
+.wb-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-self: start;
+}
+.wb-note { /* sr-only polite output */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .wb { padding: 18px; }
+  .wb-grid { grid-template-columns: 1fr; }
+}

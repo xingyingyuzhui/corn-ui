@@ -4,7 +4,7 @@
 
 - **设计语言**：纸田青釉底色、墨绿近黑文字、玉米黄点缀；宋体标题、黑体正文、等宽数据。
 - **Token**：`packages/tokens/tokens.json` 是唯一来源，包括原始色和浅/深两套语义变量；`corn-tokens.css` 由它生成。
-- **组件层**：18 个组件，纯 CSS（`corn.css`）。标签页、菜单、对话框、通知等交互放在可选的 `corn.js`（约 17 KB 未压缩，无依赖）。
+- **组件层**：18 个组件，纯 CSS（`corn.css`）。标签页、菜单、对话框、通知等交互放在可选的 `corn.js`（无运行时依赖）。
 - **AI 设计 Skill**：`SKILL.md` + `references/`，是给 agent 用的方法论与规范。
 
 ## 快速开始
@@ -13,10 +13,15 @@
 pnpm preview      # 构建并在 http://127.0.0.1:4789/ 预览（等价：python3 scripts/build.py && python3 -m http.server 4789 --bind 127.0.0.1 --directory dist）
 pnpm build        # 重新生成 corn-tokens.css / corn.css / corn.js 和 dist/ 站点
 pnpm check        # 静态检查：生成物是否最新、对比度、颜色只用 token、文件体积门槛、链接
-pnpm test:e2e     # 浏览器回归（需要环境里有 Playwright；见 tests/e2e/run.mjs）
+pnpm test:e2e     # 浏览器回归（默认 chromium；CORN_BROWSER=firefox|webkit 换引擎）
 ```
 
-只需要 Python ≥ 3.10。Node 只用于可选的 JS 语法检查和 e2e。
+直接运行 Python 构建与静态检查脚本只需要 Python ≥ 3.10；上面的 pnpm 命令还需要 Node 和 pnpm。Node（≥ 20）也用于 JS 语法检查和 e2e；首次本地跑浏览器回归：
+
+```sh
+pnpm install --frozen-lockfile          # 安装固定开发依赖 playwright@1.64.0
+pnpm exec playwright install chromium   # 下载浏览器（firefox / webkit 同理）
+```
 
 > 别直接打开 `demo/` 下的源文件：那是模板，必须先构建。预览请看 `dist/`。
 
@@ -58,13 +63,16 @@ dist/                                构建产物（gitignore），部署即拷�
 
 架构说明见 [docs/architecture.md](docs/architecture.md)，新增组件见 [docs/adding-a-component.md](docs/adding-a-component.md)。
 
+## 站点附加功能
+
+- **组件目录筛选**：组件页顶部 `<search>` 提供名称 / 描述搜索（NFKC 规范化、中文与英文均可）和分组下拉，两者取交集；无 JS 时控件隐藏、全部卡片照常显示。
+- **按钮工作台**（试点）：按钮页内置参数面板（变体 / 尺寸 / 状态 / 文字），实时预览由真实 `corn-btn` 类生成，下方展示当前 HTML 并可一键复制；无 JS 时保留静态预览与代码。
+
 ## 已知限制
 
-- **移动宽度未专项适配**：基础盒模型已修，但 docs 侧栏与首页 hero 双栏在窄屏会拥挤。
-- **浏览器覆盖**：e2e 只跑 Chromium（headless）；Safari / Firefox、读屏器、真实 Windows 高对比度未测。详见 [docs/compatibility.md](docs/compatibility.md)。
+- **浏览器覆盖**：本地 e2e 跑过 Chromium（全套件）与 Firefox、WebKit（edges / components / workbench）；Playwright WebKit 不是正式发布版 Safari。真实手机功耗与帧成本、读屏器（NVDA / VoiceOver）、真实 Windows 高对比度未测，见 [docs/compatibility.md](docs/compatibility.md) 的手工核对清单。
 - **折叠面板高度动画**依赖 `interpolate-size`（Chromium 131+）；其他浏览器直接展开，无动画。
-- **CI 不跑 e2e**：Playwright 不是项目依赖；`deploy.yml` 依次执行 `build.py --check`（拦截提交的生成物过期）、build、`check.py`。
-- **tooltip / menu 无碰撞检测与自动翻转**（tooltip 可手动 `data-placement="bottom"`）。
+- **菜单定位**：支持原生 popover + CSS anchor positioning 时走原生；支持 popover 但不支持锚定时由 JS 做视口适配（翻转 / 限高 / 跟随）；更早的浏览器退回绝对定位。tooltip 无自动翻转（可手动 `data-placement="bottom"`）。
 - **代码高亮**是最小实现，只区分注释、标签、属性、字符串、关键字。
 
 ## 设计来源

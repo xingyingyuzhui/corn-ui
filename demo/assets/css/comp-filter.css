@@ -1,0 +1,52 @@
+/* Component directory filter: <search> controls shown only once JS owns
+   them; without JS the whole grid stays visible. */
+.comp-filter {
+  margin-block-end: 28px;
+}
+.comp-filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+.comp-filter-field {
+  display: grid;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--corn-fg-muted);
+}
+.comp-filter-field input,
+.comp-filter-field select {
+  height: 48px;
+  font: inherit;
+  font-size: 16px; /* prevents iOS zoom */
+  color: var(--corn-fg);
+  background: var(--corn-surface);
+  border: 1px solid var(--corn-control-border);
+  border-radius: var(--corn-radius-sm, 10px);
+  padding: 0 14px;
+}
+.comp-filter-field input {
+  width: min(320px, 70vw);
+}
+.comp-filter-field input:focus-visible,
+.comp-filter-field select:focus-visible {
+  outline: 2px solid var(--corn-fg);
+  outline-offset: 2px;
+}
+.comp-filter-form .corn-btn {
+  height: 48px;
+}
+.comp-filter-status {
+  margin: 10px 0 0;
+  font-size: 0.8125rem;
+  color: var(--corn-fg-muted);
+}
+.comp-filter-empty {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--corn-fg-muted);
+}
+.comp-filter-empty .corn-btn {
+  margin-top: 14px;
+}

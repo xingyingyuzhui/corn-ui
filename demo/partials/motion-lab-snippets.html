@@ -1,0 +1,88 @@
+<!-- Code sources for the field hero + motion studies (read by code-pop via
+     document.getElementById). The HTML tabs mirror the live DOM; the CSS/JS
+     tabs embed the actual page assets via a build directive, so the copied
+     examples are complete and can never drift. All examples additionally
+     need corn-tokens.css + corn.css + corn.js. -->
+<template id="t-field" data-lang="html">&lt;!-- 玉米粒重组 · 需要 corn-tokens.css / corn.css / corn.js，以及 CSS、JS 两个标签页里的完整源码。
+     粒子由脚本生成进 #mfx-cob；形态按钮写 data-field-mode + aria-pressed。 --&gt;
+&lt;div class="corn-dark" style="padding:20px"&gt;
+&lt;div class="mfx-field" id="mfx-field"&gt;
+  &lt;div id="mfx-cob" aria-hidden="true"&gt;&lt;span class="corn-sr-only"&gt;CORN&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="mfx-field-bar"&gt;
+  &lt;div class="mfx-field-modes" role="group" aria-label="玉米田形态"&gt;
+    &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-field-mode="type" aria-pressed="true"&gt;01 成字&lt;/button&gt;
+    &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-field-mode="scatter" aria-pressed="false"&gt;02 散开&lt;/button&gt;
+    &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" data-field-mode="stack" aria-pressed="false"&gt;03 归仓&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" id="mfx-field-gust"&gt;吹一阵 ↗&lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;script src="motion-field.js" defer&gt;&lt;/script&gt;</template>
+<template id="t-field-css" data-lang="css">/* 粒子田样式（完整文件，与本页一致）· 深色来自 HTML 标签页的 .corn-dark 包裹 */
+{{@motion-source motion-lab.css}}</template>
+<template id="t-field-js" data-lang="js">// 玉米粒重组（完整文件，与本页一致）：5x7 点阵出字 + 黄金角散开 + 归仓堆叠，
+// 一个 RAF 积分器；指针排斥 / 吹一阵 / 实时 reduced-motion 全在里面。
+{{@motion-source motion-field.js}}</template>
+<template id="t-peel" data-lang="html">&lt;!-- 剥开这一季 · 需要 corn-tokens.css / corn.css / corn.js + CSS、JS 两个标签页的完整源码。
+     --peel 0..1 驱动两片苞叶的 rotateY；滑杆直写、回放走同一个变量。 --&gt;
+&lt;article id="study-peel"&gt;&lt;div class="mfx-stage study-peel"&gt;
+  &lt;div class="peel-stage-inner"&gt;
+    &lt;div class="peel-poster"&gt;
+      &lt;span class="peel-poster-tag"&gt;HARVEST / 2026&lt;/span&gt;
+      &lt;b class="peel-poster-title"&gt;新季&lt;br&gt;有好事。&lt;/b&gt;
+      &lt;i class="peel-poster-mark" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="peel-leaf peel-leaf-l" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="peel-leaf peel-leaf-r" aria-hidden="true"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="study-ctl"&gt;
+  &lt;label for="mfx-peel"&gt;剥开程度&lt;/label&gt;
+  &lt;input type="range" id="mfx-peel" min="0" max="100" step="1" value="100" aria-valuetext="剥开 100%"&gt;
+  &lt;output id="mfx-peel-out" for="mfx-peel"&gt;100%&lt;/output&gt;
+  &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" id="mfx-peel-replay"&gt;再剥一次&lt;/button&gt;
+&lt;/div&gt;
+&lt;/article&gt;
+&lt;script src="motion-studies.js" defer&gt;&lt;/script&gt;</template>
+<template id="t-stamp" data-lang="html">&lt;!-- 收成有回响 · 需要 corn-tokens.css / corn.css / corn.js + CSS、JS 两个标签页的完整源码。
+     印章落在预留的空白区 .stamp-area，不遮挡数据；一次确认一个编号。 --&gt;
+&lt;article id="study-stamp"&gt;&lt;div class="mfx-stage study-stamp"&gt;
+  &lt;div class="stamp-ticket" id="mfx-ticket"&gt;
+    &lt;h4&gt;CORN FIELD / 收获凭证&lt;/h4&gt;
+    &lt;div class="stamp-row"&gt;&lt;span&gt;地块&lt;/span&gt;&lt;b&gt;东坡 07&lt;/b&gt;&lt;/div&gt;
+    &lt;div class="stamp-row"&gt;&lt;span&gt;本季&lt;/span&gt;&lt;b&gt;612.4 吨&lt;/b&gt;&lt;/div&gt;
+    &lt;div class="stamp-area" aria-hidden="true"&gt;
+      &lt;span class="stamp-seal" id="mfx-seal"&gt;已入仓&lt;small&gt;CORN APPROVED&lt;/small&gt;&lt;/span&gt;
+      &lt;i class="stamp-fleck" data-dx="-46" data-dy="-34"&gt;&lt;/i&gt;
+      &lt;i class="stamp-fleck" data-dx="38" data-dy="-40"&gt;&lt;/i&gt;
+      &lt;i class="stamp-fleck" data-dx="-52" data-dy="12"&gt;&lt;/i&gt;
+      &lt;i class="stamp-fleck" data-dx="48" data-dy="20"&gt;&lt;/i&gt;
+      &lt;i class="stamp-fleck" data-dx="-18" data-dy="44"&gt;&lt;/i&gt;
+      &lt;i class="stamp-fleck" data-dx="22" data-dy="-52"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="stamp-cut" aria-hidden="true"&gt;&lt;/div&gt;
+    &lt;div class="stamp-row"&gt;&lt;span class="stamp-serial" id="mfx-serial"&gt;NO. 0000&lt;/span&gt;&lt;span&gt;已核验&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="study-ctl"&gt;
+  &lt;button type="button" class="corn-btn corn-btn-maize corn-btn-sm" id="mfx-stamp"&gt;确认收成&lt;/button&gt;
+  &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" id="mfx-stamp-replay"&gt;重播落印&lt;/button&gt;
+  &lt;output id="mfx-stamp-out" class="corn-sr-only" aria-live="polite"&gt;&lt;/output&gt;
+&lt;/div&gt;
+&lt;/article&gt;
+&lt;script src="motion-studies.js" defer&gt;&lt;/script&gt;</template>
+<template id="t-type" data-lang="html">&lt;!-- 字里有风 · 需要 corn-tokens.css / corn.css / corn.js + CSS、JS 两个标签页的完整源码。
+     pointermove 只记坐标，一个 RAF 写完全部 transform；逐字 aria-hidden。 --&gt;
+&lt;article id="study-type"&gt;&lt;div class="mfx-stage corn-dark study-type"&gt;
+  &lt;p class="type-line" id="mfx-type" aria-label="玉米熟了"&gt;&lt;span aria-hidden="true"&gt;玉&lt;/span&gt;&lt;span aria-hidden="true"&gt;米&lt;/span&gt;&lt;span aria-hidden="true"&gt;熟&lt;/span&gt;&lt;span aria-hidden="true"&gt;了&lt;/span&gt;&lt;/p&gt;
+  &lt;button type="button" class="corn-btn corn-btn-ghost corn-btn-sm" id="mfx-type-gust"&gt;吹过一阵风&lt;/button&gt;
+&lt;/div&gt;
+&lt;/article&gt;
+&lt;script src="motion-studies.js" defer&gt;&lt;/script&gt;</template>
+<template id="t-studies-css" data-lang="css">/* 三个实验共用（完整文件，与本页一致）· 前置两行是独立页需要的舞台基座 */
+.mfx-stage { display: flex; align-items: center; justify-content: center; position: relative; flex-direction: column; gap: 18px; min-height: 240px; padding: 16px 14px; background: var(--corn-bg); }
+{{@motion-source motion-studies.css}}</template>
+<template id="t-studies-js" data-lang="js">// 三个实验的全部交互（完整文件，与本页一致）：剥叶滑杆 + 落印计数 + 指针风。
+// 每个实验都有 DOM 存在性守卫，单独拿一段 HTML 出来也能跑。
+{{@motion-source motion-studies.js}}</template>

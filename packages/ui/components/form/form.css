@@ -49,12 +49,16 @@
   border-color: var(--corn-focus);
   box-shadow: 0 0 0 1px var(--corn-focus), 0 0 0 5px var(--corn-focus-glow);
 }
-:is(.corn-input, .corn-select, .corn-textarea)[aria-invalid="true"] {
+:is(.corn-input, .corn-select, .corn-textarea):is([aria-invalid="true"], :user-invalid) {
   border-color: var(--corn-danger-border);
   background-color: var(--corn-danger-soft);
+  animation: corn-shake calc(var(--corn-dur) * 2) var(--corn-ease); /* replays each time the flag flips on */
 }
-:is(.corn-input, .corn-select, .corn-textarea)[aria-invalid="true"]:focus {
+:is(.corn-input, .corn-select, .corn-textarea):is([aria-invalid="true"], :user-invalid):focus {
   box-shadow: 0 0 0 1px var(--corn-danger-border), 0 0 0 5px var(--corn-danger-soft);
+}
+:is(.corn-input, .corn-select, .corn-textarea):user-valid {
+  border-color: var(--corn-brand-text);
 }
 :is(.corn-input, .corn-select, .corn-textarea):disabled {
   opacity: 0.5;

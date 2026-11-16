@@ -90,13 +90,15 @@ class Site:
                   if c.js else '<span class="corn-tag">纯 CSS</span>')
         rules = "".join(f"<li>{escape(r)}</li>" for r in c.rules)
         pager = self._pager(i)
+        workbench = "{{> button-workbench}}" if c.name == "button" else ""
         content = f"""<header class="doc-head" data-reveal>
   <span class="corn-eyebrow">Components / {escape(self.groups[c.group])}</span>
-  <h1 class="corn-h2">{escape(c.title)}</h1>
+  <h1 class="corn-h2" data-split>{escape(c.title)}</h1>
   <p class="corn-lead">{escape(c.summary)}</p>
   <div class="doc-facts"><span class="corn-tag">{len(c.examples)} 个示例</span>
     <span class="corn-tag">components/{c.name}/{c.name}.css</span>{js_tag}</div>
 </header>
+{workbench}
 {"".join(tpls)}
 <div class="specimen-list">{"".join(cards)}</div>
 <section class="doc-rules" data-reveal><h2 class="corn-h3">用法规则</h2><ul class="corn-list">{rules}</ul></section>

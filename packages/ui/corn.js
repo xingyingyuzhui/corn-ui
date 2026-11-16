@@ -63,12 +63,119 @@
     el.addEventListener('animationend', onEnd);
   };
 
+  /** Replay a one-shot animation class (.corn-shake / .corn-flash / .corn-repop,
+      .corn-enter): remove → reflow → re-add, so the CSS animation restarts.
+      The inline `animation:none` reset kills names that linger through a
+      sibling class (e.g. a direction modifier) — otherwise the browser sees
+      the same animation instance and never restarts it. */
+  Corn.replay = function (el, cls) {
+    if (!el) return;
+    var prev = el.style.animation;
+    el.classList.remove(cls);
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = prev;
+    el.classList.add(cls);
+  };
+
+  /** Swap <html data-corn-theme> behind a uniform colour crossfade: the
+      data-corn-theming flag (see motion.css) stays up until the fade finishes.
+      Reduced motion: plain attribute swap, no flag. */
+  Corn.setTheme = function (theme) {
+    var root = document.documentElement;
+    if (Corn.reducedMotion()) {
+      root.setAttribute('data-corn-theme', theme);
+      return;
+    }
+    var raw = global.getComputedStyle(root).getPropertyValue('--corn-dur-slow').trim();
+    var ms = parseFloat(raw) * (raw.slice(-2) === 'ms' ? 1 : 1000);
+    root.setAttribute('data-corn-theming', '');
+    root.setAttribute('data-corn-theme', theme);
+    setTimeout(function () { root.removeAttribute('data-corn-theming'); },
+      (isNaN(ms) ? 550 : ms) + 120);
+  };
+
+  /** Corn.flip(container, mutate): layout transition — snapshot positions,
+      run the DOM change, then slide each surviving child from its old spot.
+      New children fade in; removed children are gone (mutate handles exits).
+      Reduced motion: mutate only. */
+  Corn.flip = function (container, mutate) {
+    if (Corn.reducedMotion()) { mutate(); return; }
+    var els = container.children;
+    for (var i = 0; i < els.length; i++) {
+      els[i].__cornFlipFrom = els[i].getBoundingClientRect();
+    }
+    mutate();
+    var cs = global.getComputedStyle(container);
+    var raw = cs.getPropertyValue('--corn-dur-slow').trim();
+    var ms = parseFloat(raw) * (raw.slice(-2) === 'ms' ? 1 : 1000);
+    if (isNaN(ms)) ms = 550;
+    var ease = cs.getPropertyValue('--corn-ease-out').trim() || 'ease-out';
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      var before = el.__cornFlipFrom;
+      delete el.__cornFlipFrom;
+      var now = el.getBoundingClientRect();
+      if (!before) {
+        el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: ms, easing: ease });
+        continue;
+      }
+      var dx = before.left - now.left, dy = before.top - now.top;
+      if (!dx && !dy) continue;
+      el.animate(
+        [{ transform: 'translate(' + dx + 'px, ' + dy + 'px)' }, { transform: 'translate(0, 0)' }],
+        { duration: ms, easing: ease }
+      );
+    }
+  };
+
   Corn.emit = function (el, name, detail) {
     el.dispatchEvent(new CustomEvent('corn:' + name, { bubbles: true, detail: detail }));
   };
 
   var seq = 0;
   Corn.uid = function (prefix) { return (prefix || 'corn') + '-' + ++seq; };
+
+  /** Generic replay: <button data-corn-replay="corn-flash" data-corn-target="#row">
+      replays a one-shot animation class on every element the target selector
+      matches (or on the button itself when no target is given). */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-corn-replay]');
+    if (!btn) return;
+    var sel = btn.getAttribute('data-corn-target');
+    var els = sel ? document.querySelectorAll(sel) : [btn];
+    for (var i = 0; i < els.length; i++) Corn.replay(els[i], btn.getAttribute('data-corn-replay'));
+  });
+
+  /** <button data-corn-set-theme="dark"> swaps the page theme with the crossfade. */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-corn-set-theme]');
+    if (btn) Corn.setTheme(btn.getAttribute('data-corn-set-theme'));
+  });
+
+  /** Scroll-in entrances: [data-corn-reveal] hides via .corn-reveal (added by
+      the hook, so no-JS pages stay visible), then .is-in lands when it enters
+      view. Siblings crossing together stagger via --reveal-i. */
+  var revealIO = null;
+  function revealObserver() {
+    if (revealIO || !('IntersectionObserver' in global)) return revealIO;
+    revealIO = new IntersectionObserver(function (entries) {
+      var n = 0;
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.style.setProperty('--reveal-i', String(Math.min(n++, 4)));
+        en.target.classList.add('is-in');
+        revealIO.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -40px 0px' });
+    return revealIO;
+  }
+  Corn.define('reveal', '[data-corn-reveal]', function (el) {
+    var ob = revealObserver();
+    if (!ob || Corn.reducedMotion()) return;
+    el.classList.add('corn-reveal');
+    ob.observe(el);
+  });
 
   /** Generic dismiss: <button data-corn-dismiss> removes its closest [data-corn-dismissible]. */
   document.addEventListener('click', function (e) {
@@ -185,8 +292,9 @@
 
 /* --- packages/ui/components/toast/toast.js --- */
 /* Toast: Corn.toast(options) + declarative [data-corn-toast] triggers.
-   Lifetime is driven by the timer bar's animationend, so hover/focus pause
-   (CSS animation-play-state) also pauses the dismissal. */
+   A JS monotonic clock owns expiry in every motion mode — hover/focus pauses
+   it, and the timer bar is a pure visual that is re-synced (never restarted)
+   whenever the global motion preference changes. */
 (function (Corn) {
   'use strict';
   var MAX = 3;
@@ -224,39 +332,72 @@
     var timer = el('span', 'corn-toast-timer');
     toast.appendChild(timer);
 
+    // --- lifetime clock: pause on hover/focus, expire on a real deadline ---
     var gone = false;
+    var clockId = 0, left = life, since = 0;
+    var reduced = Corn.reducedMotion();
+    function remaining() {
+      return Math.max(0, left - (clockId ? performance.now() - since : 0));
+    }
+    function run() {
+      left = remaining();
+      since = performance.now();
+      clockId = setTimeout(dismiss, left);
+    }
+    function hold() {
+      if (!clockId) return;
+      var rem = remaining(); // capture BEFORE clearing the clock
+      clearTimeout(clockId);
+      clockId = 0;
+      left = rem;
+    }
+    function resume() {
+      if (clockId || gone || toast.matches(':hover, :focus-within')) return;
+      run();
+    }
+
+    // --- timer bar: visual only, kept in step with `remaining()` ---
+    function syncBar() {
+      var rem = remaining(), frac = Math.max(0, rem / life);
+      toast.style.setProperty('--_remaining', frac);
+      toast.style.setProperty('--_left', rem + 'ms');
+      // restart the CSS clock from `frac` in BOTH directions — under reduce,
+      // --corn-loop simply keeps the restarted animation on its from frame.
+      timer.style.animation = 'none';
+      void timer.offsetWidth;
+      timer.style.animation = '';
+    }
+    function onPref() {
+      var now = Corn.reducedMotion();
+      if (now === reduced) return;
+      reduced = now;
+      syncBar();
+    }
+    var prefObs = new MutationObserver(onPref);
+    prefObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-corn-motion'] });
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.addEventListener) mq.addEventListener('change', onPref);
+
     function dismiss() {
       if (gone) return;
       gone = true;
-      clearTimeout(clock.id);
+      if (clockId) { clearTimeout(clockId); clockId = 0; }
+      prefObs.disconnect();
+      if (mq.removeEventListener) mq.removeEventListener('change', onPref);
       toast.setAttribute('data-leaving', '');
       Corn.afterAnimation(toast, function () { toast.remove(); });
     }
     close.addEventListener('click', dismiss);
-    // Normal motion: the timer bar's animation is the clock (CSS pauses it on
-    // hover/focus). Reduced motion: the bar is static (--corn-loop: paused),
-    // so a JS clock runs instead and pauses on the same hover/focus.
-    var clock = { id: 0, left: life, since: 0 };
-    if (Corn.reducedMotion()) {
-      var run = function () { clock.since = Date.now(); clock.id = setTimeout(dismiss, clock.left); };
-      var hold = function () {
-        if (!clock.id) return;
-        clearTimeout(clock.id);
-        clock.id = 0;
-        clock.left -= Date.now() - clock.since;
-      };
-      var resume = function () { if (!clock.id && !gone && !toast.matches(':hover, :focus-within')) run(); };
-      toast.addEventListener('mouseenter', hold);
-      toast.addEventListener('focusin', hold);
-      toast.addEventListener('mouseleave', resume);
-      toast.addEventListener('focusout', function () { setTimeout(resume, 0); });
-      run();
-    } else {
-      timer.addEventListener('animationend', dismiss);
-    }
+    toast.addEventListener('mouseenter', hold);
+    toast.addEventListener('focusin', hold);
+    toast.addEventListener('mouseleave', resume);
+    toast.addEventListener('focusout', function () { setTimeout(resume, 0); });
+
     list.appendChild(toast);
     var items = list.querySelectorAll('.corn-toast:not([data-leaving])');
     if (items.length > MAX) items[0].querySelector('.corn-toast-close').click();
+    syncBar();
+    if (!toast.matches(':hover, :focus-within')) run(); // appended under the cursor stays paused
     return { close: dismiss, element: toast };
   };
 
@@ -277,21 +418,55 @@
 })(window.Corn);
 
 /* --- packages/ui/components/tooltip/tooltip.js --- */
-/* Tooltip: Esc hides the bubble until the pointer/focus leaves (WCAG 1.4.13). */
+/* Tooltip: Esc dismisses the bubble until the pointer/focus leaves
+   (WCAG 1.4.13). Per-tip keydown covers the focused case; a capture listener
+   dismisses hover-opened tips even when focus sits elsewhere. */
 (function (Corn) {
   'use strict';
+
+  function visible(tip) {
+    if (tip.hasAttribute('data-dismissed')) return false;
+    var bub = tip.querySelector('.corn-tooltip-bubble') || tip.lastElementChild;
+    if (!bub) return false;
+    var cs = getComputedStyle(bub);
+    return cs.visibility !== 'hidden' && cs.opacity !== '0';
+  }
+
+  // First Esc hides any visible tooltip and stops here; with none visible the
+  // key passes straight through so a parent dialog/menu can still consume it.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || e.defaultPrevented) return;
+    var live = [].filter.call(document.querySelectorAll('.corn-tooltip'), visible);
+    if (!live.length) return;
+    e.preventDefault();
+    e.stopPropagation();
+    live.forEach(function (t) { t.setAttribute('data-dismissed', ''); });
+  }, true);
+
   Corn.define('tooltip', '.corn-tooltip', function (tip) {
     function reset() { tip.removeAttribute('data-dismissed'); }
     tip.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') tip.setAttribute('data-dismissed', '');
     });
-    tip.addEventListener('mouseleave', reset);
-    tip.addEventListener('focusout', reset);
+    // Re-arm only once the tip is neither hovered nor focus-within; focus can
+    // hop between children, so check focusout on the next microtask.
+    tip.addEventListener('mouseleave', function () {
+      if (!tip.matches(':focus-within')) reset();
+    });
+    tip.addEventListener('focusout', function (e) {
+      if (e.relatedTarget && tip.contains(e.relatedTarget)) return;
+      setTimeout(function () {
+        if (!tip.matches(':hover, :focus-within')) reset();
+      }, 0);
+    });
   });
 })(window.Corn);
 
 /* --- packages/ui/components/menu/menu.js --- */
-/* Menu button: [data-corn-menu] toggles the role=menu it aria-controls. */
+/* Menu button: [data-corn-menu] toggles the role=menu it aria-controls.
+   The menu is a [popover] — top layer, native light-dismiss — pinned with
+   CSS anchor positioning where supported and JS-computed coordinates
+   elsewhere; pre-popover engines fall back to hidden + absolute. */
 (function (Corn) {
   'use strict';
   Corn.define('menu', '[data-corn-menu]', function (btn) {
@@ -300,29 +475,101 @@
       console.warn('[corn] menu: aria-controls target not found', btn);
       return;
     }
+    var canPopover = typeof menu.showPopover === 'function';
+    // CSS anchoring needs the full feature set, not just anchor-name
+    var anchored = canPopover && window.CSS &&
+      CSS.supports('anchor-name: --a') &&
+      CSS.supports('position-area: block-end') &&
+      CSS.supports('top: anchor(bottom)');
     btn.setAttribute('aria-haspopup', 'menu');
     btn.setAttribute('aria-expanded', 'false');
-    function items() { return [].slice.call(menu.querySelectorAll('[role="menuitem"]:not([disabled])')); }
-    function isOpen() { return !menu.hidden; }
+    if (canPopover) {
+      menu.setAttribute('popover', '');
+      menu.removeAttribute('hidden'); // popover attr already keeps it out of view
+      menu.setAttribute('data-popover', '');
+      if (anchored) {
+        var name = '--' + Corn.uid('anchor');
+        btn.style.setProperty('anchor-name', name);
+        menu.style.setProperty('position-anchor', name);
+        menu.setAttribute('data-anchored', '');
+      }
+    } else {
+      menu.hidden = true; // the popover attr is inert here — hide it ourselves
+    }
 
+    function items() { return [].slice.call(menu.querySelectorAll('[role="menuitem"]:not([disabled])')); }
+    function isOpen() { return canPopover ? menu.matches(':popover-open') : !menu.hidden; }
+
+    var GAP = 6, EDGE = 8;
+    function place() {
+      // popover without CSS anchoring: viewport-fit coords, flipping when needed
+      var r = btn.getBoundingClientRect();
+      menu.style.maxHeight = ''; // measure the natural size first
+      var mw = menu.offsetWidth, mh = menu.offsetHeight;
+      var below = window.innerHeight - r.bottom - GAP - EDGE;
+      var above = r.top - GAP - EDGE;
+      var origin = mh <= below ? 'bottom' : (above > below ? 'top' : 'bottom');
+      var avail = origin === 'bottom' ? below : above;
+      menu.style.maxHeight = mh > avail ? Math.max(80, avail) + 'px' : '';
+      menu.style.overflowY = 'auto';
+      menu.style.maxWidth = (window.innerWidth - EDGE * 2) + 'px';
+      mw = menu.offsetWidth; var h = menu.offsetHeight; // re-read after constraining
+      var top = origin === 'bottom' ? r.bottom + GAP : r.top - GAP - h;
+      top = Math.min(Math.max(EDGE, top), Math.max(EDGE, window.innerHeight - h - EDGE));
+      var left = menu.getAttribute('data-align') === 'end' ? r.right - mw : r.left;
+      left = Math.min(Math.max(EDGE, left), Math.max(EDGE, window.innerWidth - mw - EDGE));
+      menu.style.top = top + 'px';
+      menu.style.left = left + 'px';
+      menu.style.setProperty('--corn-pop-origin', origin === 'bottom' ? 'top' : 'bottom');
+    }
+    // while open, the fallback position follows its trigger on reflow
+    function onReflow(e) {
+      if (e && e.target && e.target.nodeType === 1 && menu.contains(e.target)) return; // menu's own scroll
+      if (!btn.isConnected) { close(false); return; }
+      var r = btn.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight || r.right < 0 || r.left > window.innerWidth) {
+        close(false); // trigger scrolled away — close without stealing focus
+        return;
+      }
+      if (canPopover && !anchored) place();
+    }
+    function watch(on) {
+      var fn = on ? 'addEventListener' : 'removeEventListener';
+      window[fn]('resize', onReflow);
+      document[fn]('scroll', onReflow, true);
+    }
     function open(focusLast) {
-      menu.hidden = false;
+      if (canPopover) {
+        menu.showPopover();
+        if (!anchored) place();
+      } else {
+        menu.hidden = false;
+      }
       btn.setAttribute('aria-expanded', 'true');
       var list = items();
-      items().forEach(function (i) { i.tabIndex = -1; });
+      list.forEach(function (i) { i.tabIndex = -1; });
       if (list.length) list[focusLast ? list.length - 1 : 0].focus();
       document.addEventListener('pointerdown', outside, true);
+      watch(true);
     }
     function close(refocus) {
       if (!isOpen()) return;
-      menu.hidden = true;
+      if (canPopover) menu.hidePopover(); else menu.hidden = true;
       btn.setAttribute('aria-expanded', 'false');
       document.removeEventListener('pointerdown', outside, true);
+      watch(false);
       if (refocus) btn.focus();
     }
     function outside(e) {
       if (!menu.contains(e.target) && !btn.contains(e.target)) close(false);
     }
+    // any native dismissal (light-dismiss click or Esc) keeps aria in sync
+    menu.addEventListener('toggle', function (e) {
+      if (e.newState !== 'closed') return;
+      btn.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('pointerdown', outside, true);
+      watch(false);
+    });
 
     btn.addEventListener('click', function () { if (isOpen()) close(true); else open(false); });
     btn.addEventListener('keydown', function (e) {
@@ -337,7 +584,7 @@
       var map = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: list.length - 1 };
       if (e.key in map) {
         e.preventDefault();
-        list[(map[e.key] + list.length) % list.length].focus();
+        if (list.length) list[(map[e.key] + list.length) % list.length].focus();
       } else if (e.key === 'Escape') {
         e.preventDefault();
         e.stopPropagation();
@@ -378,7 +625,10 @@
         console.warn('[corn] dialog: target missing or <dialog> unsupported', btn);
         return;
       }
-      if (!dialog.open) dialog.showModal();
+      if (!dialog.open) {
+        dialog._cornOpener = btn; // engines that don't restore focus get help below
+        dialog.showModal();
+      }
     });
   });
 
@@ -397,6 +647,9 @@
       }
     });
     dialog.addEventListener('close', function () {
+      var opener = dialog._cornOpener;
+      dialog._cornOpener = null; // snapshot first: a later programmatic open must not refocus it
+      if (opener && opener.isConnected && !opener.disabled) opener.focus();
       Corn.emit(dialog, 'close', { value: dialog.returnValue });
     });
   });

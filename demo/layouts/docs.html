@@ -6,12 +6,16 @@
 </head>
 <body class="corn-body">
 <a class="skip-link" href="#main">跳到正文</a>
+<div class="site-progress" aria-hidden="true"></div>
 {{> nav}}
 <div class="corn-shell docs">
-  <nav class="docs-side" aria-label="组件目录">
-    <a class="side-all" href="{{ROOT}}components/index.html">全部组件</a>
-    {{@component-nav}}
-  </nav>
+  <details class="docs-directory">
+    <summary>组件目录</summary>
+    <nav class="docs-side" aria-label="组件目录">
+      <a class="side-all" href="{{ROOT}}components/index.html">全部组件</a>
+      {{@component-nav}}
+    </nav>
+  </details>
   <main id="main" class="docs-main">
 {{content}}
   </main>

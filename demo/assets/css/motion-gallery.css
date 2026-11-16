@@ -1,0 +1,121 @@
+/* Motion page: signature cards and the gallery below; the hero band,
+   cob and progress hairline are shared — see hero.css. */
+/* Motion gallery: one compact card per primitive — name, mini stage, code +
+   replay buttons. A new effect is a new card, not another section. */
+.mfx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.mfx {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--corn-border);
+  border-radius: var(--corn-radius-lg);
+  background: var(--corn-bg-subtle);
+  overflow: hidden;
+  scroll-margin-top: 80px;
+  transition: transform var(--corn-dur) var(--corn-ease),
+    border-color var(--corn-dur) var(--corn-ease),
+    box-shadow var(--corn-dur) var(--corn-ease);
+}
+.mfx:is(:hover, :focus-within) {
+  transform: translateY(calc(var(--corn-lift) * -1));
+  border-color: var(--corn-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--corn-accent) 20%, transparent);
+}
+.mfx:target { border-color: var(--corn-accent-text); }
+.mfx:has(.code-trigger[aria-expanded="true"]) { border-color: var(--corn-accent-text); }
+.mfx-stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-height: 120px;
+  padding: 16px 14px;
+  background: var(--corn-bg);
+  background-image: radial-gradient(color-mix(in srgb, var(--corn-fg) 8%, transparent) 1px, transparent 1.3px);
+  background-size: 14px 14px;
+}
+.mfx-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  padding: 9px 12px 10px;
+  border-top: 1px solid var(--corn-border);
+}
+.mfx-name { flex: 1 1 100%; margin: 0; font-family: var(--corn-mono); font-size: 0.75rem; font-weight: 500; }
+.mfx-use { flex: 1; margin: 0; font-size: 0.6875rem; color: var(--corn-fg-muted); }
+.mfx-actions { display: flex; gap: 6px; flex: none; }
+.mfx-replay {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--corn-border-strong);
+  border-radius: var(--corn-radius-sm);
+  background: var(--corn-surface-raised);
+  color: var(--corn-fg-muted);
+  cursor: pointer;
+  transition: color var(--corn-dur) var(--corn-ease), border-color var(--corn-dur) var(--corn-ease),
+    transform var(--corn-dur-fast) var(--corn-ease);
+}
+.mfx-replay:hover { color: var(--corn-fg); border-color: var(--corn-fg); }
+.mfx-replay svg { transition: transform var(--corn-dur-slow) var(--corn-ease-out); }
+.mfx-replay:hover svg { transform: rotate(-180deg); }
+.mfx-replay:active { transform: scale(var(--corn-press)); }
+/* Narrow demos inside stages */
+.mfx-bars { display: flex; gap: 8px; }
+.mfx-bars > * { margin: 0; }
+.ic { width: 14px; height: 14px; }
+/* Mini scenes: each stage shows a small real-UI fragment, not a bare tag. */
+.mfx-list { display: flex; flex-direction: column; gap: 9px; align-items: flex-start; }
+.mfx-li { display: flex; align-items: center; gap: 7px; }
+.mfx-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--corn-accent); flex: none; }
+.mfx-ln { height: 7px; border-radius: 99px; background: var(--corn-skeleton); }
+.mfx-toast {
+  display: flex; align-items: center; gap: 7px;
+  padding: 8px 12px; border-radius: var(--corn-radius-sm);
+  background: var(--corn-surface-raised); border: 1px solid var(--corn-border);
+  font-size: 0.75rem;
+}
+.mfx-toast-accent { border-left: 2px solid var(--corn-accent); }
+.mfx-form { display: flex; gap: 6px; align-items: center; width: 88%; }
+.mfx-form .corn-input { flex: 1; min-width: 0; }
+.mfx-stat {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 8px 12px; border-radius: var(--corn-radius-sm);
+  background: var(--corn-surface-raised); border: 1px solid var(--corn-border);
+}
+.mfx-stat b { font-family: var(--corn-mono); font-size: 0.875rem; }
+.mfx-bell { position: relative; color: var(--corn-fg-muted); display: inline-flex; }
+.mfx-count {
+  position: absolute; top: -7px; right: -9px;
+  min-width: 16px;
+  padding: 2px 5px;
+  border-radius: var(--corn-radius-xs);
+  background: var(--corn-accent);
+  color: var(--corn-ink);
+  font: 500 10px/1 var(--corn-mono);
+  text-align: center;
+  box-shadow: 0 0 0 2px var(--corn-bg);
+}
+.mfx-x { margin-left: 4px; font-weight: 400; color: var(--corn-fg-muted); }
+.mfx-tile {
+  width: 44px; height: 44px; border-radius: var(--corn-radius-sm);
+  background: var(--tile, var(--corn-bg-subtle)); border: 1px solid var(--corn-border);
+}
+.mfx-scr {
+  display: flex; width: 64px; height: 40px; border-radius: var(--corn-radius-sm);
+  overflow: hidden; border: 1px solid var(--corn-border-strong);
+}
+.mfx-scr > i { flex: 1; display: flex; align-items: center; justify-content: center; font: 11px/1 var(--corn-serif); }
+.mfx-scr-l { background: var(--corn-paper); color: var(--corn-ink); }
+.mfx-scr-r { background: var(--corn-ink-deep); color: var(--corn-paper); }
+.mfx-mini { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font: inherit; }

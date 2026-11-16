@@ -1,0 +1,90 @@
+<!-- Motion gallery (1/2): entrances + one-shot feedback. Each .mfx card is
+     stage + class name + use + code/replay buttons. -->
+<h2 class="demo-label">入场</h2>
+<div class="mfx-grid">
+  <article class="mfx" id="e-enter">
+    <div class="mfx-stage"><div class="mfx-list">
+      <div class="mfx-li corn-enter"><i class="mfx-dot"></i><i class="mfx-ln" style="width:74px"></i></div>
+      <div class="mfx-li corn-enter" style="--i:1"><i class="mfx-dot"></i><i class="mfx-ln" style="width:50px"></i></div>
+      <div class="mfx-li corn-enter" style="--i:2"><i class="mfx-dot"></i><i class="mfx-ln" style="width:64px"></i></div>
+    </div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-enter</h3><p class="mfx-use">入场 + --i 交错</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-enter" data-code-html="t-enter"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-enter" data-corn-target="#e-enter .mfx-li" aria-label="重播 corn-enter"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-down">
+    <div class="mfx-stage"><div class="mfx-toast corn-enter corn-enter-down"><i class="mfx-dot"></i>从上方落入</div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-enter-down</h3><p class="mfx-use">方向入场 · 向下</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-enter-down" data-code-html="t-enter-dir"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-enter" data-corn-target="#e-down .mfx-toast" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-left">
+    <div class="mfx-stage"><div class="mfx-toast corn-enter corn-enter-left"><i class="mfx-dot"></i>从右侧滑入</div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-enter-left</h3><p class="mfx-use">方向入场 · 向左</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-enter-left" data-code-html="t-enter-dir"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-enter" data-corn-target="#e-left .mfx-toast" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-right">
+    <div class="mfx-stage"><div class="mfx-toast corn-enter corn-enter-right"><i class="mfx-dot"></i>从左侧滑入</div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-enter-right</h3><p class="mfx-use">方向入场 · 向右</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-enter-right" data-code-html="t-enter-dir"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-enter" data-corn-target="#e-right .mfx-toast" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-spring">
+    <div class="mfx-stage"><div class="mfx-toast mfx-toast-accent corn-enter corn-enter-spring"><i class="mfx-dot"></i>回弹入场</div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-enter-spring</h3><p class="mfx-use">回弹修饰 · ease-spring</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-enter-spring" data-code-html="t-spring"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-enter" data-corn-target="#e-spring .mfx-toast" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+</div>
+
+<h2 class="demo-label">反馈 · 一次性的"发生了什么"</h2>
+<div class="mfx-grid">
+  <article class="mfx" id="e-shake">
+    <div class="mfx-stage"><div class="mfx-form"><input id="mfx-input" class="corn-input" aria-invalid="true" value="bad slug!" aria-label="校验失败示例"><button type="button" class="corn-btn corn-btn-ink corn-btn-sm">提交</button></div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-shake</h3><p class="mfx-use">校验失败横向微晃</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-shake" data-code-html="t-shake"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-shake" data-corn-target="#mfx-input" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-flash">
+    <div class="mfx-stage"><div class="mfx-stat" id="mfx-row" style="width:72%"><span class="corn-text-sm corn-text-muted">同步记录</span><b>12</b></div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-flash</h3><p class="mfx-use">数据更新底色扫一下</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-flash" data-code-html="t-flash"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-flash" data-corn-target="#mfx-row" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-repop">
+    <div class="mfx-stage"><span class="mfx-bell"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.2a3.8 3.8 0 0 0-3.8 3.8v2.6L3 11h10l-1.2-2.4V6A3.8 3.8 0 0 0 8 2.2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M6.6 12.6a1.5 1.5 0 0 0 2.8 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="mfx-count corn-enter-spring" id="mfx-badge">9</span></span></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-repop</h3><p class="mfx-use">计数变化重新弹出</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-repop" data-code-html="t-repop"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-repop" data-corn-target="#mfx-badge" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-burst">
+    <div class="mfx-stage"><button type="button" class="corn-btn corn-btn-maize corn-btn-sm" id="mfx-done">发布</button></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-burst</h3><p class="mfx-use">完成/庆祝 · 色环扩散</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-burst" data-code-html="t-burst"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-burst" data-corn-target="#mfx-done" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-draw">
+    <div class="mfx-stage"><svg id="e-draw-path" width="34" height="34" viewBox="0 0 34 34" fill="none" role="img" aria-label="已完成" style="color:var(--corn-accent-text)"><circle class="corn-draw" cx="17" cy="17" r="13.5" pathLength="1" stroke="currentColor" stroke-width="1.6" style="stroke-dasharray:1"/><path class="corn-draw" d="M11 17.5 15.5 22 23.5 12.5" pathLength="1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1;animation-delay:.3s"/></svg></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-draw</h3><p class="mfx-use">SVG 描边一遍</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-draw" data-code-html="t-draw"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-draw" data-corn-target="#e-draw-path .corn-draw" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+  <article class="mfx" id="e-leave">
+    <div class="mfx-stage"><div class="mfx-toast" id="e-leave-tag"><i class="mfx-dot"></i>待清理<b class="mfx-x">×</b></div></div>
+    <footer class="mfx-meta"><h3 class="mfx-name">corn-leave</h3><p class="mfx-use">对称离场 · 收缩淡出</p>
+      <div class="mfx-actions"><button type="button" class="code-trigger" aria-haspopup="dialog" aria-expanded="false" data-code-title="corn-leave" data-code-html="t-leave"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-code"/></svg><span>代码</span></button>
+      <button type="button" class="mfx-replay" data-corn-replay="corn-leave" data-corn-target="#e-leave-tag" aria-label="重播"><svg class="ic" viewBox="0 0 14 14" aria-hidden="true"><use href="#ic-replay"/></svg></button></div>
+    </footer>
+  </article>
+</div>

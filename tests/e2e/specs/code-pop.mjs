@@ -14,6 +14,10 @@ export default async function codePop({ browser, base, dist, report }) {
   for (const path of listPages(dist)) {
     const page = await ctx.newPage();
     await page.goto(base + path);
+    // Specimens reveal on scroll (12px rise): settle them all up front so the
+    // triggers stay put while the popover is exercised.
+    await page.evaluate(() => document.querySelectorAll('[data-reveal]').forEach((e) => e.classList.add('is-in')));
+    await page.waitForTimeout(600);
     const count = await page.locator('.code-trigger').count();
     for (let i = 0; i < count; i++) {
       total += 1;

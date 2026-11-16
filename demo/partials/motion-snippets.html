@@ -1,0 +1,101 @@
+<!-- Code sources for the motion.html gallery cards (read by code-pop via
+     document.getElementById — kept out of the page for the size budget).
+     One <template> per tab, id must match the trigger's data-code-*. -->
+<template id="t-enter" data-lang="html">&lt;!-- --i 是入场序号，按 --corn-stagger（60ms）间隔落位 --&gt;
+&lt;span class="corn-tag corn-enter"&gt;一&lt;/span&gt;
+&lt;span class="corn-tag corn-enter" style="--i:1"&gt;二&lt;/span&gt;
+&lt;span class="corn-tag corn-enter" style="--i:2"&gt;三&lt;/span&gt;
+
+&lt;!-- 重播（需要 corn.js）：target 是选择器，可命中一整组 --&gt;
+&lt;button data-corn-replay="corn-enter" data-corn-target=".corn-enter"&gt;重播&lt;/button&gt;</template>
+<template id="t-enter-dir" data-lang="html">&lt;!-- 方向修饰叠在 corn-enter 上：-down 从上方落入、-left 从右滑入、-right 从左滑入 --&gt;
+&lt;span class="corn-tag corn-enter corn-enter-down"&gt;从上方落入&lt;/span&gt;
+&lt;span class="corn-tag corn-enter corn-enter-left"&gt;从右侧滑入&lt;/span&gt;
+&lt;span class="corn-tag corn-enter corn-enter-right"&gt;从左侧滑入&lt;/span&gt;</template>
+<template id="t-spring" data-lang="html">&lt;!-- corn-enter-spring 把入场时序换成 --corn-ease-spring（温和回弹） --&gt;
+&lt;span class="corn-tag corn-enter corn-enter-spring"&gt;回弹入场&lt;/span&gt;
+
+&lt;!-- 单发反馈也能用回弹：corn-repop 上加同类名 --&gt;
+&lt;span class="corn-tag corn-repop corn-enter-spring"&gt;弹回提醒&lt;/span&gt;</template>
+<template id="t-shake" data-lang="html">&lt;!-- 控件翻开 aria-invalid 即自动播 corn-shake，无需脚本 --&gt;
+&lt;input class="corn-input" aria-invalid="true" value="bad slug!"&gt;
+
+&lt;!-- 声明式重放（需要 corn.js） --&gt;
+&lt;button data-corn-replay="corn-shake" data-corn-target="#input"&gt;再抖一次&lt;/button&gt;</template>
+<template id="t-flash" data-lang="html">&lt;!-- 数据更新：底色从 --corn-flash（默认 accent-soft）淡回原色 --&gt;
+&lt;div class="corn-card corn-card-pad corn-flash"&gt;已同步 12 条记录&lt;/div&gt;
+
+&lt;!-- 换提示色：元素或祖先上写 --corn-flash --&gt;
+&lt;div class="corn-card" style="--corn-flash: var(--corn-brand-soft)"&gt;…&lt;/div&gt;</template>
+<template id="t-repop" data-lang="html">&lt;!-- 计数 / 状态变化时重新 pop 一次，--corn-pop-origin 指定生长点 --&gt;
+&lt;span class="corn-tag corn-tag-brand corn-repop"&gt;9 条新提醒&lt;/span&gt;
+
+&lt;!-- 脚本重放：Corn.replay(el, 'corn-repop') --&gt;</template>
+<template id="t-burst" data-lang="html">&lt;!-- 完成 / 庆祝：色环向外扩一圈，--corn-burst 可换色 --&gt;
+&lt;span class="corn-tag corn-tag-brand corn-burst"&gt;已发布&lt;/span&gt;</template>
+<template id="t-draw" data-lang="html">&lt;!-- SVG 描绘：path 写 pathLength="1" + stroke-dasharray:1，corn-draw 描一遍 --&gt;
+&lt;svg viewBox="0 0 16 16" fill="none" width="18" height="18"&gt;
+  &lt;path class="corn-draw" d="M3 8.5 6.5 12 13 4.5" pathLength="1"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        style="stroke-dasharray:1"/&gt;
+&lt;/svg&gt;</template>
+<template id="t-leave" data-lang="html">&lt;!-- 对称离场：pop-in 的反向，移除前播一遍 --&gt;
+&lt;span class="corn-tag corn-leave"&gt;待清理&lt;/span&gt;
+
+&lt;!-- 播完真正移除： --&gt;
+&lt;script&gt;
+  el.addEventListener('animationend', function () { el.remove(); });
+&lt;/script&gt;</template>
+<template id="t-spin" data-lang="html">&lt;span class="corn-spinner" role="status" aria-label="加载中"&gt;&lt;/span&gt;
+&lt;!-- 尺寸：corn-spinner-sm / corn-spinner-lg；挂 --corn-loop，减少动效时停在弧线静帧 --&gt;</template>
+<template id="t-shimmer" data-lang="html">&lt;div aria-busy="true" aria-label="卡片加载中"&gt;
+  &lt;span class="corn-skeleton corn-skeleton-title"&gt;&lt;/span&gt;
+  &lt;span class="corn-skeleton"&gt;&lt;/span&gt;
+  &lt;span class="corn-skeleton corn-skeleton-short"&gt;&lt;/span&gt;
+&lt;/div&gt;</template>
+<template id="t-pulse" data-lang="html">&lt;!-- 状态点呼吸环：corn-tag-dot 的点用 corn-pulse 循环 --&gt;
+&lt;span class="corn-tag corn-tag-brand corn-tag-dot corn-tag-live"&gt;运行中&lt;/span&gt;
+
+&lt;!-- 自定义循环动效时，播放开关同样交给 --corn-loop --&gt;</template>
+<template id="t-lift" data-lang="html">&lt;!-- 可交互卡片悬停浮起 --corn-lift（2px），按钮 --corn-lift-sm（1px） --&gt;
+&lt;button class="corn-card corn-card-pad"&gt;悬停我&lt;/button&gt;
+
+&lt;!-- 自己的元素要挂上浮起：transition transform + translateY(var(--corn-lift)) --&gt;</template>
+<template id="t-press" data-lang="html">&lt;!-- :active 时 scale(var(--corn-press)) 轻压（0.97），所有按钮自带 --&gt;
+&lt;button class="corn-btn corn-btn-soft"&gt;按住我&lt;/button&gt;</template>
+<template id="t-flip" data-lang="js">// 重排：快照 → 变更 → 幸存元素滑位、新元素淡入（需要 corn.js）
+Corn.flip(list, function () {
+  list.appendChild(list.children[0]);   // 第一张移到末尾，其余自动滑位
+});
+
+// 删除、插入、排序也一样——把任何 DOM 变更包进 mutate 即可
+Corn.flip(list, function () { list.children[0].remove(); });</template>
+<template id="t-reveal" data-lang="html">&lt;!-- 一行属性：进入视口时自动入场（需要 corn.js + corn.css） --&gt;
+&lt;div class="corn-card corn-card-pad" data-corn-reveal&gt;滚入视口才入场&lt;/div&gt;
+
+&lt;!-- 同批进入的元素按 --reveal-i 自动错开（封顶 4）；无 JS / 减少动效时不隐藏 --&gt;</template>
+<template id="t-pop" data-lang="html">&lt;!-- 爆米花：从 0.4 倍弹起、过冲 1.14 再落回，--corn-pop-origin 指定爆点 --&gt;
+&lt;span class="corn-tag corn-pop"&gt;已收藏&lt;/span&gt;
+
+&lt;!-- 配一把"玉米粒"喷溅：小粒子上 --dx/--dy 决定飞散方向 --&gt;
+&lt;script&gt;
+  Corn.replay(star, 'corn-pop');
+&lt;/script&gt;</template>
+<template id="t-unveil" data-lang="html">&lt;!-- 剥叶揭示：clip-path 从中线向两侧打开，圆角随 --corn-radius-lg --&gt;
+&lt;div class="corn-card corn-card-pad corn-unveil"&gt;新季玉米&lt;/div&gt;</template>
+<template id="t-mark" data-lang="html">&lt;!-- 划重点：玉米黄 marker 扫到文字背后，--i 按序错落、--corn-mark 换色 --&gt;
+&lt;p&gt;动效只回答三件事：&lt;mark class="corn-mark"&gt;这是什么&lt;/mark&gt;、
+&lt;mark class="corn-mark" style="--i:1"&gt;能不能点&lt;/mark&gt;。&lt;/p&gt;</template>
+<template id="t-wave" data-lang="html">&lt;!-- 玉米粒波：--row/--col 定每粒位置，延迟 = (row+col) × --corn-wave-step（默认 35ms） --&gt;
+&lt;div class="kernel-grid"&gt;
+  &lt;i class="corn-wave" style="--row:0;--col:0"&gt;&lt;/i&gt;
+  &lt;i class="corn-wave" style="--row:0;--col:1"&gt;&lt;/i&gt;
+  &lt;i class="corn-wave" style="--row:1;--col:0"&gt;&lt;/i&gt;
+&lt;/div&gt;
+
+&lt;!-- 想从任意一粒扩散：把每个 --row/--col 改写成到那粒的距离再 Corn.replay --&gt;</template>
+<template id="t-theme" data-lang="js">Corn.setTheme('dark');   // 或 'light'；减少动效下退化为即时切换
+
+// 声明式按钮（需要 corn.js）：
+//   &lt;button data-corn-set-theme="dark"&gt;切深色&lt;/button&gt;
+// 换色期间 documentElement 挂 data-corn-theming，可临时压制自己的动效。</template>

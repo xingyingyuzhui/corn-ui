@@ -109,11 +109,23 @@
       return;
     }
     var w = pop.offsetWidth;
-    var h = pop.offsetHeight;
     var gap = 8;
+    pop.style.maxHeight = '';
+    var h = pop.offsetHeight;
     var below = r.bottom + gap + h <= vh - gap;
     var above = r.top - gap - h >= gap;
-    var top = below || !above ? r.bottom + gap : r.top - gap - h;
+    var top;
+    if (below) top = r.bottom + gap;
+    else if (above) top = r.top - gap - h;
+    else {
+      // Taller than the free space on both sides: shrink onto the roomier one
+      // (the code area scrolls) so the panel never covers its own anchor.
+      var aboveRoom = r.top - 2 * gap;
+      var belowRoom = vh - r.bottom - 2 * gap;
+      pop.style.maxHeight = Math.max(160, Math.max(aboveRoom, belowRoom)) + 'px';
+      h = pop.offsetHeight;
+      top = aboveRoom >= belowRoom ? r.top - gap - h : r.bottom + gap;
+    }
     top = Math.max(gap, Math.min(top, vh - h - gap));
     var left = Math.max(gap, Math.min(r.right - w, vw - w - gap));
     pop.style.top = Math.round(top) + 'px';

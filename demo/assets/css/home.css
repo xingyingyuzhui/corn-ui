@@ -1,0 +1,141 @@
+/* Homepage only: the brand cover — one full-bleed paper scene where the icon's
+   colour blocks assemble, burst and spell CORN. Below the fold: facts, the
+   curated index and the dark quickstart band. */
+.home-cover {
+  position: relative;
+  min-height: calc(100vh - 60px);
+  min-height: calc(100svh - 60px);
+}
+.home-theater { position: absolute; inset: 0 0 140px 0; touch-action: pan-y; }
+.home-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.home-logo-fallback {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(560px, 86%);
+  height: auto;
+  max-height: 88%;
+  object-fit: contain;
+}
+.home-canvas.is-live ~ .home-logo-fallback { opacity: 0; }
+
+/* One CTA and two quiet pagination dots — the only hero chrome. */
+.home-cta { position: absolute; left: 50%; bottom: 78px; translate: -50% 0; z-index: 2; }
+.home-shapes {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  translate: -50% 0;
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+}
+.home-dot {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.home-dot span {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--corn-fg-muted);
+  transition: width var(--corn-dur) var(--corn-ease), background var(--corn-dur) var(--corn-ease);
+}
+.home-dot[aria-pressed="true"] span {
+  width: 18px;
+  height: 4px;
+  background: var(--corn-accent-text);
+}
+.home-dot:disabled { cursor: default; }
+.home-dot:focus-visible {
+  outline: 2px solid var(--corn-focus, var(--corn-accent-text));
+  outline-offset: 2px;
+  border-radius: var(--corn-radius-sm);
+}
+
+.home-facts {
+  display: flex;
+  gap: 0;
+  margin: 0 0 34px;
+  padding: 16px 0;
+  border-block: 1px solid var(--corn-border);
+}
+.home-facts > div {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 0 26px;
+  border-left: 1px solid var(--corn-border);
+}
+.home-facts > div:first-child { border-left: 0; padding-left: 0; }
+.home-facts dt { margin: 0; font-size: 0.75rem; color: var(--corn-fg-muted); }
+.home-facts dd { margin: 0; font-size: 1rem; }
+
+/* Curated index: ruled rows, serif names, arrow nudge on hover. */
+.home-index-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.home-index-head .corn-h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+.home-index-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 36px;
+  margin-top: 26px;
+  border-top: 1px solid var(--corn-border);
+}
+.home-index-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 4px;
+  border-bottom: 1px solid var(--corn-border);
+  color: var(--corn-fg);
+  text-decoration: none;
+}
+.home-index-row svg { width: 40px; height: 24px; flex: none; color: var(--corn-fg-muted); }
+.home-index-name {
+  font-family: var(--corn-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+.home-index-arrow { margin-left: auto; color: var(--corn-fg-muted); transition: translate var(--corn-dur) var(--corn-ease); }
+.home-index-row:hover { border-bottom-color: var(--corn-accent); }
+.home-index-row:hover .home-index-arrow { translate: 2px -2px; color: var(--corn-accent-text); }
+.home-index-row:focus-visible { outline: 2px solid var(--corn-focus, var(--corn-accent-text)); outline-offset: -2px; }
+
+/* Quickstart closes the page on an ink band. */
+.home-start { border-radius: 0; }
+.home-start .corn-h2 { font-size: clamp(2rem, 4vw, 3rem); }
+.home-start-sub { margin: 14px 0 0; font-size: 0.9375rem; color: var(--corn-fg-muted); }
+.home-start .corn-code-card { border-color: var(--corn-border-strong, var(--corn-border)); }
+
+@media (max-width: 700px) {
+  .home-theater { inset: 0 0 120px 0; }
+  .home-index-row { padding: 18px 2px; }
+  .home-index-name { font-size: 1.375rem; }
+}
+@media (max-width: 600px) {
+  .home-index-list { grid-template-columns: 1fr; }
+  .home-facts > div {
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 0 14px;
+  }
+  .home-facts dt { white-space: nowrap; }
+  .home-facts dd { order: -1; }
+}
+@media (max-width: 420px) {
+  .home-facts > div { padding: 0 8px; }
+}

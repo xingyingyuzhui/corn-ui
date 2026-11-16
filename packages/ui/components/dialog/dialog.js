@@ -20,7 +20,10 @@
         console.warn('[corn] dialog: target missing or <dialog> unsupported', btn);
         return;
       }
-      if (!dialog.open) dialog.showModal();
+      if (!dialog.open) {
+        dialog._cornOpener = btn; // engines that don't restore focus get help below
+        dialog.showModal();
+      }
     });
   });
 
@@ -39,6 +42,9 @@
       }
     });
     dialog.addEventListener('close', function () {
+      var opener = dialog._cornOpener;
+      dialog._cornOpener = null; // snapshot first: a later programmatic open must not refocus it
+      if (opener && opener.isConnected && !opener.disabled) opener.focus();
       Corn.emit(dialog, 'close', { value: dialog.returnValue });
     });
   });

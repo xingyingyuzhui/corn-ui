@@ -42,4 +42,37 @@ export default async function pages({ browser, base, dist, report }) {
     }
     await ctx.close();
   }
+
+  // Hero standard: every top-level page has exactly one scroll hairline and a
+  // split title whose aria-label preserves the full text.
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const tops = ['index.html', 'foundations/colors.html', 'foundations/typography.html',
+    'foundations/motion.html', 'components/index.html', 'patterns.html'];
+  for (const path of tops) {
+    const page = await ctx.newPage();
+    await page.goto(base + path);
+    const r = await page.evaluate(() => {
+      const t = document.querySelector('.site-hero-title, .doc-head h1, .hero-copy h1');
+      return {
+        bars: document.querySelectorAll('.site-progress').length,
+        label: t && t.getAttribute('aria-label'),
+        text: t && t.textContent
+      };
+    });
+    report.check(`${path}: one progress bar`, r.bars === 1, `${r.bars}`);
+    report.check(`${path}: split title label = text`, r.label === r.text, JSON.stringify(r));
+    await page.close();
+  }
+  const cp = await ctx.newPage();
+  await cp.goto(base + 'foundations/colors.html');
+  const palette = await cp.evaluate(() => document.querySelectorAll('.cob-k[data-copy]').length);
+  report.check('colors: palette cob kernels', palette === 26, `${palette}`);
+  await cp.close();
+  const ip = await ctx.newPage();
+  await ip.goto(base + 'components/index.html');
+  const compCob = await ip.evaluate(() =>
+    [...document.querySelectorAll('.site-hero .cob-k')].filter((a) => a.getAttribute('href')).length);
+  report.check('components: cob has one kernel per component', compCob === 18, `${compCob}`);
+  await ip.close();
+  await ctx.close();
 }
